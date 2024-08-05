@@ -45,7 +45,49 @@ The server program establishes a server with `create_server_with_port` and liste
   <TabItem label="C++">
 
 ```cpp
+#include "splashkit.h"
+#include <string>
 
+void start_server(const std::string& name, int port) {
+    // Assign the server to nullptr to ensure it is not left uninitialised
+    server_socket server = nullptr;
+    
+    // Create the server
+    server = create_server(name, port);
+    write_line("Server '" + name + "' started, listening on port " + std::to_string(port));
+
+    while (true) {
+        // Check for new connections and network activity
+        check_network_activity();
+        
+        // Accept new connections
+        if (accept_new_connection(server)) {
+            // Get the last connection
+            connection client_connection = last_connection(server);
+            unsigned int client_ip = connection_ip(client_connection);
+            write_line("Connected by " + std::to_string(client_ip));
+
+            // Keep the connection open
+            while (is_connection_open(client_connection)) {
+                check_network_activity();
+            }
+
+            // Client disconnected
+            write_line("Client " + std::to_string(client_ip) + " disconnected.");
+        }
+    }
+
+    // Close the server
+    if (server != nullptr) {
+        close_server(server);
+    }
+    write_line("Server closed.");
+}
+
+int main() {
+    start_server("MyServer", 65432);
+    return 0;
+}
 ```
 
   </TabItem>
@@ -71,7 +113,9 @@ def start_server(name, port):
             # Check for new connections and network activity
             check_network_activity()
             
+            # Check for new connections
             if accept_new_connection(server):
+                # Get the last connection
                 connection = last_connection(server)
                 client_name = connection_ip(connection)
                 print(f"Connected by {client_name}")
@@ -79,17 +123,15 @@ def start_server(name, port):
                 # Keep the connection open
                 while is_connection_open(connection):
                     check_network_activity()
-                    
-    except Exception as e:
-        print(f"Server error: {e}")
+           
     finally:
         if server:
+            # Close the server
             close_connection(server)
         print("Server closed.")
 
 if __name__ == "__main__":
     start_server("MyServer", 65432)
-
 ```
 
   </TabItem>
@@ -101,6 +143,28 @@ if __name__ == "__main__":
   <TabItem label="C++">
 
 ```cpp
+#include "splashkit.h"
+#include <string>
+
+void start_client(const std::string& name, const std::string& host = "127.0.0.1", int port = 65432) {
+    // Create the client connection
+    connection client = open_connection(name, host, port);
+    write_line("Connected to server at " + host + ":" + std::to_string(port));
+
+    // Keep the connection open
+    while (is_connection_open(client)) {
+        check_network_activity();
+    }
+
+    // Close the client connection
+    close_connection(client);
+    write_line("Client closed.");
+}
+
+int main() {
+    start_client("MyClient", "127.0.0.1", 65432);
+    return 0;
+}
 
 ```
 
@@ -126,11 +190,10 @@ def start_client(name, host='127.0.0.1', port=65432):
         # Keep the connection open
         while is_connection_open(client):
             check_network_activity()
-            
-    except Exception as e:
-        print(f"Client error: {e}")
+        
     finally:
         if client:
+            # Close the client connection
             close_connection(client)
         print("Client closed.")
 
@@ -140,3 +203,27 @@ if __name__ == "__main__":
 
   </TabItem>
 </Tabs>
+
+### Running the Programs 
+
+To run these two programs, you must start the server first. Depending on the programming language you use, this will vary. The example below was done using the cpp version of the server and client programs. Once you've started the server, you can then start the client program. The client program will connect to the server and you should see and keep the connection open until you close the client program.
+
+In your server program you should see the following output when you first start it:
+
+```bash
+Server 'MyServer' started, listening on port 65432
+```
+
+Then start the client program and you should see the following output if your client program started successfully:
+    
+```bash
+Connected to server at 127.0.0.1:65432
+```
+
+Looking back at the server program, there should be a new line that says:
+
+```bash
+Connected by 2130706433
+```
+
+![Window with dimensions illustrated](/usage-examples-images-gifs/networking/server-client-tut-starter.png)
