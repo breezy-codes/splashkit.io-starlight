@@ -1,0 +1,104 @@
+---
+title: How to use network functions
+description: Learn how to use different network functions within your programs.
+category: Guides
+author: Brianna Laird
+lastupdated: August 5th 2024
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+**{frontmatter.description}**  
+Written by: {frontmatter.author}  
+_Last updated: {frontmatter.lastupdated}_
+
+---
+
+This article covers use cases on how to use different network functions in your programs.
+
+These functions are used in the tutorials:
+
+## Servers
+
+In order to connect two programs together, you need to build a host program. This will function as a server, and it can be done using this server function:
+
+### Create Server with Port
+
+In our tutorial, we used the `create_server_with_port` function, as detailed [here](https://splashkit.io/api/networking/#create-server), to establish a server within our host program. This function sets up the server to listen for incoming connections on the specified port. We then print a confirmation message using an f-string to display the server name and port number:
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+server = create_server_with_port(name, port)
+print(f"Server '{name}' started, listening on port {port}")
+```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Checking for Network Activity
+
+The key to enabling communication between programs is to check for network activity, which is essential for both the host and the clients (programs that connect to the host). Use the `check_network_activity` function, as detailed [here](https://splashkit.io/api/networking/#check-network-activity), to monitor network activity.
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+check_network_activity():
+```
+
+  </TabItem>
+</Tabs>
+
+## Connections
+
+### Opening Connections
+
+### Accepting New Connections
+
+### Checking Connection is Open
+
+### Checking The Last Connection
+
+### Checking the connection IP
+
+### Close Connection
+
+## Sending Messages
+
+### Sending Messages to the Connection
+
+### Reading Message Data from Connection
+
+### Has messages on Connection
