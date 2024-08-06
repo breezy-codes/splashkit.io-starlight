@@ -29,9 +29,7 @@ The possibilities are endless!
 
 The server program is responsible for working as the program to which other programs connect. It listens for incoming connections and processes the data sent by the clients. The server program is built using the `create_server_with_port`, found [here](https://splashkit.io/api/networking/#create-server-1), function to establish a server that listens for incoming connections on the specified port. The server program then processes the data sent by the clients and sends a confirmation message back to the client.
 
-The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](https://splashkit.io/api/networking/#open-connection) to establish a connection to the server. 
-
-These two programs can then be extended in any way imaginable to create programs that can communicate with each other over the network.
+The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](https://splashkit.io/api/networking/#open-connection) to establish a connection to the server. A break down of each network function used can be found under the [How to use Network Functions](/guides/networking/4-network-functions) page.
 
 ## Part 1: Establishing a Connection
 
@@ -227,3 +225,7 @@ Connected by 2130706433
 ```
 
 ![Window with dimensions illustrated](/usage-examples-images-gifs/networking/server-client-tut-starter.png)
+
+
+## Part 2: Adding message capabilities
+
