@@ -30,14 +30,16 @@ In our tutorial, we used the `create_server_with_port` function, as detailed [he
   <TabItem label="C++">
 
 ```cpp
-
+server = create_server(name, port);
+write_line("Server '" + name + "' started, listening on port " + std::to_string(port));
 ```
 
   </TabItem>
   <TabItem label="C#">
 
 ```csharp
-
+server = SplashKit.CreateServer(name, (ushort)port);
+SplashKit.WriteLine("Server '" + name + "' started, listening on port " + port);
 ```
 
   </TabItem>
@@ -61,14 +63,14 @@ The key to enabling communication between programs is to check for network activ
   <TabItem label="C++">
 
 ```cpp
-
+SplashKit.CheckNetworkActivity();
 ```
 
   </TabItem>
   <TabItem label="C#">
 
 ```csharp
-
+check_network_activity();
 ```
 
   </TabItem>
