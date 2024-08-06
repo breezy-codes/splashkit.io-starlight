@@ -24,7 +24,7 @@ In order to connect two programs together, you need to build a host program. Thi
 
 ### Create Server with Port
 
-In our tutorial, we used the `create_server_with_port` function, as detailed [here](https://splashkit.io/api/networking/#create-server), to establish a server within our host program. This function sets up the server to listen for incoming connections on the specified port. We then print a confirmation message using an f-string to display the server name and port number:
+In our tutorial, we used the `create_server_with_port` function, as detailed [here](/api/networking/#create-server), to establish a server within our host program. This function sets up the server to listen for incoming connections on the specified port. We then print a confirmation message using an f-string to display the server name and port number:
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -57,7 +57,7 @@ print(f"Server '{name}' started, listening on port {port}")
 
 ## Checking for Network Activity
 
-The key to enabling communication between programs is to check for network activity, which is essential for both the host and the clients (programs that connect to the host). Use the `check_network_activity` function, as detailed [here](https://splashkit.io/api/networking/#check-network-activity), to monitor network activity.
+The key to enabling communication between programs is to check for network activity, which is essential for both the host and the clients (programs that connect to the host). Use the `check_network_activity` function, as detailed [here](/api/networking/#check-network-activity), to monitor network activity.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -87,20 +87,318 @@ check_network_activity():
 
 ### Opening Connections
 
+For the client program in our tutorial to connect to the server, we need to open a connection. This can be done with the `open_connection` function, as detailed [here](/api/networking/#open-connection). This opens up the connection to the specified host and port, along with the name for the client. It then prints to the terminal if this opened connection has connected to our server.
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+connection client = open_connection(name, host, port);
+write_line("Connected to server at " + host + ":" + std::to_string(port));
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+Connection client = SplashKit.OpenConnection(name, host, (ushort)port);
+SplashKit.WriteLine("Connected to server at " + host + ":" + port);
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+client = open_connection(name, host, port)
+print(f"Connected to server at {host}:{port}")
+```
+
+  </TabItem>
+</Tabs>
+
 ### Accepting New Connections
+
+In the server code of the tutorial, we use `accept_new_connection`, as detailed [here](/api/networking/#accept-new-connection), for the `if` loop. While this loop is active, everything inside will occur. After establishing the connection, you could add whatever you can think of when building programs that communicate.
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+if (accept_new_connection(server)) {
+}
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+if (SplashKit.AcceptNewConnection(server))
+{
+  
+}
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+if accept_new_connection(server):
+```
+
+  </TabItem>
+</Tabs>
 
 ### Checking Connection is Open
 
+Similar to how the `accept_new_connection` was used in an `if` loop, the `is_connection_open` function, as detailed [here](/api/networking/#is-connection-open), is used as a `while` loop in the client program. For the client, inside this loop is where you'll put all the things you want to happen while this connection exists.
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+while (is_connection_open(client)) {
+}
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+while (SplashKit.IsConnectionOpen(client))
+{
+}
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+while is_connection_open(client):
+```
+
+  </TabItem>
+</Tabs>
+
 ### Checking The Last Connection
+
+In our server, as we are working with only one program connecting to it. We use the `last_connection` function, as detailed [here](https://splashkit.io/api/networking/#last-connection), for assigning the 
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+connection client_connection = last_connection(server);
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+Connection clientConnection = SplashKit.LastConnection(server);
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+connection = last_connection(server)
+```
+
+  </TabItem>
+</Tabs>
 
 ### Checking the connection IP
 
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+unsigned int client_ip = connection_ip(client_connection);
+write_line("Connected by " + std::to_string(client_ip));
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+uint clientIp = SplashKit.ConnectionIP(clientConnection);
+SplashKit.WriteLine("Connected by " + clientIp);
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+client_name = connection_ip(connection)
+print(f"Connected by {client_name}")
+```
+
+  </TabItem>
+</Tabs>
+
 ### Close Connection
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+if (server != nullptr) {
+  close_server(server);
+}
+write_line("Server closed.");
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+if (server != null)
+{
+  SplashKit.CloseServer(server);
+}
+SplashKit.WriteLine("Server closed.");
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+if server:
+  close_connection(server)
+print("Server closed.")
+```
+
+  </TabItem>
+</Tabs>
 
 ## Sending Messages
 
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+write_line("Sending message: " + message);
+send_message_to(message, client);
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+SplashKit.WriteLine("Sending message: " + message);
+SplashKit.SendMessageTo(message, client);
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+print(f"Sending to server: {message}")
+send_message_to_connection(message, client)
+```
+
+  </TabItem>
+</Tabs>
+
 ### Sending Messages to the Connection
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+string confirmation_message = "Server received the message: " + data;
+send_message_to(confirmation_message, client_connection);
+write_line("Responded to client " + std::to_string(client_ip));
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+string confirmationMessage = "Server received the message: " + data;
+SplashKit.SendMessageTo(confirmationMessage, clientConnection);
+SplashKit.WriteLine("Responded to client " + clientIp);
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+confirmation_message = f"Server received the message: {data}"
+send_message_to_connection(confirmation_message, connection)
+print(f"Responded to client {client_name}")
+```
+
+  </TabItem>
+</Tabs>
+
+### Has messages on Connection
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+if (has_messages(client_connection)) {
+}
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+if (SplashKit.HasMessages(clientConnection))
+{
+
+}
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+if has_messages_on_connection(connection):
+```
+
+  </TabItem>
+</Tabs>
+
 
 ### Reading Message Data from Connection
 
-### Has messages on Connection
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+string data = read_message_data(client_connection);
+write_line("Message read attempt...");
+if (data.empty()) {
+  break;
+}
+write_line("Received from client: " + data);
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+string data = SplashKit.ReadMessageData(clientConnection);
+SplashKit.WriteLine("Message read attempt...");
+if (string.IsNullOrEmpty(data))
+{
+  break;
+}
+SplashKit.WriteLine("Received from client: " + data)
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+data = read_message_data_from_connection(connection)
+if not data:
+  break
+print(f"Received from client: {data}")
+```
+
+  </TabItem>
+</Tabs>
