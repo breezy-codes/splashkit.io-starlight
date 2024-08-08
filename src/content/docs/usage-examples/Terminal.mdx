@@ -1,0 +1,75 @@
+---
+title: Terminal
+banner:
+  content: Check out how to use the Terminal functions!
+---
+
+:::note
+This page contains code examples of the [Terminal](/api/terminal) functions.
+:::
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Code } from '@astrojs/starlight/components';
+import Signatures from "/src/components/Signatures.astro";
+
+## [Write Line](/api/terminal/#write-line-5) Examples*
+
+:::tip[*]
+The example(s) below are using the **Write Line** function with the following signatures:
+
+<Signatures name="write-line">
+</Signatures>
+
+:::
+
+### Hello World string
+
+The following code shows examples of using [Write Line](/api/terminal#write-line-5) to print a string in the terminal.
+
+import write_line_1_hello_world_cpp from '/src/assets/usage-examples-code/terminal/write_line/write_line-1-hello-world.cpp?raw';
+import write_line_1_hello_world_csharp from '/src/assets/usage-examples-code/terminal/write_line/write_line-1-hello-world.cs?raw';
+import write_line_1_hello_world_python from '/src/assets/usage-examples-code/terminal/write_line/write_line-1-hello-world.py?raw';
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+    <Code code={write_line_1_hello_world_cpp} lang="cpp" />
+  </TabItem>
+  <TabItem label="C#">
+    <Code code={write_line_1_hello_world_csharp} lang="csharp" />
+  </TabItem>
+    <TabItem label="python">
+    <Code code={write_line_1_hello_world_python} lang="python" />
+  </TabItem>
+</Tabs>
+
+**Output**:
+
+![write_line-1-hello-world example](/usage-examples-images-gifs/terminal/write_line-1-hello-world.png)
+
+---
+
+### ASCII Art - Charlie the Unicorn
+
+The following code is an example of using [Write Line](/api/terminal#write-line-5) to create ASCII art of "Charlie the Unicorn" in the terminal.
+
+import write_line_2_ascii_art_charlie_the_unicorn_cpp from '/src/assets/usage-examples-code/terminal/write_line/write_line-2-ascii-art-charlie-the-unicorn.cpp?raw';
+import write_line_2_ascii_art_charlie_the_unicorn_csharp from '/src/assets/usage-examples-code/terminal/write_line/write_line-2-ascii-art-charlie-the-unicorn.cs?raw';
+import write_line_2_ascii_art_charlie_the_unicorn_python from '/src/assets/usage-examples-code/terminal/write_line/write_line-2-ascii-art-charlie-the-unicorn.py?raw';
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+    <Code code={write_line_2_ascii_art_charlie_the_unicorn_cpp} lang="cpp" />
+  </TabItem>
+  <TabItem label="C#">
+    <Code code={write_line_2_ascii_art_charlie_the_unicorn_csharp} lang="csharp" />
+  </TabItem>
+    <TabItem label="python">
+    <Code code={write_line_2_ascii_art_charlie_the_unicorn_python} lang="python" />
+  </TabItem>
+</Tabs>
+
+**Output**:
+
+![write_line-2-ascii-art-charlie-the-unicorn example](/usage-examples-images-gifs/terminal/write_line-2-ascii-art-charlie-the-unicorn.png)
+
+---
