@@ -12,7 +12,9 @@ MSYS2 provide a unix terminal environment for Windows. We will need this to run 
 
 1. Download the installer from the official MSYS2 website: [www.msys2.org](https://www.msys2.org/)
 
-2. To install MSYS2, double-click the downloaded executable file, and follow the on-screen instructions.
+![Downloading MSYS](/images/installation/windows/windows-installation-fig1.png)
+
+1. To install MSYS2, double-click the downloaded executable file, and follow the on-screen instructions.
 
     *It is strongly recommended that you use the default install path, but you can customise the other installation options as needed.*
 
@@ -29,7 +31,7 @@ MSYS2 provide a unix terminal environment for Windows. We will need this to run 
     - Right-click on the MSYS2 App icon in the taskbar (shown in the orange box in the image below).
     - Select "Pin to taskbar" (shown in the pink box):
 
-    ![Image showing MSYS2 MINGW64 App pinning to taskbar](/images/installation/windows-msys2/mingw64-pin-to-taskbar.png)
+    ![Image showing MSYS2 MINGW64 App pinning to taskbar](/images/installation/windows/mingw64-pin-to-taskbar.png)
     :::
 
 ## Install Command Line Tools
@@ -47,3 +49,9 @@ To install SplashKit, you will firstly need to install some command line tools u
 
     Instead, right-click anywhere in the terminal window and then select **Paste**.
     :::
+
+### Terminal Output
+
+You should end up with an output something like this:
+
+![Terminal Output](/images/installation/windows/windows-installation-fig2.png)

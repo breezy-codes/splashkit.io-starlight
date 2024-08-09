@@ -18,7 +18,7 @@ Once you have MSYS2 installed, you can install the SplashKit library:
 
     This can also be found on the [SplashKit](http://www.splashkit.io) home page.
 
-    <!-- TODO: Add gif -->
+    ![Terminal Output](/images/installation/windows/windows-installation-fig3.png)
 
 2. Restart the terminal and execute `skm` to test it was successfully installed.
 
@@ -33,6 +33,8 @@ Once you have MSYS2 installed, you can install the SplashKit library:
     Missing skm command. For help use 'skm help'
     ```
 
+    ![Terminal Output](/images/installation/windows/windows-installation-fig4.png)
+
     SplashKit supports a number of languages. Run `skm help` at the terminal to see the different commands you can run.
 
 3. Run the following command to install splashkit globally:
@@ -40,3 +42,14 @@ Once you have MSYS2 installed, you can install the SplashKit library:
     ```shell
     skm global install
     ```
+
+    You should see the following messages:
+
+    ```bash
+    Splashkit is installed correctly!
+    Done
+    Global command run successfully
+    ```
+
+    ![Terminal Output](/images/installation/windows/windows-installation-fig5.png)
+    
