@@ -1,5 +1,5 @@
 ---
-title: Building a Messaging App
+title: Build a Messaging App
 description: Learn how to build two programs that can communicate with each other over the local network.
 category: Guides
 author: Brianna Laird
@@ -14,9 +14,16 @@ _Last updated: {frontmatter.lastupdated}_
 
 ---
 
-This guide will show you how to extend the programs we built in the [previous guide](/guides/networking/3-connecting-programs) to include messaging capabilities. We will build a server program that listens for incoming connections and processes messages sent by clients. The server program will then send a confirmation message back to the client. We will also build a client program that connects to the server and sends messages. The client program will then receive a confirmation message from the server.
+This guide will show you how to extend the programs we built in the [previous connecting programs guide](/guides/networking/3-connecting-programs), to include messaging capabilities. We will build a server program that listens for incoming connections and processes messages sent by clients. The server program will then send a confirmation message back to the client. We will also build a client program that connects to the server and sends messages. The client program will then receive a confirmation message from the server.
 
-Similar to how the concepts in the previous guide could be extended in countless ways, you could use this tutorial as an opportunity to test your skills and extend this guide to build a 2 way messaging application.
+:::tip[Expand Your Horizons]
+Similar to how the concepts in the previous guide could be extended in countless ways, try and think of some creative ways you could use these concepts in your own projects, such as:
+
+- Build a 2 way messaging application, where the server can also send messages to the client.
+- Create a chat application that supports multiple users communicating simultaneously.
+
+:::
+
 
 ## Refresher on the Server and Client Programs
 
@@ -24,7 +31,9 @@ The server program is responsible for working as the program to which other prog
 
 The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](/api/networking/#open-connection) to establish a connection to the server. A break down of each network function used can be found under the [How to use Network Functions](/guides/networking/5-network-functions) page.
 
-### Server Program With Messaging
+## Server Program With Messaging
+
+### How to Add Messaging Capabilities
 
 To be able to add messaging capabilities into our two programs, we first need to set up the server to check for messages and then read those messages from the connection. To do this, we can extend the `while` loop conditional logic that we created prior being:
 
@@ -54,6 +63,8 @@ while is_connection_open(client):
 
   </TabItem>
 </Tabs>
+
+### Logic for Reading and Processing Messages
 
 We can then add the logic to read the message data from the connection and send a confirmation message back to the client, to do this we will need to use a few SplashKit functions. First we need to check if there is a message from the connection as an `if` loop, then if there is we need to read that message from the connection and process it. Finally we can send a confirmation message back to the client. This can be done with this code:
 
@@ -127,6 +138,8 @@ while is_connection_open(connection):
 </Tabs>
 
 ### Putting This Together
+
+We can now put this all together! Taking the server program from the [prior](/guides/networking/3-connecting-programs) guide, and the code we just build, we can add the messaging capabilities to the server program. The server program will now listen for incoming connections, read the messages sent by the clients, and send a confirmation message back to the client.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -299,7 +312,7 @@ if __name__ == "__main__":
   </TabItem>
 </Tabs>
 
-### Client Program With Messaging
+## Client Program With Messaging
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
