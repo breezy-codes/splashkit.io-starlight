@@ -28,7 +28,7 @@ The possibilities are endless!
 
 The server program is responsible for working as the program to which other programs connect. It listens for incoming connections and processes the data sent by the clients. The server program is built using the `create_server_with_port`, found [here](/api/networking/#create-server-1), function to establish a server that listens for incoming connections on the specified port. The server program then processes the data sent by the clients and sends a confirmation message back to the client.
 
-The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](/api/networking/#open-connection) to establish a connection to the server. A break down of each network function used can be found under the [How to use Network Functions](/guides/networking/4-network-functions) page.
+The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](/api/networking/#open-connection) to establish a connection to the server. A break down of each network function used can be found under the [How to use Network Functions](/guides/networking/5-network-functions) page.
 
 ## Part 1: Establishing a Connection
 
@@ -105,7 +105,7 @@ def start_server(name, port):
     try:
         # Create the server
         server = create_server_with_port(name, port)
-        print(f"Server '{name}' started, listening on port {port}")
+        write_line(f"Server '{name}' started, listening on port {port}")
 
         while True:
             # Check for new connections and network activity
@@ -116,7 +116,7 @@ def start_server(name, port):
                 # Get the last connection
                 connection = last_connection(server)
                 client_name = connection_ip(connection)
-                print(f"Connected by {client_name}")
+                write_line(f"Connected by {client_name}")
 
                 # Keep the connection open
                 while is_connection_open(connection):
@@ -126,7 +126,7 @@ def start_server(name, port):
         if server:
             # Close the server
             close_connection(server)
-        print("Server closed.")
+        write_line("Server closed.")
 
 if __name__ == "__main__":
     start_server("MyServer", 65432)
@@ -185,7 +185,7 @@ def start_client(name, host='127.0.0.1', port=65432):
     try:
         # Create the client connection
         client = open_connection(name, host, port)
-        print(f"Connected to server at {host}:{port}")
+        write_line(f"Connected to server at {host}:{port}")
         
         # Keep the connection open
         while is_connection_open(client):
@@ -195,7 +195,7 @@ def start_client(name, host='127.0.0.1', port=65432):
         if client:
             # Close the client connection
             close_connection(client)
-        print("Client closed.")
+        write_line("Client closed.")
 
 if __name__ == "__main__":
     start_client("MyClient", "127.0.0.1", 65432)
@@ -363,7 +363,7 @@ def start_server(name, port):
     try:
         # Create the server
         server = create_server_with_port(name, port)
-        print(f"Server '{name}' started, listening on port {port}")
+        write_line(f"Server '{name}' started, listening on port {port}")
 
         while True:
             # Check for new connections and network activity
@@ -372,7 +372,7 @@ def start_server(name, port):
             if accept_new_connection(server):
                 connection = last_connection(server)
                 client_name = connection_ip(connection)
-                print(f"Connected by {client_name}")
+                write_line(f"Connected by {client_name}")
 
                 while is_connection_open(connection):
                     # Read message data from the connection
@@ -380,22 +380,22 @@ def start_server(name, port):
                         data = read_message_data_from_connection(connection)
                         if not data:
                             break
-                        print(f"Received from client: {data}")
+                        write_line(f"Received from client: {data}")
 
                         # Send confirmation back to the client
                         confirmation_message = f"Server received the message: {data}"
                         send_message_to_connection(confirmation_message, connection)
-                        print(f"Responded to client {client_name}")
+                        write_line(f"Responded to client {client_name}")
                     check_network_activity()
                 
                 # Client disconnected
-                print(f"Client {client_name} disconnected.")
+                write_line(f"Client {client_name} disconnected.")
     except Exception as e:
-        print(f"Server error: {e}")
+        write_line(f"Server error: {e}")
     finally:
         if server:
             close_connection(server)
-        print("Server closed.")
+        write_line("Server closed.")
 
 if __name__ == "__main__":
     start_server("MyServer", 65432)
@@ -513,7 +513,7 @@ from splashkit import *
 def start_client(name, host='127.0.0.1', port=65432):
     # Create the client connection
     client = open_connection(name, host, port)
-    print(f"Connected to server at {host}:{port}")
+    write_line(f"Connected to server at {host}:{port}")
 
     while is_connection_open(client):
         # Get user input
@@ -521,14 +521,14 @@ def start_client(name, host='127.0.0.1', port=65432):
         if message.lower() == 'exit':
             break
         # Send data to the server
-        print(f"Sending to server: {message}")
+        write_line(f"Sending to server: {message}")
         send_message_to_connection(message, client)
         # Check for new network activity and wait for the server response
         while True:
             check_network_activity()
             if has_messages_on_connection(client):
                 msg = read_message_data_from_connection(client)
-                print(f"Received from server: {msg}")
+                write_line(f"Received from server: {msg}")
                 break
 
     # Close the client connection
