@@ -98,7 +98,47 @@ int main() {
   <TabItem label="C#">
 
 ```csharp
+using System;
+using SplashKitSDK;
 
+ServerSocket server = null;
+try
+{
+    // Create the server
+    server = SplashKit.CreateServer("MyServer", 65432);
+    SplashKit.WriteLine("Server 'MyServer' started, listening on port 65432");
+
+    while (true)
+    {
+        // Check for new connections and network activity
+        SplashKit.CheckNetworkActivity();
+
+        if (SplashKit.AcceptNewConnection(server))
+        {
+            Connection clientConnection = SplashKit.LastConnection(server);
+            uint clientIp = SplashKit.ConnectionIP(clientConnection);
+            SplashKit.WriteLine("Connected by " + clientIp);
+
+            while (SplashKit.IsConnectionOpen(clientConnection))
+            {
+                SplashKit.CheckNetworkActivity();
+            }
+
+            // Client disconnected
+            SplashKit.WriteLine("Client " + clientIp + " disconnected.");
+        }
+    }
+}
+catch (Exception e)
+{
+    SplashKit.WriteLine("Server error: " + e.Message);
+}
+
+if (server != null)
+{
+    SplashKit.CloseServer(server);
+}
+SplashKit.WriteLine("Server closed.");
 ```
 
   </TabItem>
@@ -156,7 +196,6 @@ The client program uses the `open_connection` function to establish a connection
 
 ```cpp
 #include "splashkit.h"
-#include <string>
 
 void start_client(const std::string& name, const std::string& host = "127.0.0.1", int port = 65432) {
     // Create the client connection
@@ -184,7 +223,22 @@ int main() {
   <TabItem label="C#">
 
 ```csharp
+using System;
+using SplashKitSDK;
 
+// Create the client connection
+Connection client = SplashKit.OpenConnection("MyClient", "127.0.0.1", 65432);
+SplashKit.WriteLine("Connected to server at 127.0.0.1:65432");
+
+// Keep the connection open
+while (SplashKit.IsConnectionOpen(client))
+{
+    SplashKit.CheckNetworkActivity();
+}
+
+// Close the client connection
+SplashKit.CloseConnection(client);
+SplashKit.WriteLine("Client closed.");
 ```
 
   </TabItem>
@@ -220,11 +274,6 @@ if __name__ == "__main__":
 
 To run these two programs, you must start the server first. Depending on the programming language you use, this will vary. The example below was done using the cpp version of the server and client programs. Once you've started the server, you can then start the client program. The client program will connect to the server and you should see and keep the connection open until you close the client program.
 
-### Things to Consider
-
-- Ensure that the server program is running before starting the client program, and that the server program is listening on the correct port.
-- The client program should connect to the server at the correct port.
-- If the client program is unable to connect to the server, check the server program to ensure it is running and listening on the correct port.
 
 ### Expected Outputs
 
@@ -245,5 +294,9 @@ Looking back at the server program, there should be a new line that says:
 ```bash
 Connected by 2130706433
 ```
+
+### Terminal View
+
+Here is an example of how this would look in your terminal, when running this programs its handy to run both terminals side by side.
 
 ![Window with dimensions illustrated](/usage-examples-images-gifs/networking/server-client-tut-starter.png)
