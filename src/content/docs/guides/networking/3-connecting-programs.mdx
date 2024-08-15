@@ -34,7 +34,7 @@ The client program is the program that connects to the server program. It sends 
 
 To start, lets work on building two programs that can establish a connection with each other. We will build a simple server program that listens for incoming connections and prints the connection received. We will also build a simple client program that connects to the server and keeps the connection open.
 
-### Server Program
+### Basic Server Program
 
 The server program establishes a server with `create_server_with_port` and listens for incoming connections. When a connection is received, it prints a message to the console. The server program keeps the connection open until the client disconnects. The key to keeping the connections open when building programs that communicate is to use the `check_network_activity` function to monitor network activity.
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
   </TabItem>
 </Tabs>
 
-### Client Program
+### Basic Client Program
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -226,3 +226,308 @@ Connected by 2130706433
 ![Window with dimensions illustrated](/usage-examples-images-gifs/networking/server-client-tut-starter.png)
 
 ## Part 2: Adding message capabilities
+
+### Server Program With Messaging
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+#include "splashkit.h"
+#include <stdexcept> 
+#include <string> 
+
+void start_server(const string& name, int port) {
+    server_socket server = nullptr;
+    try {
+        // Create the server
+        server = create_server(name, port);
+        write_line("Server '" + name + "' started, listening on port " + std::to_string(port));
+
+        while (true) {
+            // Check for new connections and network activity
+            check_network_activity();
+            
+            if (accept_new_connection(server)) {
+                connection client_connection = last_connection(server);
+                unsigned int client_ip = connection_ip(client_connection);
+                write_line("Connected by " + std::to_string(client_ip));
+
+                while (is_connection_open(client_connection)) {
+                    // Read message data from the connection
+                    if (has_messages(client_connection)) {
+                        string data = read_message_data(client_connection);
+                        write_line("Message read attempt...");
+                        if (data.empty()) {
+                            break;
+                        }
+                        write_line("Received from client: " + data);
+
+                        // Send confirmation back to the client
+                        string confirmation_message = "Server received the message: " + data;
+                        send_message_to(confirmation_message, client_connection);
+                        write_line("Responded to client " + std::to_string(client_ip));
+                    }
+                    check_network_activity();
+                }
+
+                // Client disconnected
+                write_line("Client " + std::to_string(client_ip) + " disconnected.");
+            }
+        }
+    } catch (const std::exception& e) {
+        write_line("Server error: " + string(e.what()));
+    }
+
+    if (server != nullptr) {
+        close_server(server);
+    }
+    write_line("Server closed.");
+}
+
+int main() {
+    start_server("MyServer", 65432);
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+using System;
+using SplashKitSDK;
+
+public class Client
+{
+    public static void StartClient(string name, string host = "127.0.0.1", int port = 65432)
+    {
+        // Create the client connection
+        Connection client = SplashKit.OpenConnection(name, host, (ushort)port);
+        SplashKit.WriteLine("Connected to server at " + host + ":" + port);
+
+        while (SplashKit.IsConnectionOpen(client))
+        {
+            // Get user input
+            SplashKit.Write("Enter message to send (or 'exit' to quit): ");
+            string message = SplashKit.ReadLine();
+            if (message.ToLower() == "exit")
+            {
+                break;
+            }
+            // Send data to the server
+            SplashKit.WriteLine("Sending message: " + message);
+            SplashKit.SendMessageTo(message, client);
+            
+            // Check for new network activity and wait for the server response
+            while (true)
+            {
+                SplashKit.CheckNetworkActivity();
+                if (SplashKit.HasMessages(client))
+                {
+                    string msg = SplashKit.ReadMessageData(client);
+                    SplashKit.WriteLine("Received from server: " + msg);
+                    break;
+                }
+            }
+        }
+
+        // Close the client connection
+        SplashKit.CloseConnection(client);
+        SplashKit.WriteLine("Client closed.");
+    }
+
+    public static void Main()
+    {
+        StartClient("MyClient", "127.0.0.1", 65432);
+    }
+}
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+from splashkit import *
+
+def start_server(name, port):
+    try:
+        # Create the server
+        server = create_server_with_port(name, port)
+        print(f"Server '{name}' started, listening on port {port}")
+
+        while True:
+            # Check for new connections and network activity
+            check_network_activity()
+            
+            if accept_new_connection(server):
+                connection = last_connection(server)
+                client_name = connection_ip(connection)
+                print(f"Connected by {client_name}")
+
+                while is_connection_open(connection):
+                    # Read message data from the connection
+                    if has_messages_on_connection(connection):
+                        data = read_message_data_from_connection(connection)
+                        if not data:
+                            break
+                        print(f"Received from client: {data}")
+
+                        # Send confirmation back to the client
+                        confirmation_message = f"Server received the message: {data}"
+                        send_message_to_connection(confirmation_message, connection)
+                        print(f"Responded to client {client_name}")
+                    check_network_activity()
+                
+                # Client disconnected
+                print(f"Client {client_name} disconnected.")
+    except Exception as e:
+        print(f"Server error: {e}")
+    finally:
+        if server:
+            close_connection(server)
+        print("Server closed.")
+
+if __name__ == "__main__":
+    start_server("MyServer", 65432)
+```
+
+  </TabItem>
+</Tabs>
+
+### Client Program With Messaging
+
+<Tabs syncKey="code-language">
+  <TabItem label="C++">
+
+```cpp
+#include "splashkit.h"
+#include <string> 
+
+void start_client(const string& name, const string& host = "127.0.0.1", int port = 65432) {
+    // Create the client connection
+    connection client = open_connection(name, host, port);
+    write_line("Connected to server at " + host + ":" + std::to_string(port));
+
+    while (is_connection_open(client)) {
+        // Get user input
+        write("Enter message to send (or 'exit' to quit): ");
+        string message = read_line();
+        if (message == "exit") {
+            break;
+        }
+        // Send data to the server
+        write_line("Sending message: " + message);
+        send_message_to(message, client);
+        
+        // Check for new network activity and wait for the server response
+        while (true) {
+            check_network_activity();
+            if (has_messages(client)) {
+                string msg = read_message_data(client);
+                write_line("Received from server: " + msg);
+                break;
+            }
+        }
+    }
+
+    // Close the client connection
+    close_connection(client);
+    write_line("Client closed.");
+}
+
+int main() {
+    start_client("MyClient", "127.0.0.1", 65432);
+    return 0;
+}
+```
+
+  </TabItem>
+  <TabItem label="C#">
+
+```csharp
+using System;
+using SplashKitSDK;
+
+public class Client
+{
+    public static void StartClient(string name, string host = "127.0.0.1", int port = 65432)
+    {
+        // Create the client connection
+        Connection client = SplashKit.OpenConnection(name, host, (ushort)port);
+        SplashKit.WriteLine("Connected to server at " + host + ":" + port);
+
+        while (SplashKit.IsConnectionOpen(client))
+        {
+            // Get user input
+            SplashKit.Write("Enter message to send (or 'exit' to quit): ");
+            string message = SplashKit.ReadLine();
+            if (message.ToLower() == "exit")
+            {
+                break;
+            }
+            // Send data to the server
+            SplashKit.WriteLine("Sending message: " + message);
+            SplashKit.SendMessageTo(message, client);
+            
+            // Check for new network activity and wait for the server response
+            while (true)
+            {
+                SplashKit.CheckNetworkActivity();
+                if (SplashKit.HasMessages(client))
+                {
+                    string msg = SplashKit.ReadMessageData(client);
+                    SplashKit.WriteLine("Received from server: " + msg);
+                    break;
+                }
+            }
+        }
+
+        // Close the client connection
+        SplashKit.CloseConnection(client);
+        SplashKit.WriteLine("Client closed.");
+    }
+
+    public static void Main()
+    {
+        StartClient("MyClient", "127.0.0.1", 65432);
+    }
+}
+```
+
+  </TabItem>
+  <TabItem label="Python">
+
+```python
+from splashkit import *
+
+def start_client(name, host='127.0.0.1', port=65432):
+    # Create the client connection
+    client = open_connection(name, host, port)
+    print(f"Connected to server at {host}:{port}")
+
+    while is_connection_open(client):
+        # Get user input
+        message = input("Enter message to send (or 'exit' to quit): ")
+        if message.lower() == 'exit':
+            break
+        # Send data to the server
+        print(f"Sending to server: {message}")
+        send_message_to_connection(message, client)
+        # Check for new network activity and wait for the server response
+        while True:
+            check_network_activity()
+            if has_messages_on_connection(client):
+                msg = read_message_data_from_connection(client)
+                print(f"Received from server: {msg}")
+                break
+
+    # Close the client connection
+    close_connection(client)
+
+if __name__ == "__main__":
+    start_client("MyClient", "127.0.0.1", 65432)
+```
+
+  </TabItem>
+</Tabs>
