@@ -1,5 +1,5 @@
 ---
-title: How to make Programs Communicate
+title: Connecting Programs over the Network
 description: Learn how to build two programs that can communicate with each other over the local network.
 category: Guides
 author: Brianna Laird
@@ -26,9 +26,9 @@ The possibilities are endless!
 
 ## Server and Client Programs
 
-The server program is responsible for working as the program to which other programs connect. It listens for incoming connections and processes the data sent by the clients. The server program is built using the `create_server_with_port`, found [here](https://splashkit.io/api/networking/#create-server-1), function to establish a server that listens for incoming connections on the specified port. The server program then processes the data sent by the clients and sends a confirmation message back to the client.
+The server program is responsible for working as the program to which other programs connect. It listens for incoming connections and processes the data sent by the clients. The server program is built using the `create_server_with_port`, found [here](/api/networking/#create-server-1), function to establish a server that listens for incoming connections on the specified port. The server program then processes the data sent by the clients and sends a confirmation message back to the client.
 
-The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](https://splashkit.io/api/networking/#open-connection) to establish a connection to the server. A break down of each network function used can be found under the [How to use Network Functions](/guides/networking/4-network-functions) page.
+The client program is the program that connects to the server program. It sends messages to the server and receives responses. The client program is built using the by using `open_connection`, found [here](/api/networking/#open-connection) to establish a connection to the server. A break down of each network function used can be found under the [How to use Network Functions](/guides/networking/4-network-functions) page.
 
 ## Part 1: Establishing a Connection
 
@@ -38,12 +38,13 @@ To start, lets work on building two programs that can establish a connection wit
 
 The server program establishes a server with `create_server_with_port` and listens for incoming connections. When a connection is received, it prints a message to the console. The server program keeps the connection open until the client disconnects. The key to keeping the connections open when building programs that communicate is to use the `check_network_activity` function to monitor network activity.
 
+#### Program Code
+
 <Tabs syncKey="code-language">
   <TabItem label="C++">
 
 ```cpp
 #include "splashkit.h"
-#include <string>
 
 void start_server(const std::string& name, int port) {
     // Assign the server to nullptr to ensure it is not left uninitialised
@@ -136,6 +137,8 @@ if __name__ == "__main__":
 
 ### Basic Client Program
 
+The client program uses the `open_connection` function to establish a connection to the server. The client program then connects to the server with the given port, we then use a `while` loop for the connection. While `is_connection_open` is true, the client program will keep the connection open by using the `check_network_activity` function to monitor network activity.
+
 <Tabs syncKey="code-language">
   <TabItem label="C++">
 
@@ -205,6 +208,8 @@ if __name__ == "__main__":
 
 To run these two programs, you must start the server first. Depending on the programming language you use, this will vary. The example below was done using the cpp version of the server and client programs. Once you've started the server, you can then start the client program. The client program will connect to the server and you should see and keep the connection open until you close the client program.
 
+#### Expected Outputs
+
 In your server program you should see the following output when you first start it:
 
 ```bash
@@ -225,9 +230,13 @@ Connected by 2130706433
 
 ![Window with dimensions illustrated](/usage-examples-images-gifs/networking/server-client-tut-starter.png)
 
-## Part 2: Adding message capabilities
+## Part 2: Adding message capabilities for the Client Side
+
+Next, we are going to work on adding in messaging capabilities to the client side program, here the client will be able to send a message and the server side will then respond with a confirmation message.
 
 ### Server Program With Messaging
+
+To be able to add messaging capabilities into our two programs, we first need to set up the server to check for messages and then read those messages from the connection.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
