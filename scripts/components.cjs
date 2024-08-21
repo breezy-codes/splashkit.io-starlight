@@ -2,7 +2,7 @@
 // Author: @XQuestCode
 const fs = require("fs");
 const kleur = require("kleur");
-const path = require('path');
+const path = require("path");
 // Define type mappings
 const typeMappings = {
   int: "`Integer`",
@@ -25,7 +25,7 @@ const guidesAvailable = {
   json: false,
   networking: false,
   sprites: false,
-  utilities: false
+  utilities: false,
 };
 
 // Define language label mappings
@@ -37,11 +37,9 @@ const languageLabelMappings = {
   // Add more mappings as needed
 };
 
-
 // Define language order
 const languageOrder = ["cpp", "csharp", "python", "pascal"];
 var name = "";
-
 
 function Mappings(jsonData) {
   //generate mappings from API
@@ -49,27 +47,36 @@ function Mappings(jsonData) {
     const category = jsonData[categoryKey];
     category.typedefs.forEach((typedef) => {
       // Add typedef to typeMappings
-      const name = typedef.name.split("_")
+      const name = typedef.name
+        .split("_")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
-      typeMappings[typedef.name] = `[\`${name}\`](/api/${categoryKey.toLowerCase().replace(/\s+/g, "-")}/#${name.toLowerCase().replace(/\s+/g, "-")})`;
+      typeMappings[typedef.name] = `[\`${name}\`](/api/${categoryKey
+        .toLowerCase()
+        .replace(/\s+/g, "-")}/#${name.toLowerCase().replace(/\s+/g, "-")})`;
     });
     category.structs.forEach((struct) => {
       // Add structs to typeMappings
-      const name = struct.name.split("_")
+      const name = struct.name
+        .split("_")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
-      typeMappings[struct.name] = `[\`${name}\`](/api/${categoryKey.toLowerCase().replace(/\s+/g, "-")}/#${name.toLowerCase().replace(/\s+/g, "-")})`;
+      typeMappings[struct.name] = `[\`${name}\`](/api/${categoryKey
+        .toLowerCase()
+        .replace(/\s+/g, "-")}/#${name.toLowerCase().replace(/\s+/g, "-")})`;
     });
     category.enums.forEach((enumm) => {
       // Add structs to typeMappings
-      const name = enumm.name.split("_")
+      const name = enumm.name
+        .split("_")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
-      typeMappings[enumm.name] = `[\`${name}\`](/api/${categoryKey.toLowerCase().replace(/\s+/g, "-")}/#${name.toLowerCase().replace(/\s+/g, "-")})`;
+      typeMappings[enumm.name] = `[\`${name}\`](/api/${categoryKey
+        .toLowerCase()
+        .replace(/\s+/g, "-")}/#${name.toLowerCase().replace(/\s+/g, "-")})`;
     });
   }
 }
@@ -86,36 +93,36 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
     Mappings(jsonData);
     console.log(`Generating MDX files for components`);
 
-
-
-
     // Please select an option: "animations, audio, camera, color, database, geometry, graphics, input, json, networking, physics, resource_bundles, resources, social, sprites, terminal, timers, types, utilities, windows"
     for (const categoryKey in jsonData) {
       const category = jsonData[categoryKey];
       let input = categoryKey;
       const categoryFunctions = category.functions;
       let mdxContent = "";
-      name = input.split("_")
+      name = input
+        .split("_")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" "); //name of the category
       const functionNames = category.functions.map((func) => func.name);
 
       mdxContent += "---\n";
       mdxContent += `title: ${name}\n`;
-      if (category.brief != "") { mdxContent += `description: ${category.brief.replace(/\n/g, '')}\n`; }
-      else { mdxContent += `description: Some description....\n`; }
+      if (category.brief != "") {
+        mdxContent += `description: ${category.brief.replace(/\n/g, "")}\n`;
+      } else {
+        mdxContent += `description: Some description....\n`;
+      }
 
       mdxContent += "---\n\n";
       if (category.brief != "") {
         if (categoryFunctions.description != null) {
           mdxContent += `:::tip[${category.brief}]\n`;
-          mdxContent += `${category.description}\n`
-          mdxContent += `:::\n`
-        }
-        else {
+          mdxContent += `${category.description}\n`;
+          mdxContent += `:::\n`;
+        } else {
           mdxContent += `:::tip[${name}]\n`;
-          mdxContent += `${category.brief}\n`
-          mdxContent += `:::\n`
+          mdxContent += `${category.brief}\n`;
+          mdxContent += `:::\n`;
         }
       }
       mdxContent += `\nimport { Tabs, TabItem } from "@astrojs/starlight/components";\nimport { LinkCard, CardGrid } from "@astrojs/starlight/components";\n`;
@@ -151,12 +158,15 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
             .split("_")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ");
-          const formattedLink = formattedFunctionName.toLowerCase().replace(/\s+/g, "-");
+          const formattedLink = formattedFunctionName
+            .toLowerCase()
+            .replace(/\s+/g, "-");
 
           const formattedGroupLink = `${formattedLink}`;
           mdxContent += `\n### [${formattedFunctionName}](#${formattedGroupLink})\n\n`;
           mdxContent += ":::note\n\n";
-          mdxContent += "This function is overloaded. The following versions exist:\n\n";
+          mdxContent +=
+            "This function is overloaded. The following versions exist:\n\n";
 
           overloads.forEach((func, index) => {
             mdxContent += `- [**${formattedFunctionName}** (`;
@@ -175,11 +185,13 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
 
               mdxContent += `${paramName}: ${paramType}`;
               if (paramNumber < paramCount) {
-                mdxContent += ", "
+                mdxContent += ", ";
               }
               paramNumber++;
             }
-            mdxContent += `)](/api/${input}/#${formattedLink.toLowerCase()}-${index + 1})\n`;
+            mdxContent += `)](/api/${input}/#${formattedLink.toLowerCase()}-${
+              index + 1
+            })\n`;
           });
 
           mdxContent += "\n:::\n";
@@ -187,7 +199,8 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
 
         overloads.forEach((func, index) => {
           // Format the header based on whether it's overloaded or not
-          let functionName2 = functionName.split("_")
+          let functionName2 = functionName
+            .split("_")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ");
           const formattedName3 = func.name
@@ -195,12 +208,15 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ");
 
-          const formattedLink = formattedName3.toLowerCase().replace(/\s+/g, "-");
+          const formattedLink = formattedName3
+            .toLowerCase()
+            .replace(/\s+/g, "-");
 
           const formattedName = isOverloaded
-            ? `\n#### [${functionName2}](#${formattedLink.toLowerCase()}-${index + 1})\n`
+            ? `\n#### [${functionName2}](#${formattedLink.toLowerCase()}-${
+                index + 1
+              })\n`
             : `\n### [${functionName2}](#${formattedLink})\n`;
-
 
           // Replace type names in the description with formatted versions
           let description = func.description || "";
@@ -219,12 +235,14 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
               .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
               .join(" ");
             const formattedLink = normalName.toLowerCase().replace(/\s+/g, "-");
-            const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`
-            description = description.replace(new RegExp(`\`\\b${names}\\b\``, "g"), link);
+            const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`;
+            description = description.replace(
+              new RegExp(`\`\\b${names}\\b\``, "g"),
+              link
+            );
             description = description.replaceAll("\n", " ");
           }
           mdxContent += description ? `${description}\n\n` : "";
-
 
           // Add Parameters section only if there are parameters
           if (Object.keys(func.parameters).length > 0) {
@@ -252,9 +270,14 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
                   .split("_")
                   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                   .join(" ");
-                const formattedLink = normalName.toLowerCase().replace(/\s+/g, "-");
-                const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`
-                description2 = description2.replace(new RegExp(`\`\\b${names}\\b\``, "g"), link);
+                const formattedLink = normalName
+                  .toLowerCase()
+                  .replace(/\s+/g, "-");
+                const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`;
+                description2 = description2.replace(
+                  new RegExp(`\`\\b${names}\\b\``, "g"),
+                  link
+                );
                 description2 = description2.replaceAll("\n", " ");
               }
 
@@ -263,42 +286,47 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
 
             mdxContent += "\n";
           }
-          if (func.return.type == 'unsigned int') {
+          if (func.return.type == "unsigned int") {
             mdxContent += "**Return Type:** Unsigned Integer\n\n";
+          } else if (func.return.type != "void") {
+            mdxContent +=
+              "**Return Type:** " + typeMappings[func.return.type] + "\n\n";
           }
-          else if (func.return.type != 'void') {
-            mdxContent += "**Return Type:** " + typeMappings[func.return.type] + "\n\n";
-          }
-
 
           mdxContent += "**Signatures:**\n\n";
-          mdxContent += "<Tabs syncKey=\"code-language\">\n";
+          mdxContent += '<Tabs syncKey="code-language">\n';
 
           // Reorder Code tabs
           languageOrder.forEach((lang) => {
-            if (func.signatures[lang].length > 0 && func.signatures[lang] != undefined) {
+            if (
+              func.signatures[lang].length > 0 &&
+              func.signatures[lang] != undefined
+            ) {
               try {
-
-                const code = (Array.isArray(func.signatures[lang])) ? func.signatures[lang].join("\n") : func.signatures[lang];
+                const code = Array.isArray(func.signatures[lang])
+                  ? func.signatures[lang].join("\n")
+                  : func.signatures[lang];
                 const languageLabel = languageLabelMappings[lang] || lang;
                 mdxContent += `  <TabItem label="${languageLabel}">\n`;
-                mdxContent +=
-                  "\n```" + lang + "\n" + code + '\n```\n\n';
+                mdxContent += "\n```" + lang + "\n" + code + "\n```\n\n";
                 mdxContent += "  </TabItem>\n";
               } catch (e) {
-                console.log(e + " " + lang + " " + func.name)
+                console.log(e + " " + lang + " " + func.name);
               }
             }
           });
 
           mdxContent += "</Tabs>\n";
           mdxContent += "\n---\n"; // Add --- after each function ends
-
         });
       }
       let allTypes = [];
 
-      allTypes.push(...category.typedefs, ...category.enums, ...category.structs);
+      allTypes.push(
+        ...category.typedefs,
+        ...category.enums,
+        ...category.structs
+      );
       // Remove empty arrays
       allTypes = allTypes.filter((type) => type.name != undefined); // Assuming name property is present
 
@@ -323,7 +351,10 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
             let description = type.description || "";
             for (const typeName in typeMappings) {
               const typeMapping = typeMappings[typeName];
-              description = description.replace(new RegExp(`\`\\b${typeName}\\b\``, "g"), typeMapping);
+              description = description.replace(
+                new RegExp(`\`\\b${typeName}\\b\``, "g"),
+                typeMapping
+              );
             }
 
             for (const names of functionNames) {
@@ -331,11 +362,15 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
                 .split("_")
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(" ");
-              const formattedLink = normalName.toLowerCase().replace(/\s+/g, "-");
-              const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`
-              description = description.replace(new RegExp(`\`\\b${names}\\b\``, "g"), link);
+              const formattedLink = normalName
+                .toLowerCase()
+                .replace(/\s+/g, "-");
+              const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`;
+              description = description.replace(
+                new RegExp(`\`\\b${names}\\b\``, "g"),
+                link
+              );
             }
-
 
             // mdxContent += `${description}\n\n`;
             // If it's a struct, add a table for its fields
@@ -362,15 +397,66 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
                     .split("_")
                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(" ");
-                  const formattedLink = normalName.toLowerCase().replace(/\s+/g, "-");
-                  const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`
-                  description = description.replace(new RegExp(`\`\\b${names}\\b\``, "g"), link);
+                  const formattedLink = normalName
+                    .toLowerCase()
+                    .replace(/\s+/g, "-");
+                  const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`;
+                  description = description.replace(
+                    new RegExp(`\`\\b${names}\\b\``, "g"),
+                    link
+                  );
                 }
 
-                mdxContent += `| ${fieldName} | ${fieldType} | ${fieldDescription.replace(/\n/g, '')} |\n`;
+                mdxContent += `| ${fieldName} | ${fieldType} | ${fieldDescription.replace(
+                  /\n/g,
+                  ""
+                )} |\n`;
               }
 
               mdxContent += "\n";
+            }
+
+            // -----------------------------------------------------------------
+            // MY TEST CODE
+            // -----------------------------------------------------------------
+            // To build a table like the enum one but instead have tabs for each language
+            if (type.tabbie) {
+              // Function to generate table for a specific language
+              function generateTable(tableData) {
+                let tableContent = "| Description | Enum Value in Code |\n";
+                tableContent += "| ----------- | ------------------ |\n";
+
+                tableData.forEach((row) => {
+                  const description = row.Description;
+                  const enumValue = row["Enum Value in Code"];
+                  tableContent += `| ${description} | ${enumValue} |\n`;
+                });
+
+                return tableContent;
+              }
+
+              // Function to generate tabs content with tables
+              function generateTabs(tabbieData) {
+                let mdxContent = `<Tabs syncKey="code-language">\n`;
+
+                for (const language in tabbieData) {
+                  const label = languageLabelMappings[language] || language;
+                  const tableContent = generateTable(
+                    tabbieData[language].table
+                  );
+
+                  mdxContent += `<TabItem label="${label}">\n\n`;
+                  mdxContent += `${tableContent}\n\n`;
+                  mdxContent += `</TabItem>\n`;
+                }
+
+                mdxContent += `</Tabs>\n`;
+
+                return mdxContent;
+              }
+
+              // Generate the table with the tabs
+              mdxContent += generateTabs(type.tabbie);
             }
 
             // If it's an enum, add a table for its constants
@@ -382,26 +468,38 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
 
               for (const constantName in type.constants) {
                 const constant = type.constants[constantName];
-                const constantValue = constant.number !== undefined ? constant.number : "";
+                const constantValue =
+                  constant.number !== undefined ? constant.number : "";
                 const constantDescription = constant.description || "";
 
-                mdxContent += `| ${constantName} | ${constantValue} | ${constantDescription.replace(/\n/g, '')} |\n`;
+                mdxContent += `| ${constantName} | ${constantValue} | ${constantDescription.replace(
+                  /\n/g,
+                  ""
+                )} |\n`;
               }
 
               mdxContent += "\n";
             }
             for (const typeName in typeMappings) {
               const typeMapping = typeMappings[typeName];
-              description = description.replace(new RegExp(`\`\\b${typeName}\\b\``, "g"), typeMapping);
+              description = description.replace(
+                new RegExp(`\`\\b${typeName}\\b\``, "g"),
+                typeMapping
+              );
             }
             for (const names of functionNames) {
               const normalName = names
                 .split("_")
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(" ");
-              const formattedLink = normalName.toLowerCase().replace(/\s+/g, "-");
-              const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`
-              description = description.replace(new RegExp(`\`\\b${names}\\b\``, "g"), link);
+              const formattedLink = normalName
+                .toLowerCase()
+                .replace(/\s+/g, "-");
+              const link = `[\`${normalName}\`](/api/${input}/#${formattedLink})`;
+              description = description.replace(
+                new RegExp(`\`\\b${names}\\b\``, "g"),
+                link
+              );
             }
             description = description.replaceAll("\n\n\n", "\n\n");
             mdxContent += `${description}\n\n`;
@@ -410,21 +508,22 @@ fs.readFile(`${__dirname}/api.json`, "utf8", async (err, data) => {
         });
       }
 
-
-
-
       // Write the MDX file
       fs.writeFile(`./src/content/docs/api/${name}.mdx`, mdxContent, (err) => {
         if (err) {
-          console.log(kleur.red(`Error writing ${input} MDX file: ${err.message}`));
+          console.log(
+            kleur.red(`Error writing ${input} MDX file: ${err.message}`)
+          );
         } else {
-
-          console.log(kleur.yellow('API Documentation') + kleur.green(` -> ${input}`));
+          console.log(
+            kleur.yellow("API Documentation") + kleur.green(` -> ${input}`)
+          );
         }
       });
-
     }
-    console.log(kleur.green("All component MDX files generated successfully.\n"));
+    console.log(
+      kleur.green("All component MDX files generated successfully.\n")
+    );
   } catch (error) {
     console.error(kleur.red("Error parsing JSON:"), error);
   }

@@ -46400,28 +46400,93 @@
         }
       },
       {
-        "signature": "enum mouse_button {NO_BUTTON,LEFT_BUTTON,MIDDLE_BUTTON,RIGHT_BUTTON,MOUSE_X1_BUTTON,MOUSE_X2_BUTTON};",
-        "name": "mouse_button",
-        "description": "A mouse can have many different types of buttons. Most people know\nabout the simple Left and Right buttons, but there is also a Middle\nbutton (sometimes part of a scoll wheel), and possible side buttons.",
+        "name": "mouse_button ",
+        "description": "A mouse can have many different types of buttons. Most people know about the simple Left and Right buttons, but there is also a Middle button (sometimes part of a scroll wheel), and possible side buttons.",
         "brief": null,
-        "constants": {
-          "NO_BUTTON": {
-            "description": "No mouse button"
+        "tabbie": {
+          "cpp": {
+            "table": [
+              {
+                "Description": "No mouse button",
+                "Enum Value in Code": "NO_BUTTON"
+              },
+              {
+                "Description": "The left mouse button",
+                "Enum Value in Code": "LEFT_BUTTON"
+              },
+              {
+                "Description": "The middle mouse button",
+                "Enum Value in Code": "MIDDLE_BUTTON"
+              },
+              {
+                "Description": "The right mouse button",
+                "Enum Value in Code": "RIGHT_BUTTON"
+              },
+              {
+                "Description": "The x1 mouse button",
+                "Enum Value in Code": "MOUSE_X1_BUTTON"
+              },
+              {
+                "Description": "The x2 mouse button",
+                "Enum Value in Code": "MOUSE_X2_BUTTON"
+              }
+            ]
           },
-          "LEFT_BUTTON": {
-            "description": "The left mouse button"
+          "csharp": {
+            "table": [
+              {
+                "Description": "No mouse button",
+                "Enum Value in Code": "MouseButton.NoButton"
+              },
+              {
+                "Description": "The left mouse button",
+                "Enum Value in Code": "MouseButton.LeftButton"
+              },
+              {
+                "Description": "The middle mouse button",
+                "Enum Value in Code": "MouseButton.MiddleButton"
+              },
+              {
+                "Description": "The right mouse button",
+                "Enum Value in Code": "MouseButton.RightButton"
+              },
+              {
+                "Description": "The x1 mouse button",
+                "Enum Value in Code": "MouseButton.MouseX1Button"
+              },
+              {
+                "Description": "The x2 mouse button",
+                "Enum Value in Code": "MouseButton.MouseX2Button"
+              }
+            ]
           },
-          "MIDDLE_BUTTON": {
-            "description": "The middle mouse button"
-          },
-          "RIGHT_BUTTON": {
-            "description": "The right mouse button"
-          },
-          "MOUSE_X1_BUTTON": {
-            "description": "The x1 mouse button"
-          },
-          "MOUSE_X2_BUTTON": {
-            "description": "The x2 mouse button"
+          "python": {
+            "table": [
+              {
+                "Description": "No mouse button",
+                "Enum Value in Code": "MouseButton.no_button"
+              },
+              {
+                "Description": "The left mouse button",
+                "Enum Value in Code": "MouseButton.left_button"
+              },
+              {
+                "Description": "The middle mouse button",
+                "Enum Value in Code": "MouseButton.middle_button"
+              },
+              {
+                "Description": "The right mouse button",
+                "Enum Value in Code": "MouseButton.right_button"
+              },
+              {
+                "Description": "The x1 mouse button",
+                "Enum Value in Code": "MouseButton.mouse_x1_button"
+              },
+              {
+                "Description": "The x2 mouse button",
+                "Enum Value in Code": "MouseButton.mouse_x2_button"
+              }
+            ]
           }
         },
         "attributes": {
