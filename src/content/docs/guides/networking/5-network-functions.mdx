@@ -31,7 +31,7 @@ In our tutorial, we used the `create_server_with_port` function, as detailed [he
 
 ```cpp
 server = create_server(name, port);
-write_line("Server '" + name + "' started, listening on port " + std::to_string(port));
+write_line("Server '" + name + "' started, listening on port " + to_string(port));
 ```
 
   </TabItem>
@@ -94,7 +94,7 @@ For the client program in our tutorial to connect to the server, we need to open
 
 ```cpp
 connection client = open_connection(name, host, port);
-write_line("Connected to server at " + host + ":" + std::to_string(port));
+write_line("Connected to server at " + host + ":" + to_string(port));
 ```
 
   </TabItem>
@@ -181,7 +181,7 @@ while is_connection_open(client):
 
 ### Checking The Last Connection
 
-In our server, as we are working with only one program connecting to it. We use the `last_connection` function, as detailed [here](/api/networking/#last-connection), for assigning the 
+In our server, as we are working with only one program connecting to it. We use the `last_connection` function, as detailed [here](/api/networking/#last-connection), for assigning the connection to a variable. This is then used to check for the last connection made to the server, which would be the client program.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -209,12 +209,14 @@ connection = last_connection(server)
 
 ### Checking the connection IP
 
+In the server program, we use the `connection_ip` function, as detailed [here](/api/networking/#connection-ip), to get the IP address of the client program (this was our last connection). This is then used to print a message to the terminal, showing the IP address of the client program thats currently connected.
+
 <Tabs syncKey="code-language">
   <TabItem label="C++">
 
 ```cpp
 unsigned int client_ip = connection_ip(client_connection);
-write_line("Connected by " + std::to_string(client_ip));
+write_line("Connected by " + to_string(client_ip));
 ```
 
   </TabItem>
@@ -237,6 +239,8 @@ print(f"Connected by {client_name}")
 </Tabs>
 
 ### Close Connection
+
+When the client program is done communicating with the server, it will close the connection. This is done using the `close_connection` function, as detailed [here](/api/networking/#close-connection). This function closes the connection to the server and prints a message to the terminal to confirm that the connection has been closed. This is an important step to ensure that the connection is closed properly.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -273,6 +277,16 @@ print("Server closed.")
 
 ## Sending Messages
 
+To send messages, we can use a variety of different Splashkit functions to send, process, and receive messages.
+
+### Send Message To
+
+ To start, we can use the `send_message_to` function, as detailed [here](/api/networking/#send-message-to), to send a message.
+
+#### For our Client Side
+
+In our messaging application tutorial, found [here](/docs/guides/networking/4-messaging-application), we use the following to send a message to the server. This function sends the message to the server and prints a message to the terminal to confirm that the message has been sent.
+
 <Tabs syncKey="code-language">
   <TabItem label="C++">
 
@@ -300,7 +314,9 @@ send_message_to_connection(message, client)
   </TabItem>
 </Tabs>
 
-### Sending Messages to the Connection
+#### For our Server Side
+
+In the server program, we use the `send_message_to` function to send a message to the client program. This function sends the message to the client and prints a message to the terminal to confirm that the message has been sent.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
@@ -308,7 +324,7 @@ send_message_to_connection(message, client)
 ```cpp
 string confirmation_message = "Server received the message: " + data;
 send_message_to(confirmation_message, client_connection);
-write_line("Responded to client " + std::to_string(client_ip));
+write_line("Responded to client " + to_string(client_ip));
 ```
 
   </TabItem>
@@ -333,6 +349,8 @@ print(f"Responded to client {client_name}")
 </Tabs>
 
 ### Has messages on Connection
+
+A key part of being able to send messages over these programs is to have a loop that continually checks for messages. Similar to how we did for the `check_network_activity` in order to keep the connection open, here we do the same with the `has_messages_on_connection` function, as detailed [here](/api/networking/#has-messages-on-connection). We do this same if loop in both the server and client, so when you're building your programs, think about how you can ensure you're getting the programs to check for the things you want to accomplish.
 
 <Tabs syncKey="code-language">
   <TabItem label="C++">
