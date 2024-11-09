@@ -1,0 +1,326 @@
+---
+title: Basic Maths Operations
+description: In this article, we discuss various maths operations and how you can use SplashKit to perform them.
+category: Guides
+author: Brianna Laird
+lastupdated: November 2024
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+**{frontmatter.description}**  
+Written by: {frontmatter.author}  
+_Last updated: {frontmatter.lastupdated}_
+
+---
+
+Mathematics is a fundamental part of programming, providing essential tools and methods that enable developers to solve complex problems efficiently. This guide explores a range of mathematical operations and demonstrates how to implement them effectively. In later tutorials, you'll learn how to integrate these operations into your SplashKit projects to create programs, games and encrypted messaging applications.
+
+## Basic Maths Operations
+
+To start we are going to build some functions that perform basic maths operations, such as calculating square roots, checking if a number is prime, finding the greatest common divisor, the least common multiple, and more.
+
+### Square Root
+
+The square root of a number is a value that, when multiplied by itself, gives the original number. For example, the square root of 9 is 3 because 3 * 3 = 9. The square root of a number can be calculated using the Newton-Raphson method. The Newton-Raphson method is an iterative method for finding the roots of a real-valued function. To calculate the square root of a number using the Newton-Raphson method, you can use the following functions:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+double calculate_square_root(int n)
+{
+    if (n == 0 || n == 1)
+        return n;
+
+    double estimate = n;
+    double precision = 0.00001; // The precision of the estimate
+
+    // The Newton-Raphson method
+    while ((estimate - n / estimate) > precision)
+    {
+        estimate = (estimate + n / estimate) / 2.0;
+    }
+
+    return estimate;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+double CalculateSquareRoot(int n)
+{
+    if (n == 0 || n == 1)
+        return n;
+
+    double estimate = n;
+    double precision = 0.00001; // The precision of the estimate
+
+    // The Newton-Raphson method
+    while ((estimate - n / estimate) > precision)
+    {
+        estimate = (estimate + n / estimate) / 2.0;
+    }
+
+    return estimate;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+double CalculateSquareRoot(int n)
+{
+    if (n == 0 || n == 1)
+        return n;
+
+    double estimate = n;
+    double precision = 0.00001; // The precision of the estimate
+
+    // The Newton-Raphson method
+    while ((estimate - n / estimate) > precision)
+    {
+        estimate = (estimate + n / estimate) / 2.0;
+    }
+
+    return estimate;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def calculate_square_root(n):
+    if n == 0 or n == 1:
+        return n
+
+    estimate = n
+    precision = 0.00001 # The precision of the estimate
+
+    # The Newton-Raphson method
+    while (estimate - n / estimate) > precision:
+        estimate = (estimate + n / estimate) / 2.0
+
+    return estimate
+```
+
+</TabItem>
+</Tabs>
+
+### Prime Number
+
+A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. To check if a number is prime, you will need to also calculate the square root of the number. You can use the following functions to check if a number is prime:
+
+:::note
+This function relies on the `calculate_square_root` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+bool is_the_number_prime(int n)
+{
+    if (n <= 1) return false;
+
+    // Check if the number is divisible by any number from 2 to the square root of the number
+    for (int i = 2; i <= calculate_square_root(n); i++)
+    {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+bool IsTheNumberPrime(int n)
+{
+    if (n <= 1) return false;
+
+    // Check if the number is divisible by any number from 2 to the square root of the number
+    for (int i = 2; i <= CalculateSquareRoot(n); i++)
+    {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+bool IsTheNumberPrime(int n)
+{
+    if (n <= 1) return false;
+
+    // Check if the number is divisible by any number from 2 to the square root of the number
+    for (int i = 2; i <= CalculateSquareRoot(n); i++)
+    {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def is_the_number_prime(n):
+    if n <= 1:
+        return False
+
+    # Check if the number is divisible by any number from 2 to the square root of the number
+    for i in range(2, int(calculate_square_root(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
+```
+
+</TabItem>
+</Tabs>
+
+### Greatest Common Divisor
+
+The greatest common divisor (GCD) of two numbers is the largest positive integer that divides both numbers without leaving a remainder. The GCD can be calculated using the Euclidean algorithm, which is an efficient method for finding the GCD of two numbers. You can use the following functions to calculate the GCD of two numbers:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int greatest_common_divisor(int a, int b)
+{
+    while (b != 0)
+    {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int GreatestCommonDivisor(int a, int b)
+{
+    while (b != 0)
+    {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int GreatestCommonDivisor(int a, int b)
+{
+    while (b != 0)
+    {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def greatest_common_divisor(a, b):
+    while b != 0:
+        temp = b
+        b = a % b
+        a = temp
+    return a
+```
+
+</TabItem>
+</Tabs>
+
+### Least Common Multiple
+
+The least common multiple (LCM) of two numbers is the smallest positive integer that is divisible by both numbers. The LCM can be calculated using the formula:
+
+:::note
+This function relies on the `greatest_common_divisor` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int least_common_multiple(int a, int b)
+{
+    return abs(a * b) / greatest_common_divisor(a, b);
+}
+
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+
+```
+
+</TabItem>
+</Tabs>
