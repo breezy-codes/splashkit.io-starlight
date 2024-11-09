@@ -22,11 +22,13 @@ To start we are going to build some functions that perform basic maths operation
 
 ### Square Root
 
-The square root of a number is a value that, when multiplied by itself, gives the original number. For example, the square root of 9 is 3 since 3 × 3 = 9. 
+The square root of a number is a value that, when multiplied by itself, gives the original number. For example, the square root of $9$ is $3$ since $3 × 3 = 9$.
 
 To calculate the square root efficiently, we use the Newton-Raphson method, an iterative numerical technique for finding roots of real-valued functions. This method starts with an initial estimate and repeatedly refines it using the formula:
 
-$$x_{n+1} = \frac{1}{2}(x_n + \frac{N}{x_n})$$
+$$
+x_{n+1} = \frac{1}{2}(x_n + \frac{N}{x_n})
+$$
 
 Where:
 
@@ -133,6 +135,14 @@ def calculate_square_root(n):
 
 A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. To check if a number is prime, you will need to also calculate the square root of the number. You can use the following functions to check if a number is prime:
 
+To check if a number is prime, we can use a simple algorithm that checks if the number is divisible by any number from 2 to its square root. The logic behind this approach is based on the following mathematical principles:
+
+1. Any non-prime number $n$ can be written as a product of two factors: $n = a \times b$
+2. If $n$ is not prime, at least one of these factors must be less than or equal to $\sqrt{n}$
+3. If we can't find any factors up to $\sqrt{n}$, then the number must be prime
+
+This can be implemented in code as follows:
+
 :::note
 This function relies on the `calculate_square_root` function defined above.
 :::
@@ -217,7 +227,15 @@ def is_the_number_prime(n):
 
 ### Greatest Common Divisor
 
-The greatest common divisor (GCD) of two numbers is the largest positive integer that divides both numbers without leaving a remainder. The GCD can be calculated using the Euclidean algorithm, which is an efficient method for finding the GCD of two numbers. You can use the following functions to calculate the GCD of two numbers:
+The greatest common divisor (GCD) of two numbers is the largest positive integer that divides both numbers without leaving a remainder. The algorithm works by repeatedly dividing the larger number by the smaller number and replacing the larger number with the remainder until the remainder is zero. The last non-zero remainder is the GCD of the two numbers. This algorithm is known as the Euclidean algorithm which can be expressed mathematically as:
+
+$$
+\text{GCD}(a,b) = \text{GCD}~(b, a \bmod b)
+$$
+
+where $a \bmod b$ represents the remainder when $a$ is divided by $b$.
+
+You can use the following functions to calculate the GCD of two numbers:
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -225,6 +243,8 @@ The greatest common divisor (GCD) of two numbers is the largest positive integer
 ```cpp
 int greatest_common_divisor(int a, int b)
 {
+
+    // Repeat the euclidean algorithm until the remainder is zero
     while (b != 0)
     {
         int temp = b;
@@ -244,6 +264,8 @@ int greatest_common_divisor(int a, int b)
 ```csharp
 int GreatestCommonDivisor(int a, int b)
 {
+
+    // Repeat the euclidean algorithm until the remainder is zero
     while (b != 0)
     {
         int temp = b;
@@ -260,6 +282,8 @@ int GreatestCommonDivisor(int a, int b)
 ```csharp
 int GreatestCommonDivisor(int a, int b)
 {
+
+    // Repeat the euclidean algorithm until the remainder is zero
     while (b != 0)
     {
         int temp = b;
@@ -278,6 +302,8 @@ int GreatestCommonDivisor(int a, int b)
 
 ```python
 def greatest_common_divisor(a, b):
+
+    # Repeat the euclidean algorithm until the remainder is zero
     while b != 0:
         temp = b
         b = a % b
@@ -318,14 +344,20 @@ int least_common_multiple(int a, int b)
 <TabItem label="Top-level Statements">
 
 ```csharp
-
+int LeastCommonMultiple(int a, int b)
+{
+    return Math.Abs(a * b) / GreatestCommonDivisor(a, b);
+}
 ```
 
 </TabItem>
 <TabItem label="Object-Oriented">
 
 ```csharp
-
+int LeastCommonMultiple(int a, int b)
+{
+    return Math.Abs(a * b) / GreatestCommonDivisor(a, b);
+}
 ```
 
 </TabItem>
@@ -335,7 +367,648 @@ int least_common_multiple(int a, int b)
 <TabItem label="Python">
 
 ```python
+def least_common_multiple(a, b):
+    return abs(a * b) // greatest_common_divisor(a, b)
+```
 
+</TabItem>
+</Tabs>
+
+### Checking for Coprime Numbers
+
+Two numbers are coprime (or relatively prime) if their greatest common divisor (GCD) is 1. For example, 8 and 15 are coprime because their GCD is 1, even though neither number is prime.
+
+:::note
+This function relies on the `greatest_common_divisor` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+bool are_coprime(int a, int b) 
+{
+    return greatest_common_divisor(a, b) == 1;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+bool AreCoprime(int a, int b) 
+{
+    return GreatestCommonDivisor(a, b) == 1;
+}
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def are_coprime(a, b):
+    return greatest_common_divisor(a, b) == 1
+```
+
+</TabItem>
+</Tabs>
+
+### Finding All Coprime Numbers
+
+Finding all numbers that are coprime to a given value is useful in many mathematical applications, particularly in cryptography and number theory. The following function identifies all numbers that are coprime to an input value up to a specified maximum. Two numbers are coprime if their greatest common divisor (GCD) is 1.
+
+For example, if we want to find all numbers coprime to 12 up to 20, we would get: 1, 5, 7, 11, 13, 17, 19
+
+:::note
+This function relies on the `are_coprime` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+void find_coprimes_up_to(int n, int max) 
+{
+    write_line("Numbers coprime to " + std::to_string(n) + " up to " + std::to_string(max) + ":");
+
+    // Check all numbers up to the maximum
+    for (int i = 1; i <= max; i++) 
+    {
+        if (are_coprime(n, i)) 
+        {
+            write(std::to_string(i) + " ");
+        }
+    }
+    write_line("");
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+void FindCoprimesUpTo(int n, int max) 
+{
+    WriteLine($"Numbers coprime to {n} up to {max}:");
+
+    // Check all numbers up to the maximum
+    for (int i = 1; i <= max; i++) 
+    {
+        if (AreCoprime(n, i)) 
+        {
+            Write($"{i} ");
+        }
+    }
+    WriteLine("");
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+void FindCoprimesUpTo(int n, int max) 
+{
+    SplashKit.WriteLine($"Numbers coprime to {n} up to {max}:");
+
+    // Check all numbers up to the maximum
+    for (int i = 1; i <= max; i++) 
+    {
+        if (AreCoprime(n, i)) 
+        {
+            SplashKit.Write($"{i} ");
+        }
+    }
+    SplashKit.WriteLine("");
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def find_coprimes_up_to(n, max):
+    write_line(f"Numbers coprime to {n} up to {max}:")
+
+    # Check all numbers up to the maximum
+    for i in range(1, max + 1):
+        if are_coprime(n, i):
+            write(f"{i} ")
+    write_line("")
+```
+
+</TabItem>
+</Tabs>
+
+### Finding Factors
+
+A factor is a number that divides evenly into another number with no remainder. For example, the factors of 12 are 1, 2, 3, 4, 6, and 12. Finding factors is useful in various mathematical applications, including:
+
+- Simplifying fractions
+- Finding common divisors
+- Breaking down numbers into their prime factorisation
+
+The following function finds all factors of a given number by checking all potential divisors up to the input number:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+void find_factors(int n) 
+{
+    write_line("Factors of " + std::to_string(n) + ":");
+
+    // Check all potential divisors up to n
+    for (int i = 1; i <= n; i++) 
+    {
+        if (n % i == 0) 
+        {
+            write(std::to_string(i) + " ");
+        }
+    }
+    write_line("");
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+void FindFactors(int n) 
+{
+    WriteLine($"Factors of {n}:");
+
+    // Check all potential divisors up to n
+    for (int i = 1; i <= n; i++) 
+    {
+        if (n % i == 0) 
+        {
+            Write($"{i} ");
+        }
+    }
+    WriteLine("");
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+void FindFactors(int n) 
+{
+    SplashKit.WriteLine($"Factors of {n}:");
+
+    // Check all potential divisors up to n
+    for (int i = 1; i <= n; i++) 
+    {
+        if (n % i == 0) 
+        {
+            SplashKit.Write($"{i} ");
+        }
+    }
+    SplashKit.WriteLine("");
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def find_factors(n):
+    write_line(f"Factors of {n}:")
+
+    # Check all potential divisors up to n
+    factors = [i for i in range(1, n + 1) if n % i == 0]
+    write(" ".join(map(str, factors)))
+    write_line("")
+```
+
+</TabItem>
+</Tabs>
+
+### Finding Prime Factors
+
+The prime factorisation of a number is its decomposition into a product of prime numbers. For example, 24 can be written as 2 × 2 × 2 × 3. The following function identifies all prime factors of a given number by:
+
+1. First extracting all factors of 2 (the smallest prime number)
+2. Then checking odd numbers up to the square root for remaining factors
+3. If any number remains after this process, it must be a prime factor itself
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+void find_prime_factors(int n) 
+{
+    write_line("Prime factors of " + std::to_string(n) + ":");
+    
+    // Extract all factors of 2
+    while (n % 2 == 0) 
+    {
+        write("2 ");
+        n /= 2;
+    }
+    
+    // Check odd numbers up to square root
+    for (int i = 3; i * i <= n; i += 2) 
+    {
+        while (n % i == 0) 
+        {
+            write(std::to_string(i) + " ");
+            n /= i;
+        }
+    }
+    
+    // If n is still greater than 2, it's a prime factor
+    if (n > 2)
+        write(std::to_string(n));
+        
+    write_line("");
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+void FindPrimeFactors(int n) 
+{
+    WriteLine($"Prime factors of {n}:");
+    
+    // Extract all factors of 2
+    while (n % 2 == 0) 
+    {
+        Write("2 ");
+        n /= 2;
+    }
+    
+    // Check odd numbers up to square root
+    for (int i = 3; i * i <= n; i += 2) 
+    {
+        while (n % i == 0) 
+        {
+            Write($"{i} ");
+            n /= i;
+        }
+    }
+    
+    // If n is still greater than 2, it's a prime factor
+    if (n > 2)
+        Write(n);
+        
+    WriteLine("");
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+void FindPrimeFactors(int n) 
+{
+    SplashKit.WriteLine($"Prime factors of {n}:");
+    
+    // Extract all factors of 2
+    while (n % 2 == 0) 
+    {
+        SplashKit.Write("2 ");
+        n /= 2;
+    }
+    
+    // Check odd numbers up to square root
+    for (int i = 3; i * i <= n; i += 2) 
+    {
+        while (n % i == 0) 
+        {
+            SplashKit.Write($"{i} ");
+            n /= i;
+        }
+    }
+    
+    // If n is still greater than 2, it's a prime factor
+    if (n > 2)
+        SplashKit.Write(n.ToString());
+        
+    SplashKit.WriteLine("");
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def find_prime_factors(n):
+    write_line(f"Prime factors of {n}:")
+    
+    # Extract all factors of 2
+    while n % 2 == 0:
+        write("2 ")
+        n //= 2
+    
+    # Check odd numbers up to square root
+    for i in range(3, int(n**0.5) + 1, 2):
+        while n % i == 0:
+            write(f"{i} ")
+            n //= i
+    
+    # If n is still greater than 2, it's a prime factor
+    if n > 2:
+        write(str(n))
+        
+    write_line("")
+```
+
+</TabItem>
+</Tabs>
+
+### Checking Congruence
+
+Two numbers $a$ and $b$ are considered congruent modulo $m$ if they yield the same remainder when divided by $m$. This relationship is written mathematically as:
+
+$$
+a \equiv b \pmod{m}
+$$
+
+For example, $38 \equiv 14 \pmod{12}$ because both numbers leave a remainder of 2 when divided by 12.
+
+We can implement a function to check if two numbers are congruent modulo $m$ as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+bool is_congruent(int a, int b, int mod) {
+    return (a % mod) == (b % mod);
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+bool IsCongruent(int a, int b, int mod) {
+    return (a % mod) == (b % mod);
+}
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def is_congruent(a, b, mod):
+    return (a % mod) == (b % mod)
+```
+
+</TabItem>
+</Tabs>
+
+## Modular Arithmetic Operations
+
+Modular arithmetic is a system of arithmetic for integers, where numbers "wrap around" upon reaching a certain value—the modulus. This section includes functions for modular addition, subtraction, multiplication, and exponentiation. The function `modular_exponentiation` performs modular exponentiation, which raises a base to an exponent under a modulus efficiently. This operation is commonly used in cryptography and number theory.
+
+### Modular Addition
+
+Modular addition is the operation of adding two numbers and taking the remainder when divided by a modulus.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int modular_addition(int a, int b, int mod) {
+    return (a + b) % mod;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int ModularAddition(int a, int b, int mod) {
+    return (a + b) % mod;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int ModularAddition(int a, int b, int mod) {
+    return (a + b) % mod;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def modular_addition(a, b, mod):
+    return (a + b) % mod
+```
+
+</TabItem>
+</Tabs>
+
+### Modular Subtraction
+
+Modular subtraction is the operation of subtracting two numbers and taking the remainder when divided by a modulus.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int modular_subtraction(int a, int b, int mod) {
+    return (a - b + mod) % mod;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int ModularSubtraction(int a, int b, int mod) {
+    return (a - b + mod) % mod;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int ModularSubtraction(int a, int b, int mod) {
+    return (a - b + mod) % mod;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def modular_subtraction(a, b, mod):
+    return (a - b + mod) % mod
+```
+
+</TabItem>
+</Tabs>
+
+### Modular Multiplication
+
+Modular multiplication is the operation of multiplying two numbers and taking the remainder when divided by a modulus.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int modular_multiplication(int a, int b, int mod) {
+    return (a * b) % mod;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int ModularMultiplication(int a, int b, int mod) {
+    return (a * b) % mod;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int ModularMultiplication(int a, int b, int mod) {
+    return (a * b) % mod;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def modular_multiplication(a, b, mod):
+    return (a * b) % mod
+```
+
+</TabItem>
+</Tabs>
+
+### Modular Exponentiation
+
+Modular exponentiation is the operation of raising a base to an exponent under a modulus. This operation is used to calculate large powers efficiently.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int modular_exponentiation(int base, int exponent, int mod) {
+    int result = 1;
+    base = base % mod;
+
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result = (result * base) % mod;
+        }
+        exponent >>= 1;
+        base = (base * base) % mod;
+    }
+    return result;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int ModularExponentiation(int base, int exponent, int mod) {
+    int result = 1;
+    base = base % mod;
+
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result = (result * base) % mod;
+        }
+        exponent >>= 1;
+        base = (base * base) % mod;
+    }
+    return result;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int ModularExponentiation(int base, int exponent, int mod) {
+    int result = 1;
+    base = base % mod;
+
+    while (exponent > 0) {
+        if (exponent % 2 == 1) {
+            result = (result * base) % mod;
+        }
+        exponent >>= 1;
+        base = (base * base) % mod;
+    }
+    return result;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def modular_exponentiation(base, exponent, mod):
+    result = 1
+    base = base % mod
+
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result = (result * base) % mod
+        exponent >>= 1
+        base = (base * base) % mod
+    return result
 ```
 
 </TabItem>
