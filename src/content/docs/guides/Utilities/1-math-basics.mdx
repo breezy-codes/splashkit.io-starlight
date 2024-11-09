@@ -1,6 +1,6 @@
 ---
 title: Basic Maths Operations
-description: In this article, we discuss various maths operations and how you can use SplashKit to perform them.
+description: Learn how to perform basic mathematical operations in programming, including square roots, prime numbers, factors, greatest common divisors, least common multiples, and modular arithmetic.
 category: Guides
 author: Brianna Laird
 lastupdated: November 2024
@@ -18,7 +18,7 @@ Mathematics is a fundamental part of programming, providing essential tools and 
 
 ## Basic Maths Operations
 
-To start we are going to build some functions that perform basic maths operations, such as calculating square roots, checking if a number is prime, finding the greatest common divisor, the least common multiple, and more.
+This section introduces fundamental mathematical operations that are essential for programming. We'll explore various mathematical functions and algorithms, starting with basic calculations like square roots and progressing to more complex operations like finding prime numbers and calculating greatest common divisors, least common multiples, and finding factors.
 
 ### Square Root
 
@@ -220,6 +220,372 @@ def is_the_number_prime(n):
         if n % i == 0:
             return False
     return True
+```
+
+</TabItem>
+</Tabs>
+
+### Finding Prime Numbers up to a Given Number
+
+Finding prime numbers up to a given number is a common task in number theory and cryptography. The following function implements the Sieve of Eratosthenes algorithm, which efficiently finds all prime numbers up to a specified maximum $n$. The algorithm works by:
+
+1. Creating a list of numbers from 2 to $n$
+2. Starting with $p=2$ (the first prime), marking all multiples of $p$ up to $n$ as composite
+3. Finding the next unmarked number and repeating step 2
+4. The remaining unmarked numbers are prime
+
+This can be expressed mathematically as finding all numbers $p$ where:
+
+$$
+p \in \{2,\ldots,n\} \text{ and } p \nmid k \text{ for all } k < p
+$$
+
+For example, to find primes up to 20, we would mark off:
+
+- Multiples of 2: $4, 6, 8, 10, 12, 14, 16, 18, 20$
+- Multiples of 3: $9, 15$
+- Multiples of 5: none remaining
+- Leaving primes: $2, 3, 5, 7, 11, 13, 17, 19$
+
+:::note
+This function relies on the `is_the_number_prime` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+void find_prime_numbers_up_to(int limit)
+{
+    write_line("Prime numbers up to " + std::to_string(limit) + ":");
+
+    // Check all numbers up to the limit to see if they are prime
+    for (int i = 2; i <= limit; i++)
+    {
+        if (is_the_number_prime(i))
+        {
+            write(std::to_string(i) + " ");
+        }
+    }
+    write_line("");
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+void FindPrimeNumbersUpTo(int limit)
+{
+    WriteLine($"Prime numbers up to {limit}:");
+
+    // Check all numbers up to the limit to see if they are prime
+    for (int i = 2; i <= limit; i++)
+    {
+        if (IsTheNumberPrime(i))
+        {
+            Write($"{i} ");
+        }
+    }
+    WriteLine("");
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+void FindPrimeNumbersUpTo(int limit)
+{
+    SplashKit.WriteLine($"Prime numbers up to {limit}:");
+
+    // Check all numbers up to the limit to see if they are prime
+    for (int i = 2; i <= limit; i++)
+    {
+        if (IsTheNumberPrime(i))
+        {
+            SplashKit.Write($"{i} ");
+        }
+    }
+    SplashKit.WriteLine("");
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def find_prime_numbers_up_to(limit):
+    write_line(f"Prime numbers up to {limit}:")
+
+    # Check all numbers up to the limit to see if they are prime
+    for i in range(2, limit + 1):
+        if is_the_number_prime(i):
+            write(f"{i} ")
+    write_line("")
+```
+
+</TabItem>
+</Tabs>
+
+### Finding the Number of Divisors
+
+The number of divisors of a positive integer $n$ is the count of positive integers that divide $n$ without leaving a remainder. We can find the number of divisors efficiently by only checking up to $\sqrt{n}$ because divisors come in pairs.
+
+For any divisor $d$ of $n$, there exists a corresponding divisor $\frac{n}{d}$ such that $d \times \frac{n}{d} = n$. For example, for $n=12$:
+
+- When $d=1$, we get $\frac{n}{d}=12$
+- When $d=2$, we get $\frac{n}{d}=6$
+- When $d=3$, we get $\frac{n}{d}=4$
+
+Therefore, except for perfect squares where $d=\sqrt{n}$, divisors occur in pairs. The total count can be calculated by:
+
+$$
+\text{divisors}(n) = 2 \times |\{d : d|\sqrt{n}\}| + |\{d : d^2=n\}|
+$$
+
+where $d|n$ denotes that $d$ divides $n$ evenly.
+
+:::note
+This function relies on the `calculate_square_root` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int count_divisors(int n)
+{
+    int count = 0;
+
+    // Check all numbers up to the square root of n
+    for (int i = 1; i <= calculate_square_root(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If divisors are equal, count only one
+            if (n / i == i)
+                count++;
+            // Otherwise count both
+            else
+                count += 2;
+        }
+    }
+    return count;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int CountDivisors(int n)
+{
+    int count = 0;
+
+    // Check all numbers up to the square root of n
+    for (int i = 1; i <= CalculateSquareRoot(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If divisors are equal, count only one
+            if (n / i == i)
+                count++;
+            // Otherwise count both
+            else
+                count += 2;
+        }
+    }
+    return count;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int CountDivisors(int n)
+{
+    int count = 0;
+
+    // Check all numbers up to the square root of n
+    for (int i = 1; i <= CalculateSquareRoot(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If divisors are equal, count only one
+            if (n / i == i)
+                count++;
+            // Otherwise count both
+            else
+                count += 2;
+        }
+    }
+    return count;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def count_divisors(n):
+    count = 0
+
+    # Check all numbers up to the square root of n
+    for i in range(1, int(calculate_square_root(n)) + 1):
+        if n % i == 0:
+            # If divisors are equal, count only one
+            if n // i == i:
+                count += 1
+            # Otherwise count both
+            else:
+                count += 2
+    return count
+```
+
+</TabItem>
+</Tabs>
+
+### Finding the Sum of Divisors
+
+The sum of divisors of a positive integer is the sum of all positive integers that divide the number without leaving a remainder. This function calculates the sum of divisors of a given number by iterating through all numbers up to the square root of the input number and summing the divisors.
+
+For a number $n$, finding the sum of its divisors involves:
+
+1. Iterating through numbers from 1 to $\sqrt{n}$
+2. For each divisor $d$, if $n$ is divisible by $d$:
+    - If $d^2 = n$, add $d$ once
+    - Otherwise, add both $d$ and $\frac{n}{d}$
+
+For example, for $n=12$:
+
+- Divisors are: 1, 2, 3, 4, 6, 12
+- Sum = 1 + 2 + 3 + 4 + 6 + 12 = 28
+
+This can be expressed mathematically as:
+
+$$
+\sum_{d|n} d = \sum_{d \leq \sqrt{n}} d \cdot [n \bmod d = 0] + \frac{n}{d} \cdot [d^2 \neq n]
+$$
+
+where $[P]$ is 1 if condition $P$ is true, and 0 otherwise.
+
+
+:::note
+This function relies on the `calculate_square_root` function defined above.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int sum_divisors(int n)
+{
+    int sum = 0;
+
+    // Check all numbers up to the square root of n
+    for (int i = 1; i <= calculate_square_root(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If divisors are equal, add only one
+            if (n / i == i)
+                sum += i;
+            // Otherwise add both
+            else
+                sum += i + n / i;
+        }
+    }
+    return sum;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+int SumDivisors(int n)
+{
+    int sum = 0;
+
+    // Check all numbers up to the square root of n
+    for (int i = 1; i <= CalculateSquareRoot(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If divisors are equal, add only one
+            if (n / i == i)
+                sum += i;
+            // Otherwise add both
+            else
+                sum += i + n / i;
+        }
+    }
+    return sum;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+int SumDivisors(int n)
+{
+    int sum = 0;
+
+    // Check all numbers up to the square root of n
+    for (int i = 1; i <= CalculateSquareRoot(n); i++)
+    {
+        if (n % i == 0)
+        {
+            // If divisors are equal, add only one
+            if (n / i == i)
+                sum += i;
+            // Otherwise add both
+            else
+                sum += i + n / i;
+        }
+    }
+    return sum;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def sum_divisors(n):
+    sum = 0
+
+    # Check all numbers up to the square root of n
+    for i in range(1, int(calculate_square_root(n)) + 1):
+        if n % i == 0:
+            # If divisors are equal, add only one
+            if n // i == i:
+                sum += i
+            # Otherwise add both
+            else:
+                sum += i + n // i
+    return sum
 ```
 
 </TabItem>
