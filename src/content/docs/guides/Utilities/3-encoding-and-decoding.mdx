@@ -1,0 +1,290 @@
+---
+title: Encoding and Decoding
+description: Explore the essentials of encoding and decoding data using Base64, Caesar cipher, and URL transformations for secure and efficient data representation.
+category: Guides
+author: Brianna Laird
+lastupdated: November 2024
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+**{frontmatter.description}**  
+Written by: {frontmatter.author}  
+_Last updated: {frontmatter.lastupdated}_
+
+---
+
+Encoding and decoding play a crucial role in the way data is represented, stored, and transmitted across systems. Whether it's transforming binary data into a readable format, encoding a URL for safe web usage, or encrypting messages using a simple cipher, these operations enable secure and efficient communication. In this guide, we'll explore how to implement popular encoding and decoding techniques like Base64, Caesar cipher, and URL transformations. These foundational skills not only enhance your understanding of data manipulation but also pave the way for integrating advanced cryptographic solutions into your projects.
+
+### Base64 Encoding
+
+When using base64, you need to define the chars which can be done with:
+
+```shell
+const string BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+```
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string base64_encode(const string &input)
+{
+    string encoded_string;
+    int value = 0, bits = -6;
+    const unsigned int base64_mask = 0x3F;
+
+    for (unsigned char character : input)
+    {
+        value = (value << 8) + character;
+        bits += 8;
+
+        while (bits >= 0)
+        {
+            encoded_string.push_back(BASE64_CHARS[(value >> bits) & base64_mask]);
+            bits -= 6;
+        }
+    }
+
+    if (bits > -6)
+    {
+        encoded_string.push_back(BASE64_CHARS[((value << 8) >> (bits + 8)) & base64_mask]);
+    }
+
+    while (encoded_string.size() % 4)
+    {
+        encoded_string.push_back('='); // Padding to make the length a multiple of 4
+    }
+
+    return encoded_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string Base64Encode(string input)
+{
+    string encodedString = "";
+    int value = 0, bits = -6;
+    const int base64Mask = 0x3F;
+
+    foreach (char character in input)
+    {
+        value = (value << 8) + character;
+        bits += 8;
+
+        while (bits >= 0)
+        {
+            encodedString += BASE64_CHARS[(value >> bits) & base64Mask];
+            bits -= 6;
+        }
+    }
+
+    if (bits > -6)
+    {
+        encodedString += BASE64_CHARS[((value << 8) >> (bits + 8)) & base64Mask];
+    }
+
+    while (encodedString.Length % 4 != 0)
+    {
+        encodedString += '=';
+    }
+    return encodedString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string Base64Encode(string input)
+{
+    string encodedString = "";
+    int value = 0, bits = -6;
+    const int base64Mask = 0x3F;
+
+    foreach (char character in input)
+    {
+        value = (value << 8) + character;
+        bits += 8;
+
+        while (bits >= 0)
+        {
+            encodedString += BASE64_CHARS[(value >> bits) & base64Mask];
+            bits -= 6;
+        }
+    }
+
+    if (bits > -6)
+    {
+        encodedString += BASE64_CHARS[((value << 8) >> (bits + 8)) & base64Mask];
+    }
+
+    while (encodedString.Length % 4 != 0)
+    {
+        encodedString += '=';
+    }
+    return encodedString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def base64_encode(input_string):
+    encoded_string = ""
+    value = 0
+    bits = -6
+    base64_mask = 0x3F
+
+    for character in input_string.encode():
+        value = (value << 8) + character
+        bits += 8
+
+        while bits >= 0:
+            encoded_string += BASE64_CHARS[(value >> bits) & base64_mask]
+            bits -= 6
+    
+    if bits > -6:
+        encoded_string += BASE64_CHARS[((value << 8) >> (bits + 8)) & base64_mask]
+    
+    while len(encoded_string) % 4:
+        encoded_string += "="
+    
+    return encoded_string
+```
+
+</TabItem>
+</Tabs>
+
+### Base64 Decoding
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string base64_decode(const string &input)
+{
+    string decoded_string;
+    int value = 0, bits = -8;
+    for (unsigned char character : input)
+    {
+        if (BASE64_CHARS.find(character) == string::npos)
+        {
+            if (character == '=')
+                break; // Padding character, stop decoding
+            continue;  // Ignore any characters not in Base64 alphabet
+        }
+
+        value = (value << 6) + BASE64_CHARS.find(character);
+        bits += 6;
+
+        if (bits >= 0)
+        {
+            decoded_string.push_back(char((value >> bits) & 0xFF));
+            bits -= 8;
+        }
+    }
+    return decoded_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string Base64Decode(string input)
+{
+    string decodedString = "";
+    int value = 0, bits = -8;
+
+    foreach (char character in input)
+    {
+        if (character == '=') break;
+        if (BASE64_CHARS.IndexOf(character) == -1) continue;
+
+        value = (value << 6) + BASE64_CHARS.IndexOf(character);
+        bits += 6;
+
+        if (bits >= 0)
+        {
+            decodedString += (char)((value >> bits) & 0xFF);
+            bits -= 8;
+        }
+    }
+    return decodedString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string Base64Decode(string input)
+{
+    string decodedString = "";
+    int value = 0, bits = -8;
+
+    foreach (char character in input)
+    {
+        if (character == '=') break;
+        if (BASE64_CHARS.IndexOf(character) == -1) continue;
+
+        value = (value << 6) + BASE64_CHARS.IndexOf(character);
+        bits += 6;
+
+        if (bits >= 0)
+        {
+            decodedString += (char)((value >> bits) & 0xFF);
+            bits -= 8;
+        }
+    }
+    return decodedString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def base64_decode(input_string):
+    decoded_string = bytearray()
+    value = 0
+    bits = -8
+
+    for character in input_string:
+        if character not in BASE64_CHARS:
+            if character == "=":
+                break
+            continue
+        
+        value = (value << 6) + BASE64_CHARS.index(character)
+        bits += 6
+
+        if bits >= 0:
+            decoded_string.append((value >> bits) & 0xFF)
+            bits -= 8
+    
+    return decoded_string.decode()
+
+def write_line(message):
+    print(message)
+```
+
+</TabItem>
+</Tabs>

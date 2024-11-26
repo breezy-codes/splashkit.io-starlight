@@ -1,0 +1,1114 @@
+---
+title: Conversion Operations
+description: Learn how to perform basic mathematical conversion operations for different values such as binary to decimal, or hex to octal.
+category: Guides
+author: Brianna Laird
+lastupdated: November 2024
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+**{frontmatter.description}**  
+Written by: {frontmatter.author}  
+_Last updated: {frontmatter.lastupdated}_
+
+---
+
+Converting between different numerical and data representations is an essential skill in programming, allowing for efficient data processing, interoperability, and the ability to build versatile applications. This guide will explore how to validate, convert, encode, and decode various formats, making your programs both robust and flexible. These concepts also serve as a foundation for implementing more complex systems in SplashKit, such as cryptographic utilities or network tools.
+
+## Validation Functions
+
+Validation is the first step in any reliable conversion process. Ensuring input values conform to their respective formats reduces errors and creates a solid foundation for processing data. For example, binary numbers must consist only of `0`s and `1`s, while hexadecimal values use a combination of numeric and alphabetic characters. In this section, we’ll explore how to check the correctness of binary, decimal, hexadecimal, and octal values, ensuring all inputs are clean and error-free before proceeding with conversions.
+
+### Is Binary
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+bool is_binary(const string &binary_string)
+{
+    for (char character : binary_string)
+    {
+        if (character != '0' && character != '1')
+            return false;
+    }
+    return !binary_string.empty();
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+bool IsBinary(string binaryString)
+{
+    foreach (char character in binaryString)
+    {
+        if (character != '0' && character != '1')
+            return false;
+    }
+    return !string.IsNullOrEmpty(binaryString);
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+bool IsBinary(string binaryString)
+{
+    foreach (char character in binaryString)
+    {
+        if (character != '0' && character != '1')
+            return false;
+    }
+    return !string.IsNullOrEmpty(binaryString);
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def is_binary(binary_string):
+    return all(character in '01' for character in binary_string) and bool(binary_string)
+```
+
+</TabItem>
+</Tabs>
+
+### Is Hexadecimal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+bool is_hex(const string &hex_string)
+{
+    for (char character : hex_string)
+    {
+        if (!((character >= '0' && character <= '9') || (character >= 'A' && character <= 'F') || (character >= 'a' && character <= 'f')))
+            return false;
+    }
+    return !hex_string.empty();
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+bool IsHex(string hexString)
+{
+    foreach (char character in hexString)
+    {
+        if (!((character >= '0' && character <= '9') || (character >= 'A' && character <= 'F') || (character >= 'a' && character <= 'f')))
+            return false;
+    }
+    return !string.IsNullOrEmpty(hexString);
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+bool IsHex(string hexString)
+{
+    foreach (char character in hexString)
+    {
+        if (!((character >= '0' && character <= '9') || (character >= 'A' && character <= 'F') || (character >= 'a' && character <= 'f')))
+            return false;
+    }
+    return !string.IsNullOrEmpty(hexString);
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def is_hex(hex_string):
+    return all(character in '0123456789ABCDEFabcdef' for character in hex_string) and bool(hex_string)
+```
+
+</TabItem>
+</Tabs>
+
+### Is Octal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+bool is_octal(const string &octal_string)
+{
+    for (char character : octal_string)
+    {
+        if (character < '0' || character > '7')
+            return false;
+    }
+    return !octal_string.empty();
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+bool IsOctal(string octalString)
+{
+    foreach (char character in octalString)
+    {
+        if (character < '0' || character > '7')
+            return false;
+    }
+    return !string.IsNullOrEmpty(octalString);
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+bool IsOctal(string octalString)
+{
+    foreach (char character in octalString)
+    {
+        if (character < '0' || character > '7')
+            return false;
+    }
+    return !string.IsNullOrEmpty(octalString);
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def is_octal(octal_string):
+    return all(character in '01234567' for character in octal_string) and bool(octal_string)
+```
+
+</TabItem>
+</Tabs>
+
+## Basic Conversion Operations
+
+Conversions between number systems are fundamental to understanding how data is represented in programming. Whether you’re transforming binary to decimal, decimal to hexadecimal, or even converting between less common systems like octal and base-64, these operations provide insight into the underlying mechanics of data storage and manipulation. This section will introduce methods for performing these conversions step by step, helping you understand the relationships between different numerical systems and how to implement them efficiently in code.
+
+### Decimal to Binary
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string dec_to_bin(unsigned int decimal_value)
+{
+    if (decimal_value == 0)
+        return "0";
+
+    string binary_string;
+    while (decimal_value > 0)
+    {
+        binary_string = ((decimal_value & 1) ? "1" : "0") + binary_string;
+        decimal_value >>= 1;
+    }
+    return binary_string;
+
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string DecToBin(uint decimalValue)
+{
+    if (decimalValue == 0) return "0";
+
+    string binaryString = "";
+    while (decimalValue > 0)
+    {
+        binaryString = ((decimalValue & 1) == 1 ? "1" : "0") + binaryString;
+        decimalValue >>= 1;
+    }
+    return binaryString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string DecToBin(uint decimalValue)
+{
+    if (decimalValue == 0) return "0";
+
+    string binaryString = "";
+    while (decimalValue > 0)
+    {
+        binaryString = ((decimalValue & 1) == 1 ? "1" : "0") + binaryString;
+        decimalValue >>= 1;
+    }
+    return binaryString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def dec_to_bin(decimal_value):
+    if decimal_value == 0:
+        return "0"
+    
+    binary_string = ""
+    while decimal_value > 0:
+        binary_string = ("1" if decimal_value & 1 else "0") + binary_string
+        decimal_value >>= 1
+    return binary_string
+```
+
+</TabItem>
+</Tabs>
+
+### Binary to Decimal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+unsigned int bin_to_dec(const string &binary_string)
+{
+    if (!is_binary(binary_string))
+    {
+        return 0;
+    }
+
+    unsigned int decimal_value = 0;
+    for (size_t i = 0; i < binary_string.size(); i++)
+    {
+        if (binary_string[i] == '1')
+        {
+            decimal_value += (1 << (binary_string.size() - i - 1));
+        }
+    }
+    return decimal_value;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+uint BinToDec(string binaryString)
+{
+    if (!IsBinary(binaryString)) return 0;
+
+    uint decimalValue = 0;
+    for (int i = 0; i < binaryString.Length; i++)
+    {
+        if (binaryString[i] == '1')
+        {
+            decimalValue += (uint)(1 << (binaryString.Length - i - 1));
+        }
+    }
+    return decimalValue;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+uint BinToDec(string binaryString)
+{
+    if (!IsBinary(binaryString)) return 0;
+
+    uint decimalValue = 0;
+    for (int i = 0; i < binaryString.Length; i++)
+    {
+        if (binaryString[i] == '1')
+        {
+            decimalValue += (uint)(1 << (binaryString.Length - i - 1));
+        }
+    }
+    return decimalValue;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def bin_to_dec(binary_string):
+    if not is_binary(binary_string):
+        return 0
+
+    decimal_value = 0
+    for i, character in enumerate(reversed(binary_string)):
+        if character == '1':
+            decimal_value += (1 << i)
+    return decimal_value
+```
+
+</TabItem>
+</Tabs>
+
+### Hexadecimal to Binary
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string hex_to_bin(const string &hex_string)
+{
+    if (!is_hex(hex_string))
+    {
+        return "";
+    }
+
+    string binary_string;
+    for (char hex_character : hex_string)
+    {
+        int hex_value = 0;
+
+        if (hex_character >= '0' && hex_character <= '9')
+            hex_value = hex_character - '0';
+        else if (hex_character >= 'A' && hex_character <= 'F')
+            hex_value = hex_character - 'A' + 10;
+        else if (hex_character >= 'a' && hex_character <= 'f')
+            hex_value = hex_character - 'a' + 10;
+
+        for (int i = 3; i >= 0; i--)
+        {
+            binary_string += ((hex_value >> i) & 1) ? '1' : '0';
+        }
+    }
+
+    if (hex_string.length() == 1)
+    {
+        size_t first_one = binary_string.find_first_not_of('0');
+        return (first_one == string::npos) ? "0" : binary_string.substr(first_one);
+    }
+
+    return binary_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string HexToBin(string hexString)
+{
+    if (!IsHex(hexString)) return "";
+
+    string binaryString = "";
+    foreach (char hexChar in hexString)
+    {
+        int hexValue = (hexChar >= '0' && hexChar <= '9') ? hexChar - '0' :
+                       (hexChar >= 'A' && hexChar <= 'F') ? hexChar - 'A' + 10 :
+                       hexChar - 'a' + 10;
+
+        for (int i = 3; i >= 0; i--)
+        {
+            binaryString += ((hexValue >> i) & 1) == 1 ? "1" : "0";
+        }
+    }
+    return binaryString.TrimStart('0');
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string HexToBin(string hexString)
+{
+    if (!IsHex(hexString)) return "";
+
+    string binaryString = "";
+    foreach (char hexChar in hexString)
+    {
+        int hexValue = (hexChar >= '0' && hexChar <= '9') ? hexChar - '0' :
+                       (hexChar >= 'A' && hexChar <= 'F') ? hexChar - 'A' + 10 :
+                       hexChar - 'a' + 10;
+
+        for (int i = 3; i >= 0; i--)
+        {
+            binaryString += ((hexValue >> i) & 1) == 1 ? "1" : "0";
+        }
+    }
+    return binaryString.TrimStart('0');
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def hex_to_bin(hex_string):
+    if not is_hex(hex_string):
+        return ""
+    
+    binary_string = ""
+    for hex_character in hex_string:
+        hex_value = int(hex_character, 16)
+        for i in range(3, -1, -1):
+            binary_string += "1" if (hex_value >> i) & 1 else "0"
+    
+    if len(hex_string) == 1:
+        first_one = binary_string.find('1')
+        return "0" if first_one == -1 else binary_string[first_one:]
+    
+    return binary_string
+```
+
+</TabItem>
+</Tabs>
+
+### Binary to Hexadecimal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string bin_to_hex(const string &binary_string)
+{
+    if (!is_binary(binary_string))
+    {
+        return "";
+    }
+
+    string hex_string;
+    int length = binary_string.length();
+
+    int padding = (4 - (length % 4)) % 4;
+    string padded_binary_string = string(padding, '0') + binary_string;
+
+    for (size_t i = 0; i < padded_binary_string.length(); i += 4)
+    {
+        int hex_value = 0;
+        for (size_t j = 0; j < 4; j++)
+        {
+            hex_value <<= 1;
+            if (padded_binary_string[i + j] == '1')
+                hex_value |= 1;
+        }
+
+        if (hex_value < 10)
+            hex_string += '0' + hex_value;
+        else
+            hex_string += 'A' + (hex_value - 10);
+    }
+    return hex_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string BinToHex(string binaryString)
+{
+    if (!IsBinary(binaryString)) return "";
+
+    string paddedBinaryString = binaryString.PadLeft((binaryString.Length + 3) / 4 * 4, '0');
+    string hexString = "";
+
+    for (int i = 0; i < paddedBinaryString.Length; i += 4)
+    {
+        int hexValue = 0;
+        for (int j = 0; j < 4; j++)
+        {
+            hexValue <<= 1;
+            if (paddedBinaryString[i + j] == '1')
+                hexValue |= 1;
+        }
+
+        if (hexValue < 10)
+            hexString += (char)('0' + hexValue);
+        else
+            hexString += (char)('A' + (hexValue - 10));
+    }
+    return hexString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string BinToHex(string binaryString)
+{
+    if (!IsBinary(binaryString)) return "";
+
+    string paddedBinaryString = binaryString.PadLeft((binaryString.Length + 3) / 4 * 4, '0');
+    string hexString = "";
+
+    for (int i = 0; i < paddedBinaryString.Length; i += 4)
+    {
+        int hexValue = 0;
+        for (int j = 0; j < 4; j++)
+        {
+            hexValue <<= 1;
+            if (paddedBinaryString[i + j] == '1')
+                hexValue |= 1;
+        }
+
+        if (hexValue < 10)
+            hexString += (char)('0' + hexValue);
+        else
+            hexString += (char)('A' + (hexValue - 10));
+    }
+    return hexString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def bin_to_hex(binary_string):
+    if not is_binary(binary_string):
+        return ""
+    
+    length = len(binary_string)
+    padding = (4 - (length % 4)) % 4
+    padded_binary_string = "0" * padding + binary_string
+    
+    hex_string = ""
+    for i in range(0, len(padded_binary_string), 4):
+        hex_value = int(padded_binary_string[i:i+4], 2)
+        hex_string += hex(hex_value)[2:].upper()
+    return hex_string
+```
+
+</TabItem>
+</Tabs>
+
+### Decimal to Octal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string dec_to_oct(unsigned int decimal_value)
+{
+    if (decimal_value == 0)
+        return "0";
+
+    string octal_string;
+    while (decimal_value > 0)
+    {
+        octal_string = to_string(decimal_value % 8) + octal_string;
+        decimal_value /= 8;
+    }
+    return octal_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string DecToOct(uint decimalValue)
+{
+    if (decimalValue == 0) return "0";
+
+    string octalString = "";
+    while (decimalValue > 0)
+    {
+        octalString = (decimalValue % 8).ToString() + octalString;
+        decimalValue /= 8;
+    }
+    return octalString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string DecToOct(uint decimalValue)
+{
+    if (decimalValue == 0) return "0";
+
+    string octalString = "";
+    while (decimalValue > 0)
+    {
+        octalString = (decimalValue % 8).ToString() + octalString;
+        decimalValue /= 8;
+    }
+    return octalString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def dec_to_oct(decimal_value):
+    if decimal_value == 0:
+        return "0"
+    
+    octal_string = ""
+    while decimal_value > 0:
+        octal_string = str(decimal_value % 8) + octal_string
+        decimal_value //= 8
+    return octal_string
+```
+
+</TabItem>
+</Tabs>
+
+### Octal to Decimal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+unsigned int oct_to_dec(const string &octal_string)
+{
+    if (!is_octal(octal_string))
+    {
+        return 0;
+    }
+
+    unsigned int decimal_value = 0;
+    for (size_t i = 0; i < octal_string.size(); i++)
+    {
+        decimal_value = decimal_value * 8 + (octal_string[i] - '0');
+    }
+    return decimal_value;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+uint OctToDec(string octalString)
+{
+    if (!IsOctal(octalString)) return 0;
+
+    uint decimalValue = 0;
+    foreach (char octChar in octalString)
+    {
+        decimalValue = decimalValue * 8 + (uint)(octChar - '0');
+    }
+    return decimalValue;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+uint OctToDec(string octalString)
+{
+    if (!IsOctal(octalString)) return 0;
+
+    uint decimalValue = 0;
+    foreach (char octChar in octalString)
+    {
+        decimalValue = decimalValue * 8 + (uint)(octChar - '0');
+    }
+    return decimalValue;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def oct_to_dec(octal_string):
+    if not is_octal(octal_string):
+        return 0
+
+    decimal_value = 0
+    for i, character in enumerate(reversed(octal_string)):
+        decimal_value += int(character) * (8 ** i)
+    return decimal_value
+```
+
+</TabItem>
+</Tabs>
+
+### Octal to Binary
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string oct_to_bin(const string &octal_string)
+{
+    if (!is_octal(octal_string))
+    {
+        return "";
+    }
+
+    string binary_string;
+    for (char octal_character : octal_string)
+    {
+        int octal_value = octal_character - '0';
+
+        for (int i = 2; i >= 0; i--)
+        {
+            binary_string += ((octal_value >> i) & 1) ? '1' : '0';
+        }
+    }
+
+    size_t first_one = binary_string.find_first_not_of('0');
+    return (first_one == string::npos) ? "0" : binary_string.substr(first_one);
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string OctToBin(string octalString)
+{
+    if (!IsOctal(octalString)) return "";
+
+    string binaryString = "";
+    foreach (char octChar in octalString)
+    {
+        int octValue = octChar - '0';
+        for (int i = 2; i >= 0; i--)
+        {
+            binaryString += ((octValue >> i) & 1) == 1 ? "1" : "0";
+        }
+    }
+    return binaryString.TrimStart('0');
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string OctToBin(string octalString)
+{
+    if (!IsOctal(octalString)) return "";
+
+    string binaryString = "";
+    foreach (char octChar in octalString)
+    {
+        int octValue = octChar - '0';
+        for (int i = 2; i >= 0; i--)
+        {
+            binaryString += ((octValue >> i) & 1) == 1 ? "1" : "0";
+        }
+    }
+    return binaryString.TrimStart('0');
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def oct_to_bin(octal_string):
+    if not is_octal(octal_string):
+        return ""
+    
+    binary_string = ""
+    for octal_character in octal_string:
+        octal_value = int(octal_character)
+        for i in range(2, -1, -1):
+            binary_string += "1" if (octal_value >> i) & 1 else "0"
+    
+    first_one = binary_string.find('1')
+    return "0" if first_one == -1 else binary_string[first_one:]
+
+```
+
+</TabItem>
+</Tabs>
+
+### Binary to Octal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string bin_to_oct(const string &binary_string)
+{
+    if (!is_binary(binary_string))
+    {
+        return "";
+    }
+
+    string octal_string;
+
+    int padding = (3 - (binary_string.length() % 3)) % 3;
+    string padded_binary_string = string(padding, '0') + binary_string;
+
+    for (size_t i = 0; i < padded_binary_string.length(); i += 3)
+    {
+        int octal_value = 0;
+        for (size_t j = 0; j < 3; j++)
+        {
+            octal_value <<= 1;
+            if (padded_binary_string[i + j] == '1')
+                octal_value |= 1;
+        }
+
+        octal_string += '0' + octal_value;
+    }
+
+    size_t first_non_zero = octal_string.find_first_not_of('0');
+    return (first_non_zero == string::npos) ? "0" : octal_string.substr(first_non_zero);
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string BinToOct(string binaryString)
+{
+    if (!IsBinary(binaryString)) return "";
+
+    string paddedBinaryString = binaryString.PadLeft((binaryString.Length + 2) / 3 * 3, '0');
+    string octalString = "";
+
+    for (int i = 0; i < paddedBinaryString.Length; i += 3)
+    {
+        int octValue = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            octValue <<= 1;
+            if (paddedBinaryString[i + j] == '1')
+                octValue |= 1;
+        }
+        octalString += (char)('0' + octValue);
+    }
+    return octalString.TrimStart('0');
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string BinToOct(string binaryString)
+{
+    if (!IsBinary(binaryString)) return "";
+
+    string paddedBinaryString = binaryString.PadLeft((binaryString.Length + 2) / 3 * 3, '0');
+    string octalString = "";
+
+    for (int i = 0; i < paddedBinaryString.Length; i += 3)
+    {
+        int octValue = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            octValue <<= 1;
+            if (paddedBinaryString[i + j] == '1')
+                octValue |= 1;
+        }
+        octalString += (char)('0' + octValue);
+    }
+    return octalString.TrimStart('0');
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def bin_to_oct(binary_string):
+    if not is_binary(binary_string):
+        return ""
+    
+    padding = (3 - (len(binary_string) % 3)) % 3
+    padded_binary_string = "0" * padding + binary_string
+    
+    octal_string = ""
+    for i in range(0, len(padded_binary_string), 3):
+        octal_value = int(padded_binary_string[i:i+3], 2)
+        octal_string += str(octal_value)
+    
+    first_non_zero = octal_string.find('1')
+    return "0" if first_non_zero == -1 else octal_string[first_non_zero:]
+```
+
+</TabItem>
+</Tabs>
+
+### Hexadecimal to Octal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string hex_to_oct(const string &hex_string)
+{
+    if (!is_hex(hex_string))
+    {
+        return "";
+    }
+
+    string binary_string = hex_to_bin(hex_string);
+    return bin_to_oct(binary_string);
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string HexToOct(string hexString) => BinToOct(HexToBin(hexString));
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string HexToOct(string hexString) => BinToOct(HexToBin(hexString));
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def hex_to_oct(hex_string):
+    if not is_hex(hex_string):
+        return ""
+    
+    binary_string = hex_to_bin(hex_string)
+    return bin_to_oct(binary_string)
+```
+
+</TabItem>
+</Tabs>
+
+### Octal to Hexadecimal
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string oct_to_hex(const string &octal_string)
+{
+    if (!is_octal(octal_string))
+    {
+        return "";
+    }
+
+    string binary_string = oct_to_bin(octal_string);
+    return bin_to_hex(binary_string);
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string OctToHex(string octalString) => BinToHex(OctToBin(octalString));
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string OctToHex(string octalString) => BinToHex(OctToBin(octalString));
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def oct_to_hex(octal_string):
+    if not is_octal(octal_string):
+        return ""
+    
+    binary_string = oct_to_bin(octal_string)
+    return bin_to_hex(binary_string)
+```
+
+</TabItem>
+</Tabs>
