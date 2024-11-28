@@ -22,6 +22,8 @@ Validation is the first step in any reliable conversion process. Ensuring input 
 
 ### Is Binary
 
+This function checks if a given string is a valid binary number, ensuring it contains only the characters `0` and `1`. It also verifies that the input is not empty, returning false for any invalid or empty input.
+
 <Tabs syncKey="code-language">
 <TabItem label="C++">
 
@@ -86,6 +88,8 @@ def is_binary(binary_string):
 
 ### Is Hexadecimal
 
+This function validates whether a string represents a valid hexadecimal number. It checks that each character falls within the ranges `0-9`, `A-F`, or `a-f`, while also ensuring the input is not empty.
+
 <Tabs syncKey="code-language">
 <TabItem label="C++">
 
@@ -149,6 +153,8 @@ def is_hex(hex_string):
 </Tabs>
 
 ### Is Octal
+
+This function determines if a string is a valid octal number by ensuring all characters are within the range `0-7`. It also returns false if the input string is empty.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -217,6 +223,8 @@ def is_octal(octal_string):
 Conversions between number systems are fundamental to understanding how data is represented in programming. Whether you’re transforming binary to decimal, decimal to hexadecimal, or even converting between less common systems like octal and base-64, these operations provide insight into the underlying mechanics of data storage and manipulation. This section will introduce methods for performing these conversions step by step, helping you understand the relationships between different numerical systems and how to implement them efficiently in code.
 
 ### Decimal to Binary
+
+Converting a decimal number to binary involves dividing the number by 2 repeatedly and recording the remainder for each division. These remainders, read in reverse order, form the binary representation of the decimal number. For example, to convert the decimal number 10 to binary, you would perform the following steps: $10 ÷ 2 = 5$ remainder $0$, $5 ÷ 2 = 2$ remainder $1$, $2 ÷ 2 = 1$ remainder $0$, and $1 ÷ 2 = 0$ remainder $1$. Reading the remainders from bottom to top, you get the binary number $1010$. This process can be implemented programmatically to convert any decimal number to its binary equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -297,7 +305,58 @@ def dec_to_bin(decimal_value):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a decimal value as an argument. For example, to convert the decimal number 10 to binary, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+unsigned int decimal_value = 10;
+string binary_string = dec_to_bin(decimal_value);
+write_line("Binary value: " + binary_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+uint decimalValue = 10;
+string binaryString = DecToBin(decimalValue);
+WriteLine("Binary value: " + binaryString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+uint decimalValue = 10;
+string binaryString = DecToBin(decimalValue);
+SplashKit.WriteLine("Binary value: " + binaryString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+decimal_value = 10
+binary_string = dec_to_bin(decimal_value)
+write_line("Binary value:", binary_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Binary to Decimal
+
+Converting a binary number to decimal involves multiplying each digit by $2^n$, where $n$ is the position of the digit from the rightmost bit, starting at $0$. For example, to convert the binary number $1010$ to decimal, you would calculate $1 \times 2^3 + 0 \times 2^2 + 1 \times 2^1 + 0 \times 2^0 = 10$. This process can be implemented programmatically to convert any binary number to its decimal equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -386,7 +445,58 @@ def bin_to_dec(binary_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a binary value as an argument. For example, to convert the binary number $1010$ to decimal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string binary_string = "1010";
+unsigned int decimal_value = bin_to_dec(binary_string);
+write_line("Decimal value: " + to_string(decimal_value));
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string binaryString = "1010";
+uint decimalValue = BinToDec(binaryString);
+WriteLine("Decimal value: " + decimalValue);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string binaryString = "1010";
+uint decimalValue = BinToDec(binaryString);
+SplashKit.WriteLine("Decimal value: " + decimalValue);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+binary_string = "1010"
+decimal_value = bin_to_dec(binary_string)
+write_line("Decimal value:", decimal_value)
+```
+
+</TabItem>
+</Tabs>
+
 ### Hexadecimal to Binary
+
+Converting a hexadecimal number to binary involves converting each hexadecimal digit to its binary equivalent. For example, the hexadecimal number $A3$ can be converted to binary by converting $A$ to $1010$ and $3$ to $0011$, resulting in the binary number $10100011$. This process can be implemented programmatically to convert any hexadecimal number to its binary equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -505,7 +615,58 @@ def hex_to_bin(hex_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a hexadecimal value as an argument. For example, to convert the hexadecimal number $A3$ to binary, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string hex_string = "A3";
+string binary_string = hex_to_bin(hex_string);
+write_line("Binary value: " + binary_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string hexString = "A3";
+string binaryString = HexToBin(hexString);
+WriteLine("Binary value: " + binaryString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string hexString = "A3";
+string binaryString = HexToBin(hexString);
+SplashKit.WriteLine("Binary value: " + binaryString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+hex_string = "A3"
+binary_string = hex_to_bin(hex_string)
+write_line("Binary value:", binary_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Binary to Hexadecimal
+
+Converting a binary number to hexadecimal involves grouping the binary digits into sets of four, starting from the rightmost bit. Each group of four bits corresponds to a single hexadecimal digit, allowing you to convert the binary number to its hexadecimal equivalent. For example, the binary number $10100011$ can be grouped as $1010$ and $0011$, which correspond to the hexadecimal digits $A$ and $3$, respectively. This process can be implemented programmatically to convert any binary number to its hexadecimal equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -631,7 +792,58 @@ def bin_to_hex(binary_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a binary value as an argument. For example, to convert the binary number $10100011$ to hexadecimal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string binary_string = "10100011";
+string hex_string = bin_to_hex(binary_string);
+write_line("Hexadecimal value: " + hex_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string binaryString = "10100011";
+string hexString = BinToHex(binaryString);
+WriteLine("Hexadecimal value: " + hexString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string binaryString = "10100011";
+string hexString = BinToHex(binaryString);
+SplashKit.WriteLine("Hexadecimal value: " + hexString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+binary_string = "10100011"
+hex_string = bin_to_hex(binary_string)
+write_line("Hexadecimal value:", hex_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Decimal to Octal
+
+Converting a decimal number to octal involves dividing the number by 8 repeatedly and recording the remainder for each division. These remainders, read in reverse order, form the octal representation of the decimal number. For example, to convert the decimal number 10 to octal, you would perform the following steps: $10 ÷ 8 = 1$ remainder $2$, and $1 ÷ 8 = 0$ remainder $1$. Reading the remainders from bottom to top, you get the octal number $12$. This process can be implemented programmatically to convert any decimal number to its octal equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -712,7 +924,58 @@ def dec_to_oct(decimal_value):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a decimal value as an argument. For example, to convert the decimal number 10 to octal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+unsigned int decimal_value = 10;
+string octal_string = dec_to_oct(decimal_value);
+write_line("Octal value: " + octal_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+uint decimalValue = 10;
+string octalString = DecToOct(decimalValue);
+WriteLine("Octal value: " + octalString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+uint decimalValue = 10;
+string octalString = DecToOct(decimalValue);
+SplashKit.WriteLine("Octal value: " + octalString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+decimal_value = 10
+octal_string = dec_to_oct(decimal_value)
+write_line("Octal value:", octal_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Octal to Decimal
+
+Converting an octal number to decimal involves multiplying each digit by $8^n$, where $n$ is the position of the digit from the rightmost bit, starting at $0$. For example, to convert the octal number 12 to decimal, you would calculate $1 \times 8^1 + 2 \times 8^0 = 10$. This process can be implemented programmatically to convert any octal number to its decimal equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -791,7 +1054,58 @@ def oct_to_dec(octal_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with an octal value as an argument. For example, to convert the octal number 12 to decimal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string octal_string = "12";
+unsigned int decimal_value = oct_to_dec(octal_string);
+write_line("Decimal value: " + to_string(decimal_value));
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string octalString = "12";
+uint decimalValue = OctToDec(octalString);
+WriteLine("Decimal value: " + decimalValue);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string octalString = "12";
+uint decimalValue = OctToDec(octalString);
+SplashKit.WriteLine("Decimal value: " + decimalValue);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+octal_string = "12"
+decimal_value = oct_to_dec(octal_string)
+write_line("Decimal value:", decimal_value)
+```
+
+</TabItem>
+</Tabs>
+
 ### Octal to Binary
+
+Converting an octal number to binary involves converting each octal digit to its binary equivalent. For example, the octal number $12$ can be converted to binary by converting $1$ to $001$ and $2$ to $010$, resulting in the binary number $001010$. This process can be implemented programmatically to convert any octal number to its binary equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -890,7 +1204,58 @@ def oct_to_bin(octal_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with an octal value as an argument. For example, to convert the octal number 12 to binary, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string octal_string = "12";
+string binary_string = oct_to_bin(octal_string);
+write_line("Binary value: " + binary_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string octalString = "12";
+string binaryString = OctToBin(octalString);
+WriteLine("Binary value: " + binaryString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string octalString = "12";
+string binaryString = OctToBin(octalString);
+SplashKit.WriteLine("Binary value: " + binaryString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+octal_string = "12"
+binary_string = oct_to_bin(octal_string)
+write_line("Binary value:", binary_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Binary to Octal
+
+Converting a binary number to octal involves grouping the binary digits into sets of three, starting from the rightmost bit. Each group of three bits corresponds to a single octal digit, allowing you to convert the binary number to its octal equivalent. For example, the binary number $101010$ can be grouped as $101$ and $010$, which correspond to the octal digits $5$ and $2$, respectively. This process can be implemented programmatically to convert any binary number to its octal equivalent.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -1007,7 +1372,62 @@ def bin_to_oct(binary_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a binary value as an argument. For example, to convert the binary number $101010$ to octal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string binary_string = "101010";
+string octal_string = bin_to_oct(binary_string);
+write_line("Octal value: " + octal_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string binaryString = "101010";
+string octalString = BinToOct(binaryString);
+WriteLine("Octal value: " + octalString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string binaryString = "101010";
+string octalString = BinToOct(binaryString);
+Splashkit.WriteLine("Octal value: " + octalString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+binary_string = "101010"
+octal_string = bin_to_oct(binary_string)
+write_line("Octal value:", octal_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Hexadecimal to Octal
+
+Converting a hexadecimal number to octal involves converting the hexadecimal number to binary and then converting the binary number to octal. This process can be implemented programmatically to convert any hexadecimal number to its octal equivalent.
+
+:::note
+This function relies on the `hex_to_bin` function defined above.
+:::
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -1060,7 +1480,62 @@ def hex_to_oct(hex_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+To use this function in your code, you can call it with a hexadecimal value as an argument. For example, to convert the hexadecimal number $A3$ to octal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string hex_string = "A3";
+string octal_string = hex_to_oct(hex_string);
+write_line("Octal value: " + octal_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string hexString = "A3";
+string octalString = HexToOct(hexString);
+WriteLine("Octal value: " + octalString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string hexString = "A3";
+string octalString = HexToOct(hexString);
+SplashKit.WriteLine("Octal value: " + octalString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+hex_string = "A3"
+octal_string = hex_to_oct(hex_string)
+write_line("Octal value:", octal_string)
+```
+
+</TabItem>
+</Tabs>
+
 ### Octal to Hexadecimal
+
+Converting an octal number to hexadecimal involves converting the octal number to binary and then converting the binary number to hexadecimal. This process can be implemented programmatically to convert any octal number to its hexadecimal equivalent.
+
+:::note
+This function relies on the `oct_to_bin` function defined above.
+:::
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -1108,6 +1583,55 @@ def oct_to_hex(octal_string):
     
     binary_string = oct_to_bin(octal_string)
     return bin_to_hex(binary_string)
+```
+
+</TabItem>
+</Tabs>
+
+#### Using this function
+
+To use this function in your code, you can call it with an octal value as an argument. For example, to convert the octal number 12 to hexadecimal, you would call the function as follows:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string octal_string = "12";
+string hex_string = oct_to_hex(octal_string);
+write_line("Hexadecimal value: " + hex_string);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string octalString = "12";
+string hexString = OctToHex(octalString);
+WriteLine("Hexadecimal value: " + hexString);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string octalString = "12";
+string hexString = OctToHex(octalString);
+SplashKit.WriteLine("Hexadecimal value: " + hexString);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+octal_string = "12"
+hex_string = oct_to_hex(octal_string)
+write_line("Hexadecimal value:", hex_string)
 ```
 
 </TabItem>
