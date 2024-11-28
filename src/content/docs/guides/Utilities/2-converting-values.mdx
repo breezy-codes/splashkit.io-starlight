@@ -20,6 +20,10 @@ Converting between different numerical and data representations is an essential 
 
 Validation is the first step in any reliable conversion process. Ensuring input values conform to their respective formats reduces errors and creates a solid foundation for processing data. For example, binary numbers must consist only of `0`s and `1`s, while hexadecimal values use a combination of numeric and alphabetic characters. In this section, we’ll explore how to check the correctness of binary, decimal, hexadecimal, and octal values, ensuring all inputs are clean and error-free before proceeding with conversions.
 
+:::note
+The following validation functions are used in the conversion operations described later in this guide. They check whether a given string is a valid representation of a binary, decimal, hexadecimal, or octal number, respectively.
+:::
+
 ### Is Binary
 
 This function checks if a given string is a valid binary number, ensuring it contains only the characters `0` and `1`. It also verifies that the input is not empty, returning false for any invalid or empty input.
@@ -354,6 +358,20 @@ write_line("Binary value:", binary_string)
 </TabItem>
 </Tabs>
 
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Binary value: 1010
+```
+
+If we change the input value to $22$, the output will be:
+
+```shell
+Binary value: 10110
+```
+
 ### Binary to Decimal
 
 Converting a binary number to decimal involves multiplying each digit by $2^n$, where $n$ is the position of the digit from the rightmost bit, starting at $0$. For example, to convert the binary number $1010$ to decimal, you would calculate $1 \times 2^3 + 0 \times 2^2 + 1 \times 2^1 + 0 \times 2^0 = 10$. This process can be implemented programmatically to convert any binary number to its decimal equivalent.
@@ -493,6 +511,20 @@ write_line("Decimal value:", decimal_value)
 
 </TabItem>
 </Tabs>
+
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Decimal value: 10
+```
+
+If we change the input value to $10110$, the output will be:
+
+```shell
+Decimal value: 22
+```
 
 ### Hexadecimal to Binary
 
@@ -663,6 +695,20 @@ write_line("Binary value:", binary_string)
 
 </TabItem>
 </Tabs>
+
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Binary value: 10100011
+```
+
+If we change the input value to $F$, the output will be:
+
+```shell
+Binary value: 1111
+```
 
 ### Binary to Hexadecimal
 
@@ -841,6 +887,20 @@ write_line("Hexadecimal value:", hex_string)
 </TabItem>
 </Tabs>
 
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Hexadecimal value: A3
+```
+
+If we change the input value to $1111$, the output will be:
+
+```shell
+Hexadecimal value: F
+```
+
 ### Decimal to Octal
 
 Converting a decimal number to octal involves dividing the number by 8 repeatedly and recording the remainder for each division. These remainders, read in reverse order, form the octal representation of the decimal number. For example, to convert the decimal number 10 to octal, you would perform the following steps: $10 ÷ 8 = 1$ remainder $2$, and $1 ÷ 8 = 0$ remainder $1$. Reading the remainders from bottom to top, you get the octal number $12$. This process can be implemented programmatically to convert any decimal number to its octal equivalent.
@@ -973,6 +1033,20 @@ write_line("Octal value:", octal_string)
 </TabItem>
 </Tabs>
 
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Octal value: 12
+```
+
+If we change the input value to $22$, the output will be:
+
+```shell
+Octal value: 26
+```
+
 ### Octal to Decimal
 
 Converting an octal number to decimal involves multiplying each digit by $8^n$, where $n$ is the position of the digit from the rightmost bit, starting at $0$. For example, to convert the octal number 12 to decimal, you would calculate $1 \times 8^1 + 2 \times 8^0 = 10$. This process can be implemented programmatically to convert any octal number to its decimal equivalent.
@@ -1102,6 +1176,20 @@ write_line("Decimal value:", decimal_value)
 
 </TabItem>
 </Tabs>
+
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Decimal value: 10
+```
+
+If we change the input value to $26$, the output will be:
+
+```shell
+Decimal value: 22
+```
 
 ### Octal to Binary
 
@@ -1252,6 +1340,20 @@ write_line("Binary value:", binary_string)
 
 </TabItem>
 </Tabs>
+
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Binary value: 1010
+```
+
+If we change the input value to $26$, the output will be:
+
+```shell
+Binary value: 10110
+```
 
 ### Binary to Octal
 
@@ -1421,12 +1523,26 @@ write_line("Octal value:", octal_string)
 </TabItem>
 </Tabs>
 
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Octal value: 52
+```
+
+If we change the input value to $10110$, the output will be:
+
+```shell
+Octal value: 26
+```
+
 ### Hexadecimal to Octal
 
 Converting a hexadecimal number to octal involves converting the hexadecimal number to binary and then converting the binary number to octal. This process can be implemented programmatically to convert any hexadecimal number to its octal equivalent.
 
 :::note
-This function relies on the `hex_to_bin` function defined above.
+This function relies on the `hex_to_bin` and the `bin_to_oct` functions defined above.
 :::
 
 <Tabs syncKey="code-language">
@@ -1529,12 +1645,20 @@ write_line("Octal value:", octal_string)
 </TabItem>
 </Tabs>
 
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Octal value: 123
+```
+
 ### Octal to Hexadecimal
 
 Converting an octal number to hexadecimal involves converting the octal number to binary and then converting the binary number to hexadecimal. This process can be implemented programmatically to convert any octal number to its hexadecimal equivalent.
 
 :::note
-This function relies on the `oct_to_bin` function defined above.
+This function relies on the `oct_to_bin` and `bin_to_hex` functions defined above.
 :::
 
 <Tabs syncKey="code-language">
@@ -1636,3 +1760,21 @@ write_line("Hexadecimal value:", hex_string)
 
 </TabItem>
 </Tabs>
+
+#### Expected Output
+
+The output of the above code will be:
+
+```shell
+Hexadecimal value: A
+```
+
+If we change the input value to $26$, the output will be:
+
+```shell
+Hexadecimal value: 16
+```
+
+## Summary
+
+This guide showed you how to convert numbers between different number systems, including decimal, binary, octal, and hexadecimal. You learned how to implement conversion functions in C++, C#, and Python, and how to use these functions to convert numbers between different number systems. By following the examples and explanations provided in this guide, you should now have a better understanding of how to convert numbers between different number systems programmatically. You can use this knowledge to implement number system conversion functions in your own projects and applications.

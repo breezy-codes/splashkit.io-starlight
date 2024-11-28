@@ -1,6 +1,6 @@
 ---
 title: Encoding and Decoding
-description: Explore the essentials of encoding and decoding data using Base64, Caesar cipher, and URL transformations for secure and efficient data representation.
+description: Explore the essentials of encoding and decoding data using Base64, ceaser cipher, and URL transformations for secure and efficient data representation.
 category: Guides
 author: Brianna Laird
 lastupdated: November 2024
@@ -14,17 +14,25 @@ _Last updated: {frontmatter.lastupdated}_
 
 ---
 
-Encoding and decoding play a crucial role in the way data is represented, stored, and transmitted across systems. Whether it's transforming binary data into a readable format, encoding a URL for safe web usage, or encrypting messages using a simple cipher, these operations enable secure and efficient communication. In this guide, we'll explore how to implement popular encoding and decoding techniques like Base64, Caesar cipher, and URL transformations. These foundational skills not only enhance your understanding of data manipulation but also pave the way for integrating advanced cryptographic solutions into your projects.
+Encoding and decoding play a crucial role in the way data is represented, stored, and transmitted across systems. Whether it's transforming binary data into a readable format, encoding a URL for safe web usage, or encrypting messages using a simple cipher, these operations enable secure and efficient communication. In this guide, we'll explore how to implement popular encoding and decoding techniques like Base64, ceaser cipher, and URL transformations. These foundational skills not only enhance your understanding of data manipulation but also pave the way for integrating advanced cryptographic solutions into your projects.
 
 ## Base64
 
-When using base64, you need to define the chars which can be done with:
+Base64 encoding is a method used to convert binary data into an ASCII string format by translating it into a radix-64 representation. This is particularly useful for encoding data that needs to be stored and transferred over media that are designed to deal with textual data. Base64 ensures that the data remains intact without modification during transport.
 
-```shell
+When using Base64, you need to define the characters used in the encoding process. This can be done with:
+
+```cpp
 const string BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 ```
 
 ### Encoding with Base64
+
+Encoding data with Base64 involves converting the input data into a sequence of characters from the Base64 character set. This process ensures that the data can be safely transmitted over text-based protocols such as HTTP or email. The following code shows how you can implement Base64 encoding to convert a message into a Base64-encoded string.
+
+:::note
+The Base64-encoded message is padded with `=` characters to ensure that the length is a multiple of 4.
+:::
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -168,7 +176,71 @@ def base64_encode(input_string):
 </TabItem>
 </Tabs>
 
+#### Using this function
+
+Here is an example of how you can use the `base64_encode` function to encode a message:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string message = "Hello, World!";
+string encoded_message = base64_encode(message);
+write_line("Original: " + message);
+write_line("Encoded: " + encoded_message);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string message = "Hello, World!";
+string encodedMessage = Base64Encode(message);
+WriteLine("Original: " + message);
+WriteLine("Encoded: " + encodedMessage);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string message = "Hello, World!";
+string encodedMessage = Base64Encode(message);
+SplashKit.WriteLine("Original: " + message);
+SplashKit.WriteLine("Encoded: " + encodedMessage);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+message = "Hello, World!"
+encoded_message = base64_encode(message)
+write_line(f"Original: {message}")
+write_line(f"Encoded: {encoded_message}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The encoded message should be a Base64 representation of the original message.
+
+```shell
+Original: "Hello, World!"
+Encoded: "SGVsbG8sIFdvcmxkIQ=="
+```
+
 ### Decoding with Base64
+
+Decoding Base64 data involves converting the encoded string back into its original binary form. This process is essential for retrieving the original data after it has been encoded using Base64. The following code shows how you can implement Base64 decoding to convert a Base64-encoded string back into its original form.
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
@@ -291,45 +363,104 @@ def write_line(message):
 </TabItem>
 </Tabs>
 
-Here’s the completed usage example, including both encoding and decoding:
+#### Using this function
 
----
-
-### Usage Example
-
-#### Encoding
-
-```plaintext
-Input: "Hello, World!"
-```
-
-#### Expected Output
-
-```plaintext
-Encoded: "SGVsbG8sIFdvcmxkIQ=="
-```
-
-#### Decoding
-
-```plaintext
-Input: "SGVsbG8sIFdvcmxkIQ=="
-```
-
-#### Expected Output
-
-```plaintext
-Decoded: "Hello, World!"
-```
-
-## Caesar Cipher
-
-### Encoding with the Ceaser Cipher
+Here is an example of how you can use the `base64_decode` function to decode a message:
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
 
 ```cpp
-string caesar_cipher_encode(const string &input, int shift)
+string encoded_message = "SGVsbG8sIFdvcmxkIQ==";
+string decoded_message = base64_decode(encoded_message);
+write_line("Encoded: " + encoded_message);
+write_line("Decoded: " + decoded_message);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string encodedMessage = "SGVsbG8sIFdvcmxkIQ==";
+string decodedMessage = Base64Decode(encodedMessage);
+WriteLine("Encoded: " + encodedMessage);
+WriteLine("Decoded: " + decodedMessage);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string encodedMessage = "SGVsbG8sIFdvcmxkIQ==";
+string decodedMessage = Base64Decode(encodedMessage);
+SplashKit.WriteLine("Encoded: " + encodedMessage);
+SplashKit.WriteLine("Decoded: " + decodedMessage);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+encoded_message = "SGVsbG8sIFdvcmxkIQ=="
+decoded_message = base64_decode(encoded_message)
+write_line(f"Encoded: {encoded_message}")
+write_line(f"Decoded: {decoded_message}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The decoded message should match the original message that was encoded.
+
+```shell
+Encoded: "SGVsbG8sIFdvcmxkIQ=="
+Decoded: "Hello, World!"
+```
+
+## Ceaser Cipher
+
+The ceaser cipher is a simple substitution cipher that shifts the characters in a message by a fixed number of positions. This technique is named after Julius ceaser, who used it to encrypt his private correspondence. The ceaser cipher is a type of symmetric encryption, meaning that the same key is used for both encryption and decryption. In the ceaser cipher, each letter in the plaintext is shifted a certain number of places down or up the alphabet. The encryption function can be described mathematically as:
+
+$$
+E(x) = (x + n) \mod 26
+$$
+
+where:
+
+- $E(x)$ is the encrypted letter,
+- $x$ is the position of the plaintext letter in the alphabet ($0$ for $A$, $1$ for $B$, ..., $25$ for $Z$),
+- $n$ is the number of positions to shift (the key),
+- $mod$ denotes the modulo operation.
+
+For decryption, the function is:
+
+$$
+D(x) = (x - n) \mod 26
+$$
+
+where:
+
+- $D(x)$ is the decrypted letter,
+- $x$ is the position of the encrypted letter in the alphabet,
+- $n$ is the number of positions to shift (the key).
+
+### Encoding with the Ceaser Cipher
+
+Encoding data with the ceaser cipher involves shifting the characters in the input message by a fixed number of positions. This process ensures that the message is encrypted and can only be decrypted using the same shift value. The following code shows how you can implement the ceaser cipher to encode a message by shifting the characters by a specified number of positions.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string ceaser_cipher_encode(const string &input, int shift)
 {
     string encoded_string;
     for (char character : input)
@@ -355,7 +486,7 @@ string caesar_cipher_encode(const string &input, int shift)
 <TabItem label="Top-level Statements">
 
 ```csharp
-string CaesarCipherEncode(string input, int shift)
+string ceaserCipherEncode(string input, int shift)
 {
     string encodedString = "";
 
@@ -379,7 +510,7 @@ string CaesarCipherEncode(string input, int shift)
 <TabItem label="Object-Oriented">
 
 ```csharp
-string CaesarCipherEncode(string input, int shift)
+string ceaserCipherEncode(string input, int shift)
 {
     string encodedString = "";
 
@@ -406,7 +537,7 @@ string CaesarCipherEncode(string input, int shift)
 <TabItem label="Python">
 
 ```python
-def caesar_cipher_encode(input_string, shift):
+def ceaser_cipher_encode(input_string, shift):
     encoded_string = ""
     for character in input_string:
         if character.isalpha():
@@ -420,15 +551,86 @@ def caesar_cipher_encode(input_string, shift):
 </TabItem>
 </Tabs>
 
-### Decoding with the Ceaser Cipher
+#### Using this function
+
+Here is an example of how you can use the `ceaser_cipher_encode` function to encode a message:
 
 <Tabs syncKey="code-language">
 <TabItem label="C++">
 
 ```cpp
-string caesar_cipher_decode(const string &input, int shift)
+string message = "Hello, World!";
+int shift = 3;  
+string encoded_message = ceaser_cipher_encode(message, shift);
+write_line("Original: " + message);
+write_line("Encoded: " + encoded_message);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string message = "Hello, World!";
+int shift = 3;
+string encodedMessage = ceaserCipherEncode(message, shift);
+WriteLine("Original: " + message);
+WriteLine("Encoded: " + encodedMessage);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string message = "Hello, World!";
+int shift = 3;
+string encodedMessage = ceaserCipherEncode(message, shift);
+SplashKit.WriteLine("Original: " + message);
+SplashKit.WriteLine("Encoded: " + encodedMessage);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+message = "Hello, World!"
+shift = 3
+encoded_message = ceaser_cipher_encode(message, shift)
+write_line(f"Original: {message}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The encoded message should be the original message with each character shifted by the specified number of positions.
+
+```shell
+Original: "Hello, World!"
+Encoded: "Khoor, Zruog!"
+```
+
+### Decoding with the Ceaser Cipher
+
+Decoding data with the ceaser cipher involves shifting the characters in the input message by the reverse of the encoding shift value. This process ensures that the message is decrypted and can be read in its original form. The following code shows how you can implement the ceaser cipher to decode a message by shifting the characters back by the specified number of positions.
+
+:::note
+This function relies on the `ceaser_cipher_encode` function to decode the message using the reverse shift value.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string ceaser_cipher_decode(const string &input, int shift)
 {
-    return caesar_cipher_encode(input, 26 - (shift % 26)); // Reverse the shift
+    return ceaser_cipher_encode(input, 26 - (shift % 26)); // Reverse the shift
 }
 ```
 
@@ -439,9 +641,9 @@ string caesar_cipher_decode(const string &input, int shift)
 <TabItem label="Top-level Statements">
 
 ```csharp
-string CaesarCipherDecode(string input, int shift)
+string ceaserCipherDecode(string input, int shift)
 {
-    return CaesarCipherEncode(input, 26 - (shift % 26)); // Reverse the shift
+    return ceaserCipherEncode(input, 26 - (shift % 26)); // Reverse the shift
 }
 ```
 
@@ -449,9 +651,9 @@ string CaesarCipherDecode(string input, int shift)
 <TabItem label="Object-Oriented">
 
 ```csharp
-string CaesarCipherDecode(string input, int shift)
+string ceaserCipherDecode(string input, int shift)
 {
-    return CaesarCipherEncode(input, 26 - (shift % 26)); // Reverse the shift
+    return ceaserCipherEncode(input, 26 - (shift % 26)); // Reverse the shift
 }
 ```
 
@@ -462,37 +664,222 @@ string CaesarCipherDecode(string input, int shift)
 <TabItem label="Python">
 
 ```python
-def caesar_cipher_decode(input_string, shift):
-    return caesar_cipher_encode(input_string, -shift)  # Reverse the shift
+def ceaser_cipher_decode(input_string, shift):
+    return ceaser_cipher_encode(input_string, -shift)  # Reverse the shift
 ```
 
 </TabItem>
 </Tabs>
 
-### Usage Example
+#### Using this function
 
-#### Input for Encoding
+The following code demonstrates how you can use the `ceaser_cipher_decode` function to decode a message:
 
-```plaintext
-Input: "Hello, World!"
-Shift: 3
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string encoded_message = "Khoor, Zruog!";
+int shift = 3;
+write_line("Encoded: " + encoded_message);
+write_line("Decoded: " + ceaser_cipher_decode(encoded_message, shift));
 ```
 
-#### Encoding Expected
+</TabItem>
+<TabItem label="C#">
 
-```plaintext
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string encodedMessage = "Khoor, Zruog!";
+int shift = 3;
+WriteLine("Encoded: " + encodedMessage);
+WriteLine("Decoded: " + ceaserCipherDecode(encodedMessage, shift));
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string encodedMessage = "Khoor, Zruog!";
+int shift = 3;
+Splashkit.WriteLine("Encoded: " + encodedMessage);
+SplashKit.WriteLine("Decoded: " + ceaserCipherDecode(encodedMessage, shift));
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+encoded_message = "Khoor, Zruog!"
+shift = 3
+write_line(f"Encoded: {encoded_message}")
+write_line(f"Decoded: {ceaser_cipher_decode(encoded_message, shift)}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The decoded message should match the original message that was encoded.
+
+```shell
 Encoded: "Khoor, Zruog!"
-```
-
-#### Input for Decoding
-
-```plaintext
-Input: "Khoor, Zruog!"
-Shift: 3
-```
-
-#### Decoding Expected
-
-```plaintext
 Decoded: "Hello, World!"
+```
+
+### Brute-Forcing the ceaser Cipher
+
+In some cases, the shift value used in the ceaser cipher may not be known. To decrypt the message without the key, you can use a brute-force approach to try all possible shift values and find the one that produces a readable message. As there is only 26 possible shift values in the ceaser cipher, this method is feasible and can be implemented efficiently. Here is how you can brute-force the ceaser cipher to decrypt a message:
+
+:::note
+This function relies on the `ceasar_cipher_decode` function to decode the message using each possible shift value, which also relies on the `ceaser_cipher_encode` function.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+void ceaser_cipher_brute_force(const string &input)
+{
+    for (int shift = 0; shift < 26; shift++)
+    {
+        write_line("Shift " + to_string(shift) + "=> " + ceaser_cipher_decode(input, shift));
+    }
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+void ceaserCipherBruteForce(string input)
+{
+    for (int shift = 0; shift < 26; shift++)
+    {
+        WriteLine("Shift " + shift + "=> " + ceaserCipherDecode(input, shift));
+    }
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+void ceaserCipherBruteForce(string input)
+{
+    for (int shift = 0; shift < 26; shift++)
+    {
+        SplashKit.WriteLine("Shift " + shift + "=> " + ceaserCipherDecode(input, shift));
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def ceaser_cipher_brute_force(input_string):
+    for shift in range(26):
+        write_line(f"Shift {shift}=> {ceaser_cipher_decode(input_string, shift)}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Using this function
+
+Here is an example of how you can use the `ceaser_cipher_brute_force` function to decrypt a message without knowing the shift value:
+
+#### Using this function
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+write_line("Enter the encoded message: ");
+string encoded_message = read_line();
+ceaser_cipher_brute_force(encoded_message);
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+WriteLine("Enter the encoded message: ");
+string encodedMessage = ReadLine();
+ceaserCipherBruteForce(encodedMessage);
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+SplashKit.WriteLine("Enter the encoded message: ");
+string encodedMessage = SplashKit.ReadLine();
+ceaserCipherBruteForce(encodedMessage);
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+write_line("Enter the encrypted message: ")
+encoded_message = read_line()
+ceaser_cipher_brute_force(encoded_message)
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The brute-force method should display all possible decrypted messages for each shift value.
+
+```shell
+Enter the encoded message: 
+Khoor Zruog!
+Shift 0=> Khoor Zruog!
+Shift 1=> Jgnnq Yqtnf!
+Shift 2=> Ifmmp Xpsme!
+Shift 3=> Hello World!
+Shift 4=> Gdkkn Vnqkc!
+Shift 5=> Fcjjm Umpjb!
+Shift 6=> Ebiil Tloia!
+Shift 7=> Dahhk Sknhz!
+Shift 8=> Czggj Rjmgy!
+Shift 9=> Byffi Qilfx!
+Shift 10=> Axeeh Phkew!
+Shift 11=> Zwddg Ogjdv!
+Shift 12=> Yvccf Nficu!
+Shift 13=> Xubbe Mehbt!
+Shift 14=> Wtaad Ldgas!
+Shift 15=> Vszzc Kcfzr!
+Shift 16=> Uryyb Jbeyq!
+Shift 17=> Tqxxa Iadxp!
+Shift 18=> Spwwz Hzcwo!
+Shift 19=> Rovvy Gybvn!
+Shift 20=> Qnuux Fxaum!
+Shift 21=> Pmttw Ewztl!
+Shift 22=> Olssv Dvysk!
+Shift 23=> Nkrru Cuxrj!
+Shift 24=> Mjqqt Btwqi!
+Shift 25=> Lipps Asvph!
 ```
