@@ -73,9 +73,6 @@ string base64_encode(const string &input)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string Base64Encode(string input)
 {
@@ -107,44 +104,6 @@ string Base64Encode(string input)
     return encodedString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string Base64Encode(string input)
-{
-    string encodedString = "";
-    int value = 0, bits = -6;
-    const int base64Mask = 0x3F;
-
-    foreach (char character in input)
-    {
-        value = (value << 8) + character;
-        bits += 8;
-
-        while (bits >= 0)
-        {
-            encodedString += BASE64_CHARS[(value >> bits) & base64Mask];
-            bits -= 6;
-        }
-    }
-
-    if (bits > -6)
-    {
-        encodedString += BASE64_CHARS[((value << 8) >> (bits + 8)) & base64Mask];
-    }
-
-    while (encodedString.Length % 4 != 0)
-    {
-        encodedString += '=';
-    }
-    return encodedString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -186,35 +145,19 @@ Here is an example of how you can use the `base64_encode` function to encode a m
 ```cpp
 string message = "Hello, World!";
 string encoded_message = base64_encode(message);
-write_line("Original: " + message);
-write_line("Encoded: " + encoded_message);
+std::cout << "Original: " << message << std::endl;
+std::cout << "Encoded: " << encoded_message << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string message = "Hello, World!";
 string encodedMessage = Base64Encode(message);
-WriteLine("Original: " + message);
-WriteLine("Encoded: " + encodedMessage);
+Console.WriteLine("Original: " + message);
+Console.WriteLine("Encoded: " + encodedMessage);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string message = "Hello, World!";
-string encodedMessage = Base64Encode(message);
-SplashKit.WriteLine("Original: " + message);
-SplashKit.WriteLine("Encoded: " + encodedMessage);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -222,8 +165,8 @@ SplashKit.WriteLine("Encoded: " + encodedMessage);
 ```python
 message = "Hello, World!"
 encoded_message = base64_encode(message)
-write_line(f"Original: {message}")
-write_line(f"Encoded: {encoded_message}")
+print(f"Original: {message}")
+print(f"Encoded: {encoded_message}")
 ```
 
 </TabItem>
@@ -275,9 +218,6 @@ string base64_decode(const string &input)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string Base64Decode(string input)
 {
@@ -301,36 +241,6 @@ string Base64Decode(string input)
     return decodedString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string Base64Decode(string input)
-{
-    string decodedString = "";
-    int value = 0, bits = -8;
-
-    foreach (char character in input)
-    {
-        if (character == '=') break;
-        if (BASE64_CHARS.IndexOf(character) == -1) continue;
-
-        value = (value << 6) + BASE64_CHARS.IndexOf(character);
-        bits += 6;
-
-        if (bits >= 0)
-        {
-            decodedString += (char)((value >> bits) & 0xFF);
-            bits -= 8;
-        }
-    }
-    return decodedString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -355,9 +265,6 @@ def base64_decode(input_string):
             bits -= 8
     
     return decoded_string.decode()
-
-def write_line(message):
-    print(message)
 ```
 
 </TabItem>
@@ -373,35 +280,19 @@ Here is an example of how you can use the `base64_decode` function to decode a m
 ```cpp
 string encoded_message = "SGVsbG8sIFdvcmxkIQ==";
 string decoded_message = base64_decode(encoded_message);
-write_line("Encoded: " + encoded_message);
-write_line("Decoded: " + decoded_message);
+std::cout << "Encoded: " << encoded_message << std::endl;
+std::cout << "Decoded: " << decoded_message << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string encodedMessage = "SGVsbG8sIFdvcmxkIQ==";
 string decodedMessage = Base64Decode(encodedMessage);
-WriteLine("Encoded: " + encodedMessage);
-WriteLine("Decoded: " + decodedMessage);
+Console.WriteLine("Encoded: " + encodedMessage);
+Console.WriteLine("Decoded: " + decodedMessage);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string encodedMessage = "SGVsbG8sIFdvcmxkIQ==";
-string decodedMessage = Base64Decode(encodedMessage);
-SplashKit.WriteLine("Encoded: " + encodedMessage);
-SplashKit.WriteLine("Decoded: " + decodedMessage);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -409,8 +300,8 @@ SplashKit.WriteLine("Decoded: " + decodedMessage);
 ```python
 encoded_message = "SGVsbG8sIFdvcmxkIQ=="
 decoded_message = base64_decode(encoded_message)
-write_line(f"Encoded: {encoded_message}")
-write_line(f"Decoded: {decoded_message}")
+print(f"Encoded: {encoded_message}")
+print(f"Decoded: {decoded_message}")
 ```
 
 </TabItem>
@@ -482,9 +373,6 @@ string ceaser_cipher_encode(const string &input, int shift)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string ceaserCipherEncode(string input, int shift)
 {
@@ -505,33 +393,6 @@ string ceaserCipherEncode(string input, int shift)
     return encodedString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string ceaserCipherEncode(string input, int shift)
-{
-    string encodedString = "";
-
-    foreach (char character in input)
-    {
-        if (char.IsLetter(character))
-        {
-            char baseChar = char.IsLower(character) ? 'a' : 'A';
-            encodedString += (char)((character - baseChar + shift) % 26 + baseChar);
-        }
-        else
-        {
-            encodedString += character; // Non-alphabet characters remain unchanged
-        }
-    }
-    return encodedString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -562,37 +423,20 @@ Here is an example of how you can use the `ceaser_cipher_encode` function to enc
 string message = "Hello, World!";
 int shift = 3;  
 string encoded_message = ceaser_cipher_encode(message, shift);
-write_line("Original: " + message);
-write_line("Encoded: " + encoded_message);
+std::cout << "Original: " << message << std::endl;
+std::cout << "Encoded: " << encoded_message << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string message = "Hello, World!";
 int shift = 3;
 string encodedMessage = ceaserCipherEncode(message, shift);
-WriteLine("Original: " + message);
-WriteLine("Encoded: " + encodedMessage);
+Console.WriteLine("Original: " + message);
+Console.WriteLine("Encoded: " + encodedMessage);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string message = "Hello, World!";
-int shift = 3;
-string encodedMessage = ceaserCipherEncode(message, shift);
-SplashKit.WriteLine("Original: " + message);
-SplashKit.WriteLine("Encoded: " + encodedMessage);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -601,7 +445,7 @@ SplashKit.WriteLine("Encoded: " + encodedMessage);
 message = "Hello, World!"
 shift = 3
 encoded_message = ceaser_cipher_encode(message, shift)
-write_line(f"Original: {message}")
+print(f"Original: {message}")
 ```
 
 </TabItem>
@@ -637,28 +481,12 @@ string ceaser_cipher_decode(const string &input, int shift)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string ceaserCipherDecode(string input, int shift)
 {
     return ceaserCipherEncode(input, 26 - (shift % 26)); // Reverse the shift
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string ceaserCipherDecode(string input, int shift)
-{
-    return ceaserCipherEncode(input, 26 - (shift % 26)); // Reverse the shift
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -681,35 +509,20 @@ The following code demonstrates how you can use the `ceaser_cipher_decode` funct
 ```cpp
 string encoded_message = "Khoor, Zruog!";
 int shift = 3;
-write_line("Encoded: " + encoded_message);
-write_line("Decoded: " + ceaser_cipher_decode(encoded_message, shift));
+std::cout << "Encoded: " << encoded_message << std::endl;
+std::cout << "Decoded: " << ceaser_cipher_decode(encoded_message, shift) << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
 
 ```csharp
 string encodedMessage = "Khoor, Zruog!";
 int shift = 3;
-WriteLine("Encoded: " + encodedMessage);
-WriteLine("Decoded: " + ceaserCipherDecode(encodedMessage, shift));
+Console.WriteLine("Encoded: " + encodedMessage);
+Console.WriteLine("Decoded: " + ceaserCipherDecode(encodedMessage, shift));
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string encodedMessage = "Khoor, Zruog!";
-int shift = 3;
-Splashkit.WriteLine("Encoded: " + encodedMessage);
-SplashKit.WriteLine("Decoded: " + ceaserCipherDecode(encodedMessage, shift));
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -717,8 +530,8 @@ SplashKit.WriteLine("Decoded: " + ceaserCipherDecode(encodedMessage, shift));
 ```python
 encoded_message = "Khoor, Zruog!"
 shift = 3
-write_line(f"Encoded: {encoded_message}")
-write_line(f"Decoded: {ceaser_cipher_decode(encoded_message, shift)}")
+print(f"Encoded: {encoded_message}")
+print(f"Decoded: {ceaser_cipher_decode(encoded_message, shift)}")
 ```
 
 </TabItem>
@@ -749,7 +562,7 @@ void ceaser_cipher_brute_force(const string &input)
 {
     for (int shift = 0; shift < 26; shift++)
     {
-        write_line("Shift " + to_string(shift) + "=> " + ceaser_cipher_decode(input, shift));
+        std::cout << "Shift " << shift << "=> " << ceaser_cipher_decode(input, shift) << std::endl;
     }
 }
 ```
@@ -757,34 +570,15 @@ void ceaser_cipher_brute_force(const string &input)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 void ceaserCipherBruteForce(string input)
 {
     for (int shift = 0; shift < 26; shift++)
     {
-        WriteLine("Shift " + shift + "=> " + ceaserCipherDecode(input, shift));
+        Console.WriteLine("Shift " + shift + "=> " + ceaserCipherDecode(input, shift));
     }
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-void ceaserCipherBruteForce(string input)
-{
-    for (int shift = 0; shift < 26; shift++)
-    {
-        SplashKit.WriteLine("Shift " + shift + "=> " + ceaserCipherDecode(input, shift));
-    }
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -792,7 +586,7 @@ void ceaserCipherBruteForce(string input)
 ```python
 def ceaser_cipher_brute_force(input_string):
     for shift in range(26):
-        write_line(f"Shift {shift}=> {ceaser_cipher_decode(input_string, shift)}")
+        print(f"Shift {shift}=> {ceaser_cipher_decode(input_string, shift)}")
 ```
 
 </TabItem>
@@ -808,40 +602,26 @@ Here is an example of how you can use the `ceaser_cipher_brute_force` function t
 <TabItem label="C++">
 
 ```cpp
-write_line("Enter the encoded message: ");
-string encoded_message = read_line();
+std::cout << "Enter the encoded message: ";
+string encoded_message;
+std::getline(std::cin, encoded_message);
 ceaser_cipher_brute_force(encoded_message);
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
-WriteLine("Enter the encoded message: ");
-string encodedMessage = ReadLine();
+Console.WriteLine("Enter the encoded message: ");
+string encodedMessage = Console.ReadLine();
 ceaserCipherBruteForce(encodedMessage);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-SplashKit.WriteLine("Enter the encoded message: ");
-string encodedMessage = SplashKit.ReadLine();
-ceaserCipherBruteForce(encodedMessage);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
-write_line("Enter the encrypted message: ")
+print("Enter the encrypted message: ")
 encoded_message = read_line()
 ceaser_cipher_brute_force(encoded_message)
 ```
@@ -929,9 +709,6 @@ string url_encode(const string &input)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 // Function to convert a number to its hexadecimal representation
 char ToHex(char num)
@@ -960,41 +737,6 @@ string UrlEncode(string input)
     return encodedString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-// Function to convert a number to its hexadecimal representation
-char ToHex(char num)
-{
-    const string hexChars = "0123456789ABCDEF";
-    return hexChars[num & 0xF];
-}
-
-// Function to encode a URL
-string UrlEncode(string input)
-{
-    string encodedString = "";
-    foreach (char character in input)
-    {
-        if (char.IsLetterOrDigit(character) || character == '-' || character == '_' || character == '.' || character == '~')
-        {
-            encodedString += character;
-        }
-        else
-        {
-            encodedString += '%';
-            encodedString += ToHex((char)(character >> 4));
-            encodedString += ToHex((char)(character & 0xF));
-        }
-    }
-    return encodedString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1029,32 +771,17 @@ Here is an example of how you can use the `url_encode` function to encode a URL:
 ```cpp
 string url = "https://www.example.com/search?q=hello world";
 string encoded_url = url_encode(url);
-write_line("URL Encode (" + url + ")=> " + url_encode(url));
+std::cout << "URL Encode (" << url << ")=> " << url_encode(url) << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string url = "https://www.example.com/search?q=hello world";
 string encodedUrl = UrlEncode(url);
-WriteLine("URL Encode (" + url + ")=> " + UrlEncode(url));
+Console.WriteLine("URL Encode (" + url + ")=> " + UrlEncode(url));
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string url = "https://www.example.com/search?q=hello world";
-string encodedUrl = UrlEncode(url);
-SplashKit.WriteLine("URL Encode (" + url + ")=> " + UrlEncode(url));
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1062,7 +789,7 @@ SplashKit.WriteLine("URL Encode (" + url + ")=> " + UrlEncode(url));
 ```python
 url = "https://www.example.com/search?q=hello world"
 encoded_url = url_encode(url)
-write_line(f"URL Encode ({url})=> {encoded_url}")
+print(f"URL Encode ({url})=> {encoded_url}")
 ```
 
 </TabItem>
@@ -1143,9 +870,6 @@ string UrlDecode(string input)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 // Function to convert a hexadecimal character to its decimal representation
 int FromHex(char hex)
@@ -1198,65 +922,6 @@ string UrlDecode(string input)
     return decodedString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-// Function to convert a hexadecimal character to its decimal representation
-int FromHex(char hex)
-{
-    if (hex >= '0' && hex <= '9') return hex - '0';
-    if (hex >= 'A' && hex <= 'F') return hex - 'A' + 10;
-    if (hex >= 'a' && hex <= 'f') return hex - 'a' + 10;
-    return -1; // Invalid hex character
-}
-
-// Function to decode a URL-encoded string
-string UrlDecode(string input)
-{
-    string decodedString = "";
-    for (int i = 0; i < input.Length; i++)
-    {
-        if (input[i] == '%')
-        {
-            if (i + 2 < input.Length)
-            {
-                char hex1 = input[i + 1];
-                char hex2 = input[i + 2];
-                int decodedChar = (FromHex(hex1) << 4) | FromHex(hex2);
-                if (decodedChar >= 0) // Only append if valid hex
-                {
-                    decodedString += (char)decodedChar;
-                    i += 2; // Skip the two hex characters
-                }
-                else
-                {
-                    // Handle invalid hex gracefully (optional)
-                    decodedString += '%';
-                }
-            }
-            else
-            {
-                // Handle incomplete encoding gracefully
-                decodedString += '%';
-            }
-        }
-        else if (input[i] == '+')
-        {
-            decodedString += ' '; // '+' is interpreted as space in URL encoding
-        }
-        else
-        {
-            decodedString += input[i];
-        }
-    }
-    return decodedString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1307,37 +972,23 @@ def url_decode(input_string):
 
 ```cpp
 string encoded_url = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world";
-write_line("URL Decode (" + encoded_url + ")=> " + url_decode(encoded_url));
+std::cout << "URL Decode (" << encoded_url << ")=> " << url_decode(encoded_url) << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string encodedUrl = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world";
-WriteLine("URL Decode (" + encodedUrl + ")=> " + UrlDecode(encodedUrl));
+Console.WriteLine("URL Decode (" + encodedUrl + ")=> " + UrlDecode(encodedUrl));
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string encodedUrl = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world";
-SplashKit.WriteLine("URL Decode (" + encodedUrl + ")=> " + UrlDecode(encodedUrl));
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 encoded_url = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world"
-write_line(f"URL Decode ({encoded_url})=> {url_decode(encoded_url)}")
+print(f"URL Decode ({encoded_url})=> {url_decode(encoded_url)}")
 ```
 
 </TabItem>

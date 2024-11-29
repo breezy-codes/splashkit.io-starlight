@@ -76,9 +76,6 @@ double calculate_square_root(double x)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 double CalculateSquareRoot(int x)
 {
@@ -111,45 +108,6 @@ double CalculateSquareRoot(int x)
     return y;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-double CalculateSquareRoot(int x)
-{
-    double y = 0.0;
-    int p = 0;
-    int c = 0;
-
-    // Find the first perfect square greater than the input number
-    while (true)
-    {
-        p++;
-        int square = (p + 1) * (p + 1); // Calculate the next perfect square
-        if (x <= square) // Stop when x is less than or equal to the square
-            break;
-    }
-
-    // Approximate the square root using the Newton-Raphson method
-    y = (double)p;
-    c = 0;
-    while (c < 10) // Perform a maximum of 10 iterations
-    {
-        y = (x / y + y) / 2; // Update the guess by averaging x/y and y
-
-        if (y * y == x) // Check if the square of the current guess matches the input
-            return y; // If exact, return the square root
-
-        c++;
-    }
-
-    return y;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -190,37 +148,23 @@ You can use the `calculate_square_root` function to find the square root of a nu
 
 ```cpp
 double result = calculate_square_root(25);
-write_line("The square root of 25 is: " + std::to_string(result));
+std::cout << "The square root of 25 is: " << result << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 double result = CalculateSquareRoot(25);
-WriteLine($"The square root of 25 is: {result}");
+Console.WriteLine($"The square root of 25 is: {result}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-double result = CalculateSquareRoot(25);
-SplashKit.WriteLine($"The square root of 25 is: {result}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 result = calculate_square_root(25)
-write_line(f"The square root of 25 is: {result}")
+print(f"The square root of 25 is: {result}")
 ```
 
 </TabItem>
@@ -277,9 +221,6 @@ bool is_the_number_prime(int n)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool IsTheNumberPrime(int n)
 {
@@ -294,27 +235,6 @@ bool IsTheNumberPrime(int n)
     return true;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool IsTheNumberPrime(int n)
-{
-    if (n <= 1) return false;
-
-    // Check if the number is divisible by any number from 2 to the square root of the number
-    for (int i = 2; i <= CalculateSquareRoot(n); i++)
-    {
-        if (n % i == 0)
-            return false;
-    }
-    return true;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -343,37 +263,23 @@ You can use the `is_the_number_prime` function to check if a number is prime. Fo
 
 ```cpp
 bool is_prime = is_the_number_prime(17);
-write_line("Is 17 a prime number? " + (is_prime ? "Yes" : "No"));
+std::cout << "Is 17 a prime number? " << (is_prime ? "Yes" : "No") << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool isPrime = IsTheNumberPrime(17);
-WriteLine($"Is 17 a prime number? {(isPrime ? "Yes" : "No")}");
+Console.WriteLine($"Is 17 a prime number? {(isPrime ? "Yes" : "No")}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool isPrime = IsTheNumberPrime(17);
-SplashKit.WriteLine($"Is 17 a prime number? {(isPrime ? "Yes" : "No")}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 is_prime = is_the_number_prime(17)
-write_line(f"Is 17 a prime number? {'Yes' if is_prime else 'No'}")
+print(f"Is 17 a prime number? {'Yes' if is_prime else 'No'}")
 ```
 
 </TabItem>
@@ -425,78 +331,52 @@ This function relies on the `is_the_number_prime` function defined above.
 ```cpp
 void find_prime_numbers_up_to(int limit)
 {
-    write_line("Prime numbers up to " + std::to_string(limit) + ":");
+    std::cout << "Prime numbers up to " << limit << ":";
 
     // Check all numbers up to the limit to see if they are prime
     for (int i = 2; i <= limit; i++)
     {
         if (is_the_number_prime(i))
         {
-            write(std::to_string(i) + " ");
+            std::cout << i << " ";
         }
     }
-    write_line("");
+    std::cout << std::endl;
 }
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 void FindPrimeNumbersUpTo(int limit)
 {
-    WriteLine($"Prime numbers up to {limit}:");
+    Console.WriteLine($"Prime numbers up to {limit}:");
 
     // Check all numbers up to the limit to see if they are prime
     for (int i = 2; i <= limit; i++)
     {
         if (IsTheNumberPrime(i))
         {
-            Write($"{i} ");
+            Console.Write($"{i} ");
         }
     }
-    WriteLine("");
+    Console.WriteLine("");
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-void FindPrimeNumbersUpTo(int limit)
-{
-    SplashKit.WriteLine($"Prime numbers up to {limit}:");
-
-    // Check all numbers up to the limit to see if they are prime
-    for (int i = 2; i <= limit; i++)
-    {
-        if (IsTheNumberPrime(i))
-        {
-            SplashKit.Write($"{i} ");
-        }
-    }
-    SplashKit.WriteLine("");
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 def find_prime_numbers_up_to(limit):
-    write_line(f"Prime numbers up to {limit}:")
+    print(f"Prime numbers up to {limit}:")
 
     # Check all numbers up to the limit to see if they are prime
     for i in range(2, limit + 1):
         if is_the_number_prime(i):
-            write(f"{i} ")
-    write_line("")
+            print(f"{i} ")
+    print("")
 ```
 
 </TabItem>
@@ -516,22 +396,9 @@ find_prime_numbers_up_to(40);
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 FindPrimeNumbersUpTo(40);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-FindPrimeNumbersUpTo(40);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -602,9 +469,6 @@ int count_divisors(int n)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int CountDivisors(int n)
 {
@@ -626,34 +490,6 @@ int CountDivisors(int n)
     return count;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int CountDivisors(int n)
-{
-    int count = 0;
-
-    // Check all numbers up to the square root of n
-    for (int i = 1; i <= CalculateSquareRoot(n); i++)
-    {
-        if (n % i == 0)
-        {
-            // If divisors are equal, count only one
-            if (n / i == i)
-                count++;
-            // Otherwise count both
-            else
-                count += 2;
-        }
-    }
-    return count;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -686,37 +522,23 @@ You can use the `count_divisors` function to find the number of divisors of a gi
 
 ```cpp
 int divisors = count_divisors(12);
-write_line("The number of divisors of 12 is: " + std::to_string(divisors));
+std::cout << "The number of divisors of 12 is: " << divisors << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int divisors = CountDivisors(12);
-WriteLine($"The number of divisors of 12 is: {divisors}");
+Console.WriteLine($"The number of divisors of 12 is: {divisors}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int divisors = CountDivisors(12);
-SplashKit.WriteLine($"The number of divisors of 12 is: {divisors}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 divisors = count_divisors(12)
-write_line(f"The number of divisors of 12 is: {divisors}")
+print(f"The number of divisors of 12 is: {divisors}")
 ```
 
 </TabItem>
@@ -792,9 +614,6 @@ int sum_divisors(int n)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int SumDivisors(int n)
 {
@@ -816,34 +635,6 @@ int SumDivisors(int n)
     return sum;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int SumDivisors(int n)
-{
-    int sum = 0;
-
-    // Check all numbers up to the square root of n
-    for (int i = 1; i <= CalculateSquareRoot(n); i++)
-    {
-        if (n % i == 0)
-        {
-            // If divisors are equal, add only one
-            if (n / i == i)
-                sum += i;
-            // Otherwise add both
-            else
-                sum += i + n / i;
-        }
-    }
-    return sum;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -876,37 +667,23 @@ You can use the `sum_divisors` function to find the sum of divisors of a given n
 
 ```cpp
 int sum = sum_divisors(12);
-write_line("The sum of divisors of 12 is: " + std::to_string(sum));
+std::cout << "The sum of divisors of 12 is: " << sum << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int sum = SumDivisors(12);
-WriteLine($"The sum of divisors of 12 is: {sum}");
+Console.WriteLine($"The sum of divisors of 12 is: {sum}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int sum = SumDivisors(12);
-SplashKit.WriteLine($"The sum of divisors of 12 is: {sum}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 sum = sum_divisors(12)
-write_line(f"The sum of divisors of 12 is: {sum}")
+print(f"The sum of divisors of 12 is: {sum}")
 ```
 
 </TabItem>
@@ -959,9 +736,6 @@ int greatest_common_divisor(int a, int b)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int GreatestCommonDivisor(int a, int b)
 {
@@ -976,27 +750,6 @@ int GreatestCommonDivisor(int a, int b)
     return a;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int GreatestCommonDivisor(int a, int b)
-{
-
-    // Repeat the euclidean algorithm until the remainder is zero
-    while (b != 0)
-    {
-        int temp = b;
-        b = a % b;
-        a = temp;
-    }
-    return a;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1024,37 +777,23 @@ You can use the `greatest_common_divisor` function to find the GCD of two number
 
 ```cpp
 int gcd = greatest_common_divisor(24, 36);
-write_line("The GCD of 24 and 36 is: " + std::to_string(gcd));
+std::cout << "The GCD of 24 and 36 is: " << gcd << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int gcd = GreatestCommonDivisor(24, 36);
-WriteLine($"The GCD of 24 and 36 is: {gcd}");
+Console.WriteLine($"The GCD of 24 and 36 is: {gcd}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int gcd = GreatestCommonDivisor(24, 36);
-SplashKit.WriteLine($"The GCD of 24 and 36 is: {gcd}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 gcd = greatest_common_divisor(24, 36)
-write_line(f"The GCD of 24 and 36 is: {gcd}")
+print(f"The GCD of 24 and 36 is: {gcd}")
 ```
 
 </TabItem>
@@ -1100,28 +839,12 @@ int least_common_multiple(int a, int b)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int LeastCommonMultiple(int a, int b)
 {
     return Math.Abs(a * b) / GreatestCommonDivisor(a, b);
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int LeastCommonMultiple(int a, int b)
-{
-    return Math.Abs(a * b) / GreatestCommonDivisor(a, b);
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1143,37 +866,23 @@ You can use the `least_common_multiple` function to find the LCM of two numbers.
 
 ```cpp
 int lcm = least_common_multiple(24, 36);
-write_line("The LCM of 24 and 36 is: " + std::to_string(lcm));
+std::cout << "The LCM of 24 and 36 is: " << lcm << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int lcm = LeastCommonMultiple(24, 36);
-WriteLine($"The LCM of 24 and 36 is: {lcm}");
+Console.WriteLine($"The LCM of 24 and 36 is: {lcm}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int lcm = LeastCommonMultiple(24, 36);
-SplashKit.WriteLine($"The LCM of 24 and 36 is: {lcm}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 lcm = least_common_multiple(24, 36)
-write_line(f"The LCM of 24 and 36 is: {lcm}")
+print(f"The LCM of 24 and 36 is: {lcm}")
 ```
 
 </TabItem>
@@ -1241,37 +950,23 @@ You can use the `are_coprime` function to check if two numbers are coprime. For 
 
 ```cpp
 bool coprime = are_coprime(8, 15);
-write_line("Are 8 and 15 coprime? " + (coprime ? "Yes" : "No"));
+std::cout << "Are 8 and 15 coprime? " << (coprime ? "Yes" : "No") << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool coprime = AreCoprime(8, 15);
-WriteLine($"Are 8 and 15 coprime? {(coprime ? "Yes" : "No")}");
+Console.WriteLine($"Are 8 and 15 coprime? {(coprime ? "Yes" : "No")}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool coprime = AreCoprime(8, 15);
-SplashKit.WriteLine($"Are 8 and 15 coprime? {(coprime ? "Yes" : "No")}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 coprime = are_coprime(8, 15)
-write_line(f"Are 8 and 15 coprime? {'Yes' if coprime else 'No'}")
+print(f"Are 8 and 15 coprime? {'Yes' if coprime else 'No'}")
 ```
 
 </TabItem>
@@ -1307,78 +1002,52 @@ This function relies on the `are_coprime` function defined above.
 ```cpp
 void find_coprimes_up_to(int n, int max) 
 {
-    write_line("Numbers coprime to " + std::to_string(n) + " up to " + std::to_string(max) + ":");
+    std::cout << "Numbers coprime to " << n << " up to " << max << ":";
 
     // Check all numbers up to the maximum
     for (int i = 1; i <= max; i++) 
     {
         if (are_coprime(n, i)) 
         {
-            write(std::to_string(i) + " ");
+            std::cout << i << " ";
         }
     }
-    write_line("");
+    std::cout << std::endl;
 }
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 void FindCoprimesUpTo(int n, int max) 
 {
-    WriteLine($"Numbers coprime to {n} up to {max}:");
+    Console.WriteLine($"Numbers coprime to {n} up to {max}:");
 
     // Check all numbers up to the maximum
     for (int i = 1; i <= max; i++) 
     {
         if (AreCoprime(n, i)) 
         {
-            Write($"{i} ");
+            Console.Write($"{i} ");
         }
     }
-    WriteLine("");
+    Console.WriteLine("");
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-void FindCoprimesUpTo(int n, int max) 
-{
-    SplashKit.WriteLine($"Numbers coprime to {n} up to {max}:");
-
-    // Check all numbers up to the maximum
-    for (int i = 1; i <= max; i++) 
-    {
-        if (AreCoprime(n, i)) 
-        {
-            SplashKit.Write($"{i} ");
-        }
-    }
-    SplashKit.WriteLine("");
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 def find_coprimes_up_to(n, max):
-    write_line(f"Numbers coprime to {n} up to {max}:")
+    print(f"Numbers coprime to {n} up to {max}:")
 
     # Check all numbers up to the maximum
     for i in range(1, max + 1):
         if are_coprime(n, i):
             write(f"{i} ")
-    write_line("")
+    print("")
 ```
 
 </TabItem>
@@ -1398,22 +1067,9 @@ find_coprimes_up_to(12, 20);
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 FindCoprimesUpTo(12, 20);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-FindCoprimesUpTo(12, 20);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1457,77 +1113,51 @@ The following function finds all factors of a given number by checking all poten
 ```cpp
 void find_factors(int n) 
 {
-    write_line("Factors of " + std::to_string(n) + ":");
+    std::cout << "Factors of " << n << ": ";
 
     // Check all potential divisors up to n
     for (int i = 1; i <= n; i++) 
     {
         if (n % i == 0) 
         {
-            write(std::to_string(i) + " ");
+            std::cout << i << " ";
         }
     }
-    write_line("");
+    std::cout << std::endl;
 }
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 void FindFactors(int n) 
 {
-    WriteLine($"Factors of {n}:");
+    Console.WriteLine($"Factors of {n}:");
 
     // Check all potential divisors up to n
     for (int i = 1; i <= n; i++) 
     {
         if (n % i == 0) 
         {
-            Write($"{i} ");
+            Console.Write($"{i} ");
         }
     }
-    WriteLine("");
+    Console.WriteLine("");
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-void FindFactors(int n) 
-{
-    SplashKit.WriteLine($"Factors of {n}:");
-
-    // Check all potential divisors up to n
-    for (int i = 1; i <= n; i++) 
-    {
-        if (n % i == 0) 
-        {
-            SplashKit.Write($"{i} ");
-        }
-    }
-    SplashKit.WriteLine("");
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 def find_factors(n):
-    write_line(f"Factors of {n}:")
+    print(f"Factors of {n}:")
 
     # Check all potential divisors up to n
     factors = [i for i in range(1, n + 1) if n % i == 0]
-    write(" ".join(map(str, factors)))
-    write_line("")
+    print(" ".join(map(str, factors)))
+    print("")
 ```
 
 </TabItem>
@@ -1547,22 +1177,9 @@ find_factors(24);
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 FindFactors(24);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-FindFactors(24);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1604,12 +1221,12 @@ The prime factorisation of a number is its decomposition into a product of prime
 ```cpp
 void find_prime_factors(int n) 
 {
-    write_line("Prime factors of " + std::to_string(n) + ":");
+    std::cout << "Prime factors of " << n << ": ";
     
     // Extract all factors of 2
     while (n % 2 == 0) 
     {
-        write("2 ");
+        std::cout << "2 ";
         n /= 2;
     }
     
@@ -1618,29 +1235,26 @@ void find_prime_factors(int n)
     {
         while (n % i == 0) 
         {
-            write(std::to_string(i) + " ");
+            std::cout << i << " ";
             n /= i;
         }
     }
     
     // If n is still greater than 2, it's a prime factor
     if (n > 2)
-        write(std::to_string(n));
+        std::cout << n;
         
-    write_line("");
+    std::cout << std::endl;
 }
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 void FindPrimeFactors(int n) 
 {
-    WriteLine($"Prime factors of {n}:");
+    Console.WriteLine($"Prime factors of {n}:");
     
     // Extract all factors of 2
     while (n % 2 == 0) 
@@ -1663,52 +1277,16 @@ void FindPrimeFactors(int n)
     if (n > 2)
         Write(n);
         
-    WriteLine("");
+    Console.WriteLine("");
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-void FindPrimeFactors(int n) 
-{
-    SplashKit.WriteLine($"Prime factors of {n}:");
-    
-    // Extract all factors of 2
-    while (n % 2 == 0) 
-    {
-        SplashKit.Write("2 ");
-        n /= 2;
-    }
-    
-    // Check odd numbers up to square root
-    for (int i = 3; i * i <= n; i += 2) 
-    {
-        while (n % i == 0) 
-        {
-            SplashKit.Write($"{i} ");
-            n /= i;
-        }
-    }
-    
-    // If n is still greater than 2, it's a prime factor
-    if (n > 2)
-        SplashKit.Write(n.ToString());
-        
-    SplashKit.WriteLine("");
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 def find_prime_factors(n):
-    write_line(f"Prime factors of {n}:")
+    print(f"Prime factors of {n}:")
     
     # Extract all factors of 2
     while n % 2 == 0:
@@ -1725,7 +1303,7 @@ def find_prime_factors(n):
     if n > 2:
         write(str(n))
         
-    write_line("")
+    print("")
 ```
 
 </TabItem>
@@ -1745,22 +1323,9 @@ find_prime_factors(24);
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 FindPrimeFactors(24);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-FindPrimeFactors(24);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1838,37 +1403,23 @@ You can use the `is_congruent` function to check if two numbers are congruent mo
 
 ```cpp
 bool congruent = is_congruent(38, 14, 12);
-write_line("Are 38 and 14 congruent modulo 12? " + (congruent ? "Yes" : "No"));
+std::cout << "Are 38 and 14 congruent modulo 12? " << (congruent ? "Yes" : "No") << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool congruent = IsCongruent(38, 14, 12);
-WriteLine($"Are 38 and 14 congruent modulo 12? {(congruent ? "Yes" : "No")}");
+Console.WriteLine($"Are 38 and 14 congruent modulo 12? {(congruent ? "Yes" : "No")}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool congruent = IsCongruent(38, 14, 12);
-SplashKit.WriteLine($"Are 38 and 14 congruent modulo 12? {(congruent ? "Yes" : "No")}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 congruent = is_congruent(38, 14, 12)
-write_line(f"Are 38 and 14 congruent modulo 12? {'Yes' if congruent else 'No'}")
+print(f"Are 38 and 14 congruent modulo 12? {'Yes' if congruent else 'No'}")
 ```
 
 </TabItem>
@@ -1930,26 +1481,11 @@ int modular_addition(int a, int b, int mod) {
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int ModularAddition(int a, int b, int mod) {
     return (a + b) % mod;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int ModularAddition(int a, int b, int mod) {
-    return (a + b) % mod;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1971,37 +1507,23 @@ You can use the `modular_addition` function to perform modular addition of two n
 
 ```cpp
 int result = modular_addition(7, 5, 10);
-write_line("The result of modular addition is: " + std::to_string(result));
+std::cout << "The result of modular addition is: " << result << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int result = ModularAddition(7, 5, 10);
-WriteLine($"The result of modular addition is: {result}");
+Console.WriteLine($"The result of modular addition is: {result}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int result = ModularAddition(7, 5, 10);
-SplashKit.WriteLine($"The result of modular addition is: {result}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 result = modular_addition(7, 5, 10)
-write_line(f"The result of modular addition is: {result}")
+print(f"The result of modular addition is: {result}")
 ```
 
 </TabItem>
@@ -2059,26 +1581,11 @@ int modular_subtraction(int a, int b, int mod) {
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int ModularSubtraction(int a, int b, int mod) {
     return (a - b + mod) % mod;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int ModularSubtraction(int a, int b, int mod) {
-    return (a - b + mod) % mod;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -2090,6 +1597,51 @@ def modular_subtraction(a, b, mod):
 
 </TabItem>
 </Tabs>
+
+#### Using this function
+
+You can use the `modular_subtraction` function to perform modular subtraction of two numbers. For example, to subtract $5$ from $7$ with a modulus of $10$:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+int result = modular_subtraction(7, 5, 10);
+std::cout << "The result of modular subtraction is: " << result << std::endl;
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+int result = ModularSubtraction(7, 5, 10);
+Console.WriteLine($"The result of modular subtraction is: {result}");
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+result = modular_subtraction(7, 5, 10)
+print(f"The result of modular subtraction is: {result}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+After running the above code, the expected output should be:
+
+```plaintext
+The result of modular subtraction is: 2
+```
+
+If we swapped the value to be $24$ instead of $5$, the output would then be:
+
+```plaintext
+The result of modular subtraction is: 3
+```
 
 ### Modular Multiplication
 
@@ -2129,26 +1681,11 @@ int modular_multiplication(int a, int b, int mod) {
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int ModularMultiplication(int a, int b, int mod) {
     return (a * b) % mod;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int ModularMultiplication(int a, int b, int mod) {
-    return (a * b) % mod;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -2170,37 +1707,23 @@ You can use the `modular_multiplication` function to perform modular multiplicat
 
 ```cpp
 int result = modular_multiplication(7, 5, 10);
-write_line("The result of modular multiplication is: " + std::to_string(result));
+std::cout << "The result of modular multiplication is: " << result << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int result = ModularMultiplication(7, 5, 10);
-WriteLine($"The result of modular multiplication is: {result}");
+Console.WriteLine($"The result of modular multiplication is: {result}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int result = ModularMultiplication(7, 5, 10);
-SplashKit.WriteLine($"The result of modular multiplication is: {result}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 result = modular_multiplication(7, 5, 10)
-write_line(f"The result of modular multiplication is: {result}")
+print(f"The result of modular multiplication is: {result}")
 ```
 
 </TabItem>
@@ -2269,9 +1792,6 @@ int modular_exponentiation(int base, int exponent, int mod) {
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int ModularExponentiation(int base, int exponent, int mod) {
     int result = 1;
@@ -2287,28 +1807,6 @@ int ModularExponentiation(int base, int exponent, int mod) {
     return result;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int ModularExponentiation(int base, int exponent, int mod) {
-    int result = 1;
-    base = base % mod;
-
-    while (exponent > 0) {
-        if (exponent % 2 == 1) {
-            result = (result * base) % mod;
-        }
-        exponent >>= 1;
-        base = (base * base) % mod;
-    }
-    return result;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -2338,37 +1836,23 @@ You can use the `modular_exponentiation` function to perform modular exponentiat
 
 ```cpp
 int result = modular_exponentiation(3, 4, 5);
-write_line("The result of modular exponentiation is: " + std::to_string(result));
+std::cout << "The result of modular exponentiation is: " << result << std::endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 int result = ModularExponentiation(3, 4, 5);
-WriteLine($"The result of modular exponentiation is: {result}");
+Console.WriteLine($"The result of modular exponentiation is: {result}");
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-int result = ModularExponentiation(3, 4, 5);
-SplashKit.WriteLine($"The result of modular exponentiation is: {result}");
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
 
 ```python
 result = modular_exponentiation(3, 4, 5)
-write_line(f"The result of modular exponentiation is: {result}")
+print(f"The result of modular exponentiation is: {result}")
 ```
 
 </TabItem>

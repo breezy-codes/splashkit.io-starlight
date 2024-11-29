@@ -32,6 +32,10 @@ This function checks if a given string is a valid binary number, ensuring it con
 <TabItem label="C++">
 
 ```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
 bool is_binary(const string &binary_string)
 {
     for (char character : binary_string)
@@ -46,9 +50,6 @@ bool is_binary(const string &binary_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool IsBinary(string binaryString)
 {
@@ -60,24 +61,6 @@ bool IsBinary(string binaryString)
     return !string.IsNullOrEmpty(binaryString);
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool IsBinary(string binaryString)
-{
-    foreach (char character in binaryString)
-    {
-        if (character != '0' && character != '1')
-            return false;
-    }
-    return !string.IsNullOrEmpty(binaryString);
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -112,9 +95,6 @@ bool is_hex(const string &hex_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool IsHex(string hexString)
 {
@@ -126,24 +106,6 @@ bool IsHex(string hexString)
     return !string.IsNullOrEmpty(hexString);
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool IsHex(string hexString)
-{
-    foreach (char character in hexString)
-    {
-        if (!((character >= '0' && character <= '9') || (character >= 'A' && character <= 'F') || (character >= 'a' && character <= 'f')))
-            return false;
-    }
-    return !string.IsNullOrEmpty(hexString);
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -178,9 +140,6 @@ bool is_octal(const string &octal_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 bool IsOctal(string octalString)
 {
@@ -192,24 +151,6 @@ bool IsOctal(string octalString)
     return !string.IsNullOrEmpty(octalString);
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-bool IsOctal(string octalString)
-{
-    foreach (char character in octalString)
-    {
-        if (character < '0' || character > '7')
-            return false;
-    }
-    return !string.IsNullOrEmpty(octalString);
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -252,9 +193,6 @@ string dec_to_bin(unsigned int decimal_value)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string DecToBin(uint decimalValue)
 {
@@ -269,27 +207,6 @@ string DecToBin(uint decimalValue)
     return binaryString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string DecToBin(uint decimalValue)
-{
-    if (decimalValue == 0) return "0";
-
-    string binaryString = "";
-    while (decimalValue > 0)
-    {
-        binaryString = ((decimalValue & 1) == 1 ? "1" : "0") + binaryString;
-        decimalValue >>= 1;
-    }
-    return binaryString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -319,32 +236,17 @@ To use this function in your code, you can call it with a decimal value as an ar
 ```cpp
 unsigned int decimal_value = 10;
 string binary_string = dec_to_bin(decimal_value);
-write_line("Binary value: " + binary_string);
+cout << "Binary value: " << binary_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 uint decimalValue = 10;
 string binaryString = DecToBin(decimalValue);
-WriteLine("Binary value: " + binaryString);
+Console.WriteLine("Binary value: " + binaryString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-uint decimalValue = 10;
-string binaryString = DecToBin(decimalValue);
-SplashKit.WriteLine("Binary value: " + binaryString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -352,7 +254,7 @@ SplashKit.WriteLine("Binary value: " + binaryString);
 ```python
 decimal_value = 10
 binary_string = dec_to_bin(decimal_value)
-write_line("Binary value:", binary_string)
+print("Binary value:", binary_string)
 ```
 
 </TabItem>
@@ -402,9 +304,6 @@ unsigned int bin_to_dec(const string &binary_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 uint BinToDec(string binaryString)
 {
@@ -421,29 +320,6 @@ uint BinToDec(string binaryString)
     return decimalValue;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-uint BinToDec(string binaryString)
-{
-    if (!IsBinary(binaryString)) return 0;
-
-    uint decimalValue = 0;
-    for (int i = 0; i < binaryString.Length; i++)
-    {
-        if (binaryString[i] == '1')
-        {
-            decimalValue += (uint)(1 << (binaryString.Length - i - 1));
-        }
-    }
-    return decimalValue;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -473,32 +349,17 @@ To use this function in your code, you can call it with a binary value as an arg
 ```cpp
 string binary_string = "1010";
 unsigned int decimal_value = bin_to_dec(binary_string);
-write_line("Decimal value: " + to_string(decimal_value));
+cout << "Decimal value: " << decimal_value << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string binaryString = "1010";
 uint decimalValue = BinToDec(binaryString);
-WriteLine("Decimal value: " + decimalValue);
+Console.WriteLine("Decimal value: " + decimalValue);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string binaryString = "1010";
-uint decimalValue = BinToDec(binaryString);
-SplashKit.WriteLine("Decimal value: " + decimalValue);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -506,7 +367,7 @@ SplashKit.WriteLine("Decimal value: " + decimalValue);
 ```python
 binary_string = "1010"
 decimal_value = bin_to_dec(binary_string)
-write_line("Decimal value:", decimal_value)
+print("Decimal value:", decimal_value)
 ```
 
 </TabItem>
@@ -572,9 +433,6 @@ string hex_to_bin(const string &hex_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string HexToBin(string hexString)
 {
@@ -595,33 +453,6 @@ string HexToBin(string hexString)
     return binaryString.TrimStart('0');
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string HexToBin(string hexString)
-{
-    if (!IsHex(hexString)) return "";
-
-    string binaryString = "";
-    foreach (char hexChar in hexString)
-    {
-        int hexValue = (hexChar >= '0' && hexChar <= '9') ? hexChar - '0' :
-                       (hexChar >= 'A' && hexChar <= 'F') ? hexChar - 'A' + 10 :
-                       hexChar - 'a' + 10;
-
-        for (int i = 3; i >= 0; i--)
-        {
-            binaryString += ((hexValue >> i) & 1) == 1 ? "1" : "0";
-        }
-    }
-    return binaryString.TrimStart('0');
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -657,32 +488,17 @@ To use this function in your code, you can call it with a hexadecimal value as a
 ```cpp
 string hex_string = "A3";
 string binary_string = hex_to_bin(hex_string);
-write_line("Binary value: " + binary_string);
+cout << "Binary value: " << binary_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string hexString = "A3";
 string binaryString = HexToBin(hexString);
-WriteLine("Binary value: " + binaryString);
+Console.WriteLine("Binary value: " + binaryString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string hexString = "A3";
-string binaryString = HexToBin(hexString);
-SplashKit.WriteLine("Binary value: " + binaryString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -690,7 +506,7 @@ SplashKit.WriteLine("Binary value: " + binaryString);
 ```python
 hex_string = "A3"
 binary_string = hex_to_bin(hex_string)
-write_line("Binary value:", binary_string)
+print("Binary value:", binary_string)
 ```
 
 </TabItem>
@@ -753,9 +569,6 @@ string bin_to_hex(const string &binary_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string BinToHex(string binaryString)
 {
@@ -782,39 +595,6 @@ string BinToHex(string binaryString)
     return hexString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string BinToHex(string binaryString)
-{
-    if (!IsBinary(binaryString)) return "";
-
-    string paddedBinaryString = binaryString.PadLeft((binaryString.Length + 3) / 4 * 4, '0');
-    string hexString = "";
-
-    for (int i = 0; i < paddedBinaryString.Length; i += 4)
-    {
-        int hexValue = 0;
-        for (int j = 0; j < 4; j++)
-        {
-            hexValue <<= 1;
-            if (paddedBinaryString[i + j] == '1')
-                hexValue |= 1;
-        }
-
-        if (hexValue < 10)
-            hexString += (char)('0' + hexValue);
-        else
-            hexString += (char)('A' + (hexValue - 10));
-    }
-    return hexString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -848,32 +628,17 @@ To use this function in your code, you can call it with a binary value as an arg
 ```cpp
 string binary_string = "10100011";
 string hex_string = bin_to_hex(binary_string);
-write_line("Hexadecimal value: " + hex_string);
+cout << "Hexadecimal value: " << hex_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string binaryString = "10100011";
 string hexString = BinToHex(binaryString);
-WriteLine("Hexadecimal value: " + hexString);
+Console.WriteLine("Hexadecimal value: " + hexString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string binaryString = "10100011";
-string hexString = BinToHex(binaryString);
-SplashKit.WriteLine("Hexadecimal value: " + hexString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -881,7 +646,7 @@ SplashKit.WriteLine("Hexadecimal value: " + hexString);
 ```python
 binary_string = "10100011"
 hex_string = bin_to_hex(binary_string)
-write_line("Hexadecimal value:", hex_string)
+print("Hexadecimal value:", hex_string)
 ```
 
 </TabItem>
@@ -927,9 +692,6 @@ string dec_to_oct(unsigned int decimal_value)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string DecToOct(uint decimalValue)
 {
@@ -944,27 +706,6 @@ string DecToOct(uint decimalValue)
     return octalString;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string DecToOct(uint decimalValue)
-{
-    if (decimalValue == 0) return "0";
-
-    string octalString = "";
-    while (decimalValue > 0)
-    {
-        octalString = (decimalValue % 8).ToString() + octalString;
-        decimalValue /= 8;
-    }
-    return octalString;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -994,32 +735,17 @@ To use this function in your code, you can call it with a decimal value as an ar
 ```cpp
 unsigned int decimal_value = 10;
 string octal_string = dec_to_oct(decimal_value);
-write_line("Octal value: " + octal_string);
+cout << "Octal value: " << octal_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 uint decimalValue = 10;
 string octalString = DecToOct(decimalValue);
-WriteLine("Octal value: " + octalString);
+Console.WriteLine("Octal value: " + octalString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-uint decimalValue = 10;
-string octalString = DecToOct(decimalValue);
-SplashKit.WriteLine("Octal value: " + octalString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1027,7 +753,7 @@ SplashKit.WriteLine("Octal value: " + octalString);
 ```python
 decimal_value = 10
 octal_string = dec_to_oct(decimal_value)
-write_line("Octal value:", octal_string)
+print("Octal value:", octal_string)
 ```
 
 </TabItem>
@@ -1074,9 +800,6 @@ unsigned int oct_to_dec(const string &octal_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 uint OctToDec(string octalString)
 {
@@ -1090,26 +813,6 @@ uint OctToDec(string octalString)
     return decimalValue;
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-uint OctToDec(string octalString)
-{
-    if (!IsOctal(octalString)) return 0;
-
-    uint decimalValue = 0;
-    foreach (char octChar in octalString)
-    {
-        decimalValue = decimalValue * 8 + (uint)(octChar - '0');
-    }
-    return decimalValue;
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1138,32 +841,17 @@ To use this function in your code, you can call it with an octal value as an arg
 ```cpp
 string octal_string = "12";
 unsigned int decimal_value = oct_to_dec(octal_string);
-write_line("Decimal value: " + to_string(decimal_value));
+cout << "Decimal value: " << decimal_value << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string octalString = "12";
 uint decimalValue = OctToDec(octalString);
-WriteLine("Decimal value: " + decimalValue);
+Console.WriteLine("Decimal value: " + decimalValue);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string octalString = "12";
-uint decimalValue = OctToDec(octalString);
-SplashKit.WriteLine("Decimal value: " + decimalValue);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1171,7 +859,7 @@ SplashKit.WriteLine("Decimal value: " + decimalValue);
 ```python
 octal_string = "12"
 decimal_value = oct_to_dec(octal_string)
-write_line("Decimal value:", decimal_value)
+print("Decimal value:", decimal_value)
 ```
 
 </TabItem>
@@ -1225,9 +913,6 @@ string oct_to_bin(const string &octal_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string OctToBin(string octalString)
 {
@@ -1245,30 +930,6 @@ string OctToBin(string octalString)
     return binaryString.TrimStart('0');
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string OctToBin(string octalString)
-{
-    if (!IsOctal(octalString)) return "";
-
-    string binaryString = "";
-    foreach (char octChar in octalString)
-    {
-        int octValue = octChar - '0';
-        for (int i = 2; i >= 0; i--)
-        {
-            binaryString += ((octValue >> i) & 1) == 1 ? "1" : "0";
-        }
-    }
-    return binaryString.TrimStart('0');
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1302,32 +963,17 @@ To use this function in your code, you can call it with an octal value as an arg
 ```cpp
 string octal_string = "12";
 string binary_string = oct_to_bin(octal_string);
-write_line("Binary value: " + binary_string);
+cout << "Binary value: " << binary_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string octalString = "12";
 string binaryString = OctToBin(octalString);
-WriteLine("Binary value: " + binaryString);
+Console.WriteLine("Binary value: " + binaryString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string octalString = "12";
-string binaryString = OctToBin(octalString);
-SplashKit.WriteLine("Binary value: " + binaryString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1335,7 +981,7 @@ SplashKit.WriteLine("Binary value: " + binaryString);
 ```python
 octal_string = "12"
 binary_string = oct_to_bin(octal_string)
-write_line("Binary value:", binary_string)
+print("Binary value:", binary_string)
 ```
 
 </TabItem>
@@ -1396,9 +1042,6 @@ string bin_to_oct(const string &binary_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string BinToOct(string binaryString)
 {
@@ -1421,35 +1064,6 @@ string BinToOct(string binaryString)
     return octalString.TrimStart('0');
 }
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string BinToOct(string binaryString)
-{
-    if (!IsBinary(binaryString)) return "";
-
-    string paddedBinaryString = binaryString.PadLeft((binaryString.Length + 2) / 3 * 3, '0');
-    string octalString = "";
-
-    for (int i = 0; i < paddedBinaryString.Length; i += 3)
-    {
-        int octValue = 0;
-        for (int j = 0; j < 3; j++)
-        {
-            octValue <<= 1;
-            if (paddedBinaryString[i + j] == '1')
-                octValue |= 1;
-        }
-        octalString += (char)('0' + octValue);
-    }
-    return octalString.TrimStart('0');
-}
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1484,32 +1098,17 @@ To use this function in your code, you can call it with a binary value as an arg
 ```cpp
 string binary_string = "101010";
 string octal_string = bin_to_oct(binary_string);
-write_line("Octal value: " + octal_string);
+cout << "Octal value: " << octal_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string binaryString = "101010";
 string octalString = BinToOct(binaryString);
-WriteLine("Octal value: " + octalString);
+Console.WriteLine("Octal value: " + octalString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string binaryString = "101010";
-string octalString = BinToOct(binaryString);
-Splashkit.WriteLine("Octal value: " + octalString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1517,7 +1116,7 @@ Splashkit.WriteLine("Octal value: " + octalString);
 ```python
 binary_string = "101010"
 octal_string = bin_to_oct(binary_string)
-write_line("Octal value:", octal_string)
+print("Octal value:", octal_string)
 ```
 
 </TabItem>
@@ -1564,22 +1163,9 @@ string hex_to_oct(const string &hex_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string HexToOct(string hexString) => BinToOct(HexToBin(hexString));
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string HexToOct(string hexString) => BinToOct(HexToBin(hexString));
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1606,32 +1192,17 @@ To use this function in your code, you can call it with a hexadecimal value as a
 ```cpp
 string hex_string = "A3";
 string octal_string = hex_to_oct(hex_string);
-write_line("Octal value: " + octal_string);
+cout << "Octal value: " << octal_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string hexString = "A3";
 string octalString = HexToOct(hexString);
-WriteLine("Octal value: " + octalString);
+Console.WriteLine("Octal value: " + octalString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string hexString = "A3";
-string octalString = HexToOct(hexString);
-SplashKit.WriteLine("Octal value: " + octalString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1639,7 +1210,7 @@ SplashKit.WriteLine("Octal value: " + octalString);
 ```python
 hex_string = "A3"
 octal_string = hex_to_oct(hex_string)
-write_line("Octal value:", octal_string)
+print("Octal value:", octal_string)
 ```
 
 </TabItem>
@@ -1686,22 +1257,9 @@ string oct_to_hex(const string &octal_string)
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string OctToHex(string octalString) => BinToHex(OctToBin(octalString));
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string OctToHex(string octalString) => BinToHex(OctToBin(octalString));
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1728,32 +1286,17 @@ To use this function in your code, you can call it with an octal value as an arg
 ```cpp
 string octal_string = "12";
 string hex_string = oct_to_hex(octal_string);
-write_line("Hexadecimal value: " + hex_string);
+cout << "Hexadecimal value: " << hex_string << endl;
 ```
 
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 string octalString = "12";
 string hexString = OctToHex(octalString);
-WriteLine("Hexadecimal value: " + hexString);
+Console.WriteLine("Hexadecimal value: " + hexString);
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-string octalString = "12";
-string hexString = OctToHex(octalString);
-SplashKit.WriteLine("Hexadecimal value: " + hexString);
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -1761,7 +1304,7 @@ SplashKit.WriteLine("Hexadecimal value: " + hexString);
 ```python
 octal_string = "12"
 hex_string = oct_to_hex(octal_string)
-write_line("Hexadecimal value:", hex_string)
+print("Hexadecimal value:", hex_string)
 ```
 
 </TabItem>
