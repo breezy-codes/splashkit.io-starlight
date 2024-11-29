@@ -6,7 +6,7 @@ author: Brianna Laird
 lastupdated: November 2024
 ---
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
 
 **{frontmatter.description}**  
 Written by: {frontmatter.author}  
@@ -55,11 +55,11 @@ In this guide, we will demonstrate how to use steganography to hide messages wit
 
 To hide a message:
 
+<Steps>
 1. **Choose an Image:** Any bitmap image can be used, but high-resolution images provide more space for hiding data. For this guide, we'll use a bitmap image of a cat.
-
 2. **Prepare the Message:** The message will be encoded in Base64 before embedding to ensure compatibility and readability.
-
 3. **Embed the Message:** Using LSB steganography, replace the least significant bits of the image's pixel data with bits from the encoded message.
+</Steps>
 
 ### Code Example
 
@@ -110,9 +110,12 @@ Message embedded successfully in Base64! Encoded image saved as /yourfolders/hid
 
 To retrieve the hidden message, the recipient must reverse the embedding process. This involves:
 
-1. Reading the modified bitmap image.
-2. Extracting the least significant bits of the pixel data.
-3. Decoding the Base64-encoded message to retrieve the original message.
+<Steps>
+1. **Load the Image:** Open the image containing the hidden message.
+2. **Extract the Message Length:** Retrieve the length of the hidden message from the least significant bits of the image's pixel data.
+3. **Extract the Message:** Using the message length, extract the hidden message from the least significant bits of the image's pixel data.
+4. **Decode the Message:** Decode the extracted message from Base64 to reveal the original content.
+</Steps>
 
 ### Code Example
 
@@ -155,3 +158,91 @@ Length bits: 00000000000000000000000000001100
 Extracted Base64 length (in characters): 12
 Extracted message: im a cat
 ```
+
+## Enhancing Security with the Caesar Cipher
+
+Before embedding the message in the image using Base64 encoding, an additional layer of obfuscation can be applied to make the message more secure. One simple technique for this is the **Caesar Cipher**. Named after Julius Caesar, who reportedly used it in his private correspondence, the Caesar Cipher is a substitution cipher that shifts each character in the plaintext by a fixed number of positions in the alphabet.
+
+By applying a Caesar Cipher to the message prior to Base64 encoding, you introduce an extra hurdle for anyone trying to extract and interpret the hidden message without the necessary key. This is particularly useful when the steganographic embedding is coupled with plaintext messages. However, in real-world scenarios, more advanced encryption techniques should be used for sensitive information.
+
+### How the Caesar Cipher Works
+
+The Caesar Cipher replaces each letter in the message with another letter a fixed number of positions down (or up) the alphabet. For example, with a shift of 3:
+
+- `A` becomes `D`
+- `B` becomes `E`
+- `C` becomes `F`
+
+The process wraps around at the end of the alphabet, so `X` becomes `A`, `Y` becomes `B`, and `Z` becomes `C`. Numbers and punctuation are typically left unchanged, but this can vary based on implementation.
+
+To decrypt a Caesar Cipher message, the recipient simply shifts the letters in the opposite direction by the same number of positions.
+
+### Applying Caesar Cipher to Steganography
+
+Here’s how the process works:
+
+<Steps>
+1. **Plaintext Message:** Start with the original message (e.g., `"im a cat"`).
+2. **Apply Caesar Cipher:** Obfuscate the message using a chosen shift value (e.g., `3`). The message `"im a cat"` might become `"lp d fdw"`.
+3. **Encode in Base64:** Convert the obfuscated message into Base64, producing a string of printable characters.
+4. **Embed in Image:** Use LSB steganography to embed the Base64-encoded string into the image.
+</Steps>
+
+To extract and interpret the message, the reverse process is followed:
+
+<Steps>
+1. **Extract the Base64 Message:** Decode the embedded Base64 string from the image.
+2. **Decrypt Caesar Cipher:** Apply the inverse Caesar Cipher shift to recover the original plaintext message.
+</Steps>
+
+By combining Caesar Cipher obfuscation with LSB steganography, you can enhance the security of your hidden messages while exploring the principles of encryption and steganography. Here is how you can implement this in your code:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+
+```
+
+</TabItem>
+</Tabs>
+
+### Expected Output
+
+After extracting the message and decrypting it using the Caesar Cipher, you'll see an output like:
+
+```plaintext
+Enter the message to embed: 
+hi im a cat
+Enter the Caesar cipher shift value: 
+7
+Caesar cipher shifted message: op pt h jha
+Base64-encoded message: b3AgcHQgaCBqaGE=
+Base64 length (in characters): 16
+Length bits: 00000000000000000000000000010000
+Message embedded successfully in Base64! Encoded image saved as /yourfolders/hiddencat.bmp.
+```
+
+If we then run the same decode script, we would see:
+
+```plaintext
+Length bits: 00000000000000000000000000010000
+Extracted Base64 length (in characters): 16
+Extracted message: op pt h jha
+```
+
+So now, while someone can extract the message, they would need to know that you used Ceaser Cipher, as well as what the shift value was, to get the original message.
