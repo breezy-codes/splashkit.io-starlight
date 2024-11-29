@@ -14,23 +14,56 @@ _Last updated: {frontmatter.lastupdated}_
 
 ---
 
-Steganography is the practice of concealing a message within another message or medium. In this guide, we will explore using steganography to hide messages in images and bitmaps.
+Steganography is the practice of concealing a message within another message or medium. In this guide, we will explore how to use steganography to hide messages in images and bitmaps, delving into concepts, techniques, and practical examples.
 
 ## What is Steganography?
 
-Steganography is the practice of concealing a message within another message or medium. The word steganography is derived from the Greek words "steganos" and "graphein," which mean "covered" and "writing," respectively. Steganography is often used to hide messages in images, audio files, and other digital media. The goal of steganography is to hide the existence of the message, so that it is not detected by anyone other than the intended recipient. Steganography is often used in conjunction with encryption to provide an additional layer of security.
+Steganography is an ancient technique of hiding information in plain sight. The term is derived from the Greek words steganos (covered) and graphein (writing), meaning "covered writing." Unlike encryption, which scrambles the content of a message to make it unreadable to unauthorized parties, steganography disguises the very existence of the message by embedding it within another seemingly innocuous medium, such as an image, audio file, or text document.
 
-### How Does Steganography Work?
+Modern digital steganography often takes advantage of the characteristics of multimedia files to hide information. Images are particularly useful for this purpose because their pixel data provides a high degree of redundancy, which means small changes in pixel values are imperceptible to the human eye. For added security, steganography is frequently combined with encryption, ensuring that even if a hidden message is discovered, it remains unreadable without the proper decryption key.
 
-Steganography works by embedding a message within another message or medium. In the case of images, steganography involves hiding a message within the pixels of the image. The message is typically encoded as a series of bits, which are then embedded in the least significant bits of the image pixels. The human eye is not sensitive to small changes in the least significant bits of an image, so the message is effectively hidden from view. To extract the hidden message, the recipient must know the encoding scheme used to embed the message and must have access to the original image. The recipient can then extract the hidden message by examining the least significant bits of the image pixels.
+### Applications of Steganography
 
-### Using Steganography to Hide Messages in Images
+Steganography has a range of applications, both benign and malicious. Legitimate uses include watermarking to protect intellectual property, secure communication in censorship-prone environments, and embedding metadata for digital forensics. However, it has also been misused for covert communication in cybercrime and espionage. This dual-use nature makes it a fascinating but critical subject in cybersecurity.
 
-There are many different techniques for hiding messages in images using steganography. One common technique is to replace the least significant bits of the image pixels with the bits of the message. This technique is known as least significant bit (LSB) steganography. This will be the technique we will explore in this guide, as it is relatively simple and easy to implement. We will also use base64 encoding to encode the message before embedding it in the image, as well as for decoding the message after extracting it from the image.
+## How Does Steganography Work?
 
-#### How to Hide a Message in an Image
+At its core, digital steganography involves embedding a secret message within a host medium. For images, this is typically done by modifying the binary representation of pixel values. Each pixel in a digital image is represented by a combination of red, green, and blue (RGB) color values. These values are stored as binary numbers, allowing for subtle alterations to be made without visibly affecting the image.
 
-To start, you can use any image you would like for this, but for this guide we will use a bitmap image of a cat. You can download the image [here](https://example.com/cat.bmp). Once you have the image, you can use the following code in either C++, csharp or python for encoding a message into this bitmap.
+The most common method is Least Significant Bit (LSB) Steganography, where the least significant bit (the last bit in a binary number) of each pixel is replaced with a bit from the secret message. This approach leverages the fact that small changes to the least significant bit have negligible visual impact on the image.
+
+For example, consider the binary representation of a pixel's red channel:
+
+```plaintext
+Original: 11110010
+Modified: 11110011
+```
+
+The difference between these two values is imperceptible to the human eye, but the change encodes a bit of the hidden message.
+
+To ensure the hidden message can be retrieved, both the sender and receiver must agree on an encoding scheme. This includes specifying which bits will carry the hidden data and how the message length will be encoded.
+
+### Why Use Base64 Encoding?
+
+Before embedding the message, encoding it in a format like Base64 is common. Base64 ensures that the message is represented using only printable characters, making it easier to handle and less prone to corruption during transmission. This step is particularly useful when the message contains non-textual or binary data.
+
+## Using Steganography to Hide Messages in Images
+
+In this guide, we will demonstrate how to use steganography to hide messages within bitmap images using LSB steganography. This technique is straightforward, making it ideal for beginners, while still being robust enough to illustrate the core principles of steganography.
+
+### Embedding a Message in an Image
+
+To hide a message:
+
+1. **Choose an Image:** Any bitmap image can be used, but high-resolution images provide more space for hiding data. For this guide, we'll use a bitmap image of a cat.
+
+2. **Prepare the Message:** The message will be encoded in Base64 before embedding to ensure compatibility and readability.
+
+3. **Embed the Message:** Using LSB steganography, replace the least significant bits of the image's pixel data with bits from the encoded message.
+
+### Code Example
+
+Here is how you can embed a message in an image using C++, C#, or Python:
 
 :::note
 You will need to update the path to be the path to your image file.
@@ -46,22 +79,9 @@ You will need to update the path to be the path to your image file.
 </TabItem>
 <TabItem label="C#">
 
-<Tabs syncKey="csharp-style">
-<TabItem label="Top-level Statements">
-
 ```csharp
 
 ```
-
-</TabItem>
-<TabItem label="Object-Oriented">
-
-```csharp
-
-```
-
-</TabItem>
-</Tabs>
 
 </TabItem>
 <TabItem label="Python">
@@ -73,9 +93,9 @@ You will need to update the path to be the path to your image file.
 </TabItem>
 </Tabs>
 
-#### Expected Output
+### Expected Output
 
-After running the code in your terminal, you should see an outpujt that shows the message you embedded, its encoded form, the length of the message and the length of bits used to encode the message. Which should look like this:
+After embedding the message, you'll see an output like:
 
 ```plaintext
 Enter the message to embed: 
@@ -84,4 +104,54 @@ Base64-encoded message: aW0gYSBjYXQ=
 Base64 length (in characters): 12
 Length bits: 00000000000000000000000000001100
 Message embedded successfully in Base64! Encoded image saved as /yourfolders/hiddencat.bmp.
+```
+
+## Extracting a Message from an Image
+
+To retrieve the hidden message, the recipient must reverse the embedding process. This involves:
+
+1. Reading the modified bitmap image.
+2. Extracting the least significant bits of the pixel data.
+3. Decoding the Base64-encoded message to retrieve the original message.
+
+### Code Example
+
+Here is how you can extract a message from an image using C++, C#, or Python:
+
+:::note
+You will need to update the path to be the path to your image file.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+
+```
+
+</TabItem>
+</Tabs>
+
+### Expected Output
+
+After extracting the message, you'll see an output like:
+
+```plaintext
+Length bits: 00000000000000000000000000001100
+Extracted Base64 length (in characters): 12
+Extracted message: im a cat
 ```
