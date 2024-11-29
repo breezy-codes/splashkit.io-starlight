@@ -233,7 +233,7 @@ write_line(f"Encoded: {encoded_message}")
 
 The encoded message should be a Base64 representation of the original message.
 
-```shell
+```plaintext
 Original: "Hello, World!"
 Encoded: "SGVsbG8sIFdvcmxkIQ=="
 ```
@@ -420,7 +420,7 @@ write_line(f"Decoded: {decoded_message}")
 
 The decoded message should match the original message that was encoded.
 
-```shell
+```plaintext
 Encoded: "SGVsbG8sIFdvcmxkIQ=="
 Decoded: "Hello, World!"
 ```
@@ -611,7 +611,7 @@ write_line(f"Original: {message}")
 
 The encoded message should be the original message with each character shifted by the specified number of positions.
 
-```shell
+```plaintext
 Original: "Hello, World!"
 Encoded: "Khoor, Zruog!"
 ```
@@ -728,7 +728,7 @@ write_line(f"Decoded: {ceaser_cipher_decode(encoded_message, shift)}")
 
 The decoded message should match the original message that was encoded.
 
-```shell
+```plaintext
 Encoded: "Khoor, Zruog!"
 Decoded: "Hello, World!"
 ```
@@ -853,7 +853,7 @@ ceaser_cipher_brute_force(encoded_message)
 
 The brute-force method should display all possible decrypted messages for each shift value.
 
-```shell
+```plaintext
 Enter the encoded message: 
 Khoor Zruog!
 Shift 0=> Khoor Zruog!
@@ -882,4 +882,471 @@ Shift 22=> Olssv Dvysk!
 Shift 23=> Nkrru Cuxrj!
 Shift 24=> Mjqqt Btwqi!
 Shift 25=> Lipps Asvph!
+```
+
+## URL Transformations
+
+URL transformations are used to encode and decode URLs to ensure that they are safe for use in web applications. URLs may contain special characters that need to be encoded to prevent errors and security vulnerabilities. The most common encoding scheme used for URLs is percent-encoding, which replaces special characters with a percent sign followed by two hexadecimal digits. This ensures that the URL is correctly interpreted by web browsers and servers.
+
+### Encoding URLs
+
+Encoding URLs involves replacing special characters with their percent-encoded equivalents. This process ensures that the URL is safe for use in web applications and can be correctly interpreted by browsers and servers. The following code shows how you can implement URL encoding to convert a URL into a percent-encoded string.
+
+:::note
+Here we will need to define a function for converting a string into its hexadecimal representation, then we can use this function to encode the URL.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+// Function to convert a number to its hexadecimal representation
+string to_hex(char num)
+{
+    const char hex_chars[] = "0123456789ABCDEF";
+    return string(1, hex_chars[num & 0xF]);
+}
+
+// Function to encode a URL
+string url_encode(const string &input)
+{
+    string encoded_string;
+    for (char character : input)
+    {
+        if (isalnum(character) || character == '-' || character == '_' || character == '.' || character == '~')
+        {
+            encoded_string += character;
+        }
+        else
+        {
+            encoded_string += '%' + to_hex(character >> 4) + to_hex(character & 0xF);
+        }
+    }
+    return encoded_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+// Function to convert a number to its hexadecimal representation
+char ToHex(char num)
+{
+    const string hexChars = "0123456789ABCDEF";
+    return hexChars[num & 0xF];
+}
+
+// Function to encode a URL
+string UrlEncode(string input)
+{
+    string encodedString = "";
+    foreach (char character in input)
+    {
+        if (char.IsLetterOrDigit(character) || character == '-' || character == '_' || character == '.' || character == '~')
+        {
+            encodedString += character;
+        }
+        else
+        {
+            encodedString += '%';
+            encodedString += ToHex((char)(character >> 4));
+            encodedString += ToHex((char)(character & 0xF));
+        }
+    }
+    return encodedString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+// Function to convert a number to its hexadecimal representation
+char ToHex(char num)
+{
+    const string hexChars = "0123456789ABCDEF";
+    return hexChars[num & 0xF];
+}
+
+// Function to encode a URL
+string UrlEncode(string input)
+{
+    string encodedString = "";
+    foreach (char character in input)
+    {
+        if (char.IsLetterOrDigit(character) || character == '-' || character == '_' || character == '.' || character == '~')
+        {
+            encodedString += character;
+        }
+        else
+        {
+            encodedString += '%';
+            encodedString += ToHex((char)(character >> 4));
+            encodedString += ToHex((char)(character & 0xF));
+        }
+    }
+    return encodedString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+# Function to convert a number to its hexadecimal representation
+def to_hex(num):
+    hex_chars = "0123456789ABCDEF"
+    return hex_chars[num & 0xF]
+
+# Function to encode a URL
+def url_encode(input_string):
+    encoded_string = ""
+    for character in input_string:
+        if character.isalnum() or character in '-_.~':
+            encoded_string += character
+        else:
+            encoded_string += '%' + to_hex(ord(character) >> 4) + to_hex(ord(character) & 0xF)
+    return encoded_string
+```
+
+</TabItem>
+</Tabs>
+
+#### Using this function
+
+Here is an example of how you can use the `url_encode` function to encode a URL:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string url = "https://www.example.com/search?q=hello world";
+string encoded_url = url_encode(url);
+write_line("URL Encode (" + url + ")=> " + url_encode(url));
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string url = "https://www.example.com/search?q=hello world";
+string encodedUrl = UrlEncode(url);
+WriteLine("URL Encode (" + url + ")=> " + UrlEncode(url));
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string url = "https://www.example.com/search?q=hello world";
+string encodedUrl = UrlEncode(url);
+SplashKit.WriteLine("URL Encode (" + url + ")=> " + UrlEncode(url));
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+url = "https://www.example.com/search?q=hello world"
+encoded_url = url_encode(url)
+write_line(f"URL Encode ({url})=> {encoded_url}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The encoded URL should replace special characters with their percent-encoded equivalents.
+
+```plaintext
+URL Encode (https://www.example.com/search?q=hello world)=> https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world
+```
+
+### Decoding URLs
+
+Decoding URLs involves converting percent-encoded characters back to their original form. This process ensures that the URL is correctly interpreted by web browsers and servers. The following code shows how you can implement URL decoding to convert a percent-encoded string back into its original URL.
+
+:::note
+Here we will need to define a function for converting a hexadecimal string into its decimal representation, then we can use this function to decode the URL.
+:::
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+// Function to convert a hexadecimal character to its decimal representation
+int from_hex(char hex)
+{
+    if (hex >= '0' && hex <= '9') return hex - '0';
+    if (hex >= 'A' && hex <= 'F') return hex - 'A' + 10;
+    if (hex >= 'a' && hex <= 'f') return hex - 'a' + 10;
+    return -1; // Invalid hex character
+}
+
+// Function to decode a URL-encoded string
+string UrlDecode(string input)
+{
+    string decodedString = "";
+    for (int i = 0; i < input.Length; i++)
+    {
+        if (input[i] == '%')
+        {
+            if (i + 2 < input.Length)
+            {
+                char hex1 = input[i + 1];
+                char hex2 = input[i + 2];
+                int decodedChar = (FromHex(hex1) << 4) | FromHex(hex2);
+                if (decodedChar >= 0) // Only append if valid hex
+                {
+                    decodedString += (char)decodedChar;
+                    i += 2; // Skip the two hex characters
+                }
+                else
+                {
+                    // Handle invalid hex gracefully (optional)
+                    decodedString += '%';
+                }
+            }
+            else
+            {
+                // Handle incomplete encoding gracefully
+                decodedString += '%';
+            }
+        }
+        else if (input[i] == '+')
+        {
+            decodedString += ' '; // '+' is interpreted as space in URL encoding
+        }
+        else
+        {
+            decodedString += input[i];
+        }
+    }
+    return decodedString;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+// Function to convert a hexadecimal character to its decimal representation
+int FromHex(char hex)
+{
+    if (hex >= '0' && hex <= '9') return hex - '0';
+    if (hex >= 'A' && hex <= 'F') return hex - 'A' + 10;
+    if (hex >= 'a' && hex <= 'f') return hex - 'a' + 10;
+    return -1; // Invalid hex character
+}
+
+// Function to decode a URL-encoded string
+string UrlDecode(string input)
+{
+    string decodedString = "";
+    for (int i = 0; i < input.Length; i++)
+    {
+        if (input[i] == '%')
+        {
+            if (i + 2 < input.Length)
+            {
+                char hex1 = input[i + 1];
+                char hex2 = input[i + 2];
+                int decodedChar = (FromHex(hex1) << 4) | FromHex(hex2);
+                if (decodedChar >= 0) // Only append if valid hex
+                {
+                    decodedString += (char)decodedChar;
+                    i += 2; // Skip the two hex characters
+                }
+                else
+                {
+                    // Handle invalid hex gracefully (optional)
+                    decodedString += '%';
+                }
+            }
+            else
+            {
+                // Handle incomplete encoding gracefully
+                decodedString += '%';
+            }
+        }
+        else if (input[i] == '+')
+        {
+            decodedString += ' '; // '+' is interpreted as space in URL encoding
+        }
+        else
+        {
+            decodedString += input[i];
+        }
+    }
+    return decodedString;
+}
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+// Function to convert a hexadecimal character to its decimal representation
+int FromHex(char hex)
+{
+    if (hex >= '0' && hex <= '9') return hex - '0';
+    if (hex >= 'A' && hex <= 'F') return hex - 'A' + 10;
+    if (hex >= 'a' && hex <= 'f') return hex - 'a' + 10;
+    return -1; // Invalid hex character
+}
+
+// Function to decode a URL-encoded string
+string UrlDecode(string input)
+{
+    string decodedString = "";
+    for (int i = 0; i < input.Length; i++)
+    {
+        if (input[i] == '%')
+        {
+            if (i + 2 < input.Length)
+            {
+                char hex1 = input[i + 1];
+                char hex2 = input[i + 2];
+                int decodedChar = (FromHex(hex1) << 4) | FromHex(hex2);
+                if (decodedChar >= 0) // Only append if valid hex
+                {
+                    decodedString += (char)decodedChar;
+                    i += 2; // Skip the two hex characters
+                }
+                else
+                {
+                    // Handle invalid hex gracefully (optional)
+                    decodedString += '%';
+                }
+            }
+            else
+            {
+                // Handle incomplete encoding gracefully
+                decodedString += '%';
+            }
+        }
+        else if (input[i] == '+')
+        {
+            decodedString += ' '; // '+' is interpreted as space in URL encoding
+        }
+        else
+        {
+            decodedString += input[i];
+        }
+    }
+    return decodedString;
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+# Function to convert a hexadecimal character to its decimal representation
+def from_hex(hex):
+    if '0' <= hex <= '9':
+        return ord(hex) - ord('0')
+    if 'A' <= hex <= 'F':
+        return ord(hex) - ord('A') + 10
+    if 'a' <= hex <= 'f':
+        return ord(hex) - ord('a') + 10
+    return -1  # Invalid hex character
+
+# Function to decode a URL-encoded string
+def url_decode(input_string):
+    decoded_string = ""
+    i = 0
+    while i < len(input_string):
+        if input_string[i] == '%':
+            if i + 2 < len(input_string):
+                hex1 = input_string[i + 1]
+                hex2 = input_string[i + 2]
+                decoded_char = (from_hex(hex1) << 4) | from_hex(hex2)
+                if decoded_char >= 0:
+                    decoded_string += chr(decoded_char)
+                    i += 2
+                else:
+                    decoded_string += '%'
+            else:
+                decoded_string += '%'
+        elif input_string[i] == '+':
+            decoded_string += ' '
+        else:
+            decoded_string += input_string[i]
+        i += 1
+    return decoded_string
+```
+
+</TabItem>
+</Tabs>
+
+#### Using this function
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string encoded_url = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world";
+write_line("URL Decode (" + encoded_url + ")=> " + url_decode(encoded_url));
+```
+
+</TabItem>
+<TabItem label="C#">
+
+<Tabs syncKey="csharp-style">
+<TabItem label="Top-level Statements">
+
+```csharp
+string encodedUrl = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world";
+WriteLine("URL Decode (" + encodedUrl + ")=> " + UrlDecode(encodedUrl));
+```
+
+</TabItem>
+<TabItem label="Object-Oriented">
+
+```csharp
+string encodedUrl = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world";
+SplashKit.WriteLine("URL Decode (" + encodedUrl + ")=> " + UrlDecode(encodedUrl));
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+encoded_url = "https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world"
+write_line(f"URL Decode ({encoded_url})=> {url_decode(encoded_url)}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The decoded URL should match the original URL that was encoded.
+
+```plaintext
+URL Decode (https%3A%2F%2Fwww.example.com%2Fsearch%3Fq%3Dhello%20world)=> https://www.example.com/search?q=hello world
 ```
