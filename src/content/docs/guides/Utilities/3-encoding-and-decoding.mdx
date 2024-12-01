@@ -7,6 +7,7 @@ lastupdated: November 2024
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Aside } from '@astrojs/starlight/components';
 
 **{frontmatter.description}**  
 Written by: {frontmatter.author}  
@@ -25,6 +26,10 @@ When using Base64, you need to define the characters used in the encoding proces
 ```cpp
 const string BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 ```
+
+<Aside type="tip" title="Common Uses of Base64 Encoding">
+Base64 encoding is widely used to safely transmit binary data, such as images or files, over text-based protocols like HTTP, email, or JSON. It is also essential for embedding assets directly in HTML or converting binary data for use in web development.
+</Aside>
 
 ### Encoding with Base64
 
@@ -351,6 +356,10 @@ where:
 - $x$ is the position of the encrypted letter in the alphabet,
 - $n$ is the number of positions to shift (the key).
 
+<Aside type="tip" title="Common Uses of Ciphers">
+Ciphers are widely used in various applications to ensure secure communication and data protection. They are essential in modern cryptography for encrypting sensitive information, securing online transactions, protecting personal data, and ensuring the confidentiality of communications. Ciphers are also used in digital signatures, authentication protocols, and solving cryptographic puzzles.
+</Aside>
+
 ### Encoding with the Caesar Cipher
 
 Encoding data with the caesar cipher involves shifting the characters in the input message by a fixed number of positions. This process ensures that the message is encrypted and can only be decrypted using the same shift value. The following code shows how you can implement the caesar cipher to encode a message by shifting the characters by a specified number of positions.
@@ -672,9 +681,291 @@ Shift 24=> Mjqqt Btwqi!
 Shift 25=> Lipps Asvph!
 ```
 
+## Vigenère Cipher
+
+The Vigenère cipher is a method of encrypting alphabetic text using a form of polyalphabetic substitution, which applies multiple Caesar ciphers based on a keyword. Each letter in the plaintext is shifted by an amount determined by the corresponding letter in the keyword, creating a more secure encryption than a single-shift cipher. This method is more resistant to brute force attacks because the pattern of shifts varies based on the keyword.
+
+Mathematically, the Vigenère cipher relies on modular arithmetic to compute shifts. For encoding, each letter in the plaintext is shifted according to the corresponding letter in the keyword:
+
+$$
+E(x_i) = (x_i + k_i) \mod 26
+$$
+
+where:
+
+- $E(x_i)$ is the encoded letter,
+- $x_i$ is the position of the plaintext letter in the alphabet ($0$ for $A$, $1$ for $B$, ..., $25$ for $Z$),
+- $k_i$ is the position of the keyword letter in the alphabet.
+
+For decoding, the process is reversed:
+
+$$
+D(y_i) = (y_i - k_i + 26) \mod 26
+$$
+
+where:
+
+- $D(y_i)$ is the decoded letter,
+- $y_i$ is the position of the encoded letter in the alphabet,
+- $k_i$ is the position of the keyword letter in the alphabet.
+
+This structured and repeatable process ensures that both encryption and decryption can be performed accurately using the same keyword.
+
+### Encoding with the Vigenère Cipher
+
+Encoding a message with the Vigenère cipher involves applying different shifts to each letter in the plaintext, determined by the corresponding letter in the repeated keyword. This ensures that each character is encrypted with a different substitution, making the resulting ciphertext more complex and secure. The process involves converting characters to numeric values, applying modular arithmetic for the shifts, and converting the results back to alphabetic text.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string vigenere_cipher_encode(const string &input, const string &keyword)
+{
+    string encoded_string;
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        char character = input[i];
+        char key = keyword[i % keyword.size()];
+
+        if (isalpha(character))
+        {
+            char base = islower(character) ? 'a' : 'A';
+            encoded_string += (character - base + key - 'A') % 26 + base;
+        }
+        else
+        {
+            encoded_string += character; // Non-alphabet characters remain unchanged
+        }
+    }
+    return encoded_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+string vigenereCipherEncode(string input, string keyword)
+{
+    string encodedString = "";
+    for (int i = 0; i < input.Length; i++)
+    {
+        char character = input[i];
+        char key = keyword[i % keyword.Length];
+
+        if (char.IsLetter(character))
+        {
+            char baseChar = char.IsLower(character) ? 'a' : 'A';
+            encodedString += (char)((character - baseChar + key - 'A') % 26 + baseChar);
+        }
+        else
+        {
+            encodedString += character; // Non-alphabet characters remain unchanged
+        }
+    }
+    return encodedString;
+}
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def vigenere_cipher_encode(input_string, keyword):
+    encoded_string = ""
+    for i, character in enumerate(input_string):
+        key = keyword[i % len(keyword)]
+        if character.isalpha():
+            base = ord('a') if character.islower() else ord('A')
+            encoded_string += chr((ord(character) - base + ord(key) - ord('A')) % 26 + base)
+        else:
+            encoded_string += character  # Non-alphabet characters remain unchanged
+    return encoded_string
+```
+
+</TabItem>
+</Tabs>
+
+#### Using this function
+
+Here is an example of how you can use the `vigenere_cipher_encode` function to encode a message using a keyword:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string message = "Hello, World!";
+string keyword = "KEY";
+string encoded_message = vigenere_cipher_encode(message, keyword);
+std::cout << "Original: " << message << std::endl;
+std::cout << "Encoded: " << encoded_message << std::endl;
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+string message = "Hello, World!";
+string keyword = "KEY";
+string encodedMessage = vigenereCipherEncode(message, keyword);
+Console.WriteLine("Original: " + message);
+Console.WriteLine("Encoded: " + encodedMessage);
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+message = "Hello, World!"
+keyword = "KEY"
+encoded_message = vigenere_cipher_encode(message, keyword)
+print(f"Original: {message}")
+print(f"Encoded: {encoded_message}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The encoded message should be the original message with each character shifted by the corresponding letter in the keyword.
+
+```plaintext
+Original: "Hello, World!"
+Encoded: "Rijvs, Uyvvn!"
+```
+
+### Decoding with the Vigenère Cipher
+
+Decoding a message encrypted with the Vigenère cipher involves reversing the shifts applied during encryption using the same keyword. By applying the modular arithmetic in reverse, each character is shifted back to its original position, reconstructing the plaintext. This process relies on the keyword to match the shifts used during encryption, ensuring that the message can only be decrypted by someone with the correct key.
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string vigenere_cipher_decode(const string &input, const string &keyword)
+{
+    string decoded_string;
+    for (size_t i = 0; i < input.size(); i++)
+    {
+        char character = input[i];
+        char key = keyword[i % keyword.size()];
+
+        if (isalpha(character))
+        {
+            char base = islower(character) ? 'a' : 'A';
+            decoded_string += (character - base - key + 'A' + 26) % 26 + base;
+        }
+        else
+        {
+            decoded_string += character; // Non-alphabet characters remain unchanged
+        }
+    }
+    return decoded_string;
+}
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+string vigenereCipherDecode(string input, string keyword)
+{
+    string decodedString = "";
+    for (int i = 0; i < input.Length; i++)
+    {
+        char character = input[i];
+        char key = keyword[i % keyword.Length];
+
+        if (char.IsLetter(character))
+        {
+            char baseChar = char.IsLower(character) ? 'a' : 'A';
+            decodedString += (char)((character - baseChar - key + 'A' + 26) % 26 + baseChar);
+        }
+        else
+        {
+            decodedString += character; // Non-alphabet characters remain unchanged
+        }
+    }
+    return decodedString;
+}
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+def vigenere_cipher_decode(input_string, keyword):
+    decoded_string = ""
+    for i, character in enumerate(input_string):
+        key = keyword[i % len(keyword)]
+        if character.isalpha():
+            base = ord('a') if character.islower() else ord('A')
+            decoded_string += chr((ord(character) - base - ord(key) + ord('A') + 26) % 26 + base)
+        else:
+            decoded_string += character  # Non-alphabet characters remain unchanged
+    return decoded_string
+```
+
+</TabItem>
+</Tabs>
+
+#### Using this function
+
+Here is an example of how you can use the `vigenere_cipher_decode` function to decode a message using a keyword:
+
+<Tabs syncKey="code-language">
+<TabItem label="C++">
+
+```cpp
+string encoded_message = "Rijvs, Uyvvn!";
+string keyword = "KEY";
+string decoded_message = vigenere_cipher_decode(encoded_message, keyword);
+std::cout << "Encoded: " << encoded_message << std::endl;
+std::cout << "Decoded: " << decoded_message << std::endl;
+```
+
+</TabItem>
+<TabItem label="C#">
+
+```csharp
+string encodedMessage = "Rijvs, Uyvvn!";
+string keyword = "KEY";
+string decodedMessage = vigenereCipherDecode(encodedMessage, keyword);
+Console.WriteLine("Encoded: " + encodedMessage);
+Console.WriteLine("Decoded: " + decodedMessage);
+```
+
+</TabItem>
+<TabItem label="Python">
+
+```python
+encoded_message = "Rijvs, Uyvvn!"
+keyword = "KEY"
+decoded_message = vigenere_cipher_decode(encoded_message, keyword)
+print(f"Encoded: {encoded_message}")
+print(f"Decoded: {decoded_message}")
+```
+
+</TabItem>
+</Tabs>
+
+#### Expected Output
+
+The decoded message should match the original message that was encoded.
+
+```plaintext
+Encoded: "Rijvs, Uyvvn!"
+Decoded: "Hello, World!"
+```
+
 ## URL Transformations
 
 URL transformations are used to encode and decode URLs to ensure that they are safe for use in web applications. URLs may contain special characters that need to be encoded to prevent errors and security vulnerabilities. The most common encoding scheme used for URLs is percent-encoding, which replaces special characters with a percent sign followed by two hexadecimal digits. This ensures that the URL is correctly interpreted by web browsers and servers.
+
+<Aside type="tip" title="Common Uses of URL Encoding and Decoding">
+URL encoding and decoding are essential for ensuring that URLs are correctly interpreted by web browsers and servers. They are commonly used in web development to handle special characters in query parameters, form submissions, and API requests. Proper URL encoding helps prevent errors and security vulnerabilities, ensuring reliable and secure communication between clients and servers.
+</Aside>
 
 ### Encoding URLs
 
