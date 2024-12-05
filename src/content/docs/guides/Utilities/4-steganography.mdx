@@ -113,6 +113,26 @@ string base64_encode(const string &input)
     return encoded_string;
 }
 
+// This will allow us to highlight the differences in the binary data
+pair<string, string> highlight_changes(const string &original, const string &modified)
+{
+    string highlighted_original, highlighted_modified;
+    for (size_t i = 0; i < original.size(); ++i)
+    {
+        if (original[i] != modified[i])
+        {
+            highlighted_original += "[" + string(1, original[i]) + "]";
+            highlighted_modified += "[" + string(1, modified[i]) + "]";
+        }
+        else
+        {
+            highlighted_original += original[i];
+            highlighted_modified += modified[i];
+        }
+    }
+    return {highlighted_original, highlighted_modified};
+}
+
 vector<char> embed_message(const vector<char>& data, const string& message, int offset) {
     // Encode the message using Base64
     string base64_message = base64_encode(message);
@@ -153,6 +173,9 @@ vector<char> embed_message(const vector<char>& data, const string& message, int 
         modified_binary += bitset<8>(modified_data[offset + i]).to_string();
     }
 
+    // Highlight changes
+    auto [highlighted_original, highlighted_modified] = highlight_changes(original_binary, modified_binary);
+
     // Truncate for readability
     auto truncate_binary = [](const string& binary_str, size_t show_bits = 64) {
         if (binary_str.length() > show_bits * 2) {
@@ -162,10 +185,10 @@ vector<char> embed_message(const vector<char>& data, const string& message, int 
     };
 
     cout << "\nOriginal binary data at embedding positions (truncated):" << endl;
-    cout << truncate_binary(original_binary) << endl;
+    cout << truncate_binary(highlighted_original) << endl;
 
     cout << "\nModified binary data at embedding positions (truncated):" << endl;
-    cout << truncate_binary(modified_binary) << endl;
+    cout << truncate_binary(highlighted_modified) << endl;
 
     return modified_data;
 }
@@ -259,6 +282,29 @@ string Base64Encode(string input)
     return encodedString;
 }
 
+// This will allow us to highlight the differences in the binary data
+(string, string) HighlightChanges(string original, string modified)
+{
+    StringBuilder highlightedOriginal = new StringBuilder();
+    StringBuilder highlightedModified = new StringBuilder();
+
+    for (int i = 0; i < original.Length; i++)
+    {
+        if (original[i] != modified[i])
+        {
+            highlightedOriginal.Append($"[{original[i]}]");
+            highlightedModified.Append($"[{modified[i]}]");
+        }
+        else
+        {
+            highlightedOriginal.Append(original[i]);
+            highlightedModified.Append(modified[i]);
+        }
+    }
+
+    return (highlightedOriginal.ToString(), highlightedModified.ToString());
+}
+
 List<byte> EmbedMessage(List<byte> data, string message, int offset)
 {
     // Encode the message using Base64
@@ -308,6 +354,9 @@ List<byte> EmbedMessage(List<byte> data, string message, int offset)
         modifiedBinary.Append(Convert.ToString(modifiedData[offset + i], 2).PadLeft(8, '0'));
     }
 
+    // Highlight changes
+    (string highlightedOriginal, string highlightedModified) = HighlightChanges(originalBinary.ToString(), modifiedBinary.ToString());
+
     // Truncate for readability
     string TruncateBinary(string binaryStr, int showBits = 64)
     {
@@ -319,10 +368,10 @@ List<byte> EmbedMessage(List<byte> data, string message, int offset)
     }
 
     Console.WriteLine("\nOriginal binary data at embedding positions (truncated):");
-    Console.WriteLine(TruncateBinary(originalBinary.ToString()));
+    Console.WriteLine(TruncateBinary(highlightedOriginal));
 
     Console.WriteLine("\nModified binary data at embedding positions (truncated):");
-    Console.WriteLine(TruncateBinary(modifiedBinary.ToString()));
+    Console.WriteLine(TruncateBinary(highlightedModified));
 
     return modifiedData;
 }
@@ -400,6 +449,29 @@ class Program
         return encodedString;
     }
 
+    // This will allow us to highlight the differences in the binary data
+    static (string, string) HighlightChanges(string original, string modified)
+    {
+        StringBuilder highlightedOriginal = new StringBuilder();
+        StringBuilder highlightedModified = new StringBuilder();
+
+        for (int i = 0; i < original.Length; i++)
+        {
+            if (original[i] != modified[i])
+            {
+                highlightedOriginal.Append($"[{original[i]}]");
+                highlightedModified.Append($"[{modified[i]}]");
+            }
+            else
+            {
+                highlightedOriginal.Append(original[i]);
+                highlightedModified.Append(modified[i]);
+            }
+        }
+
+        return (highlightedOriginal.ToString(), highlightedModified.ToString());
+    }
+
     static List<byte> EmbedMessage(List<byte> data, string message, int offset)
     {
         // Encode the message using Base64
@@ -449,6 +521,9 @@ class Program
             modifiedBinary.Append(Convert.ToString(modifiedData[offset + i], 2).PadLeft(8, '0'));
         }
 
+        // Highlight changes
+        (string highlightedOriginal, string highlightedModified) = HighlightChanges(originalBinary.ToString(), modifiedBinary.ToString());
+
         // Truncate for readability
         string TruncateBinary(string binaryStr, int showBits = 64)
         {
@@ -460,10 +535,10 @@ class Program
         }
 
         Console.WriteLine("\nOriginal binary data at embedding positions (truncated):");
-        Console.WriteLine(TruncateBinary(originalBinary.ToString()));
+        Console.WriteLine(TruncateBinary(highlightedOriginal));
 
         Console.WriteLine("\nModified binary data at embedding positions (truncated):");
-        Console.WriteLine(TruncateBinary(modifiedBinary.ToString()));
+        Console.WriteLine(TruncateBinary(highlightedModified));
 
         return modifiedData;
     }
@@ -515,6 +590,7 @@ class Program
 
 ```python
 import os
+
 path = "PATH TO YOUR FOLDER HERE"
 
 def base64_encode(input_string):
@@ -539,6 +615,21 @@ def base64_encode(input_string):
         encoded_string += "="
     
     return encoded_string
+
+# This will allow us to highlight the differences in the binary data
+def highlight_changes(original, modified):
+    highlighted_original = []
+    highlighted_modified = []
+
+    for o, m in zip(original, modified):
+        if o != m:
+            highlighted_original.append(f"[{o}]")
+            highlighted_modified.append(f"[{m}]")
+        else:
+            highlighted_original.append(o)
+            highlighted_modified.append(m)
+
+    return ''.join(highlighted_original), ''.join(highlighted_modified)
 
 def embed_message(data, message, offset):
     # Encode the message using Base64
@@ -565,6 +656,9 @@ def embed_message(data, message, offset):
     # Extract modified binary at embedding positions
     modified_binary = "".join(format(modified_data[offset + i], '08b') for i in range(len(length_bits + binary_message)))
 
+    # Highlight changes
+    highlighted_original, highlighted_modified = highlight_changes(original_binary, modified_binary)
+
     # Truncate for readability
     def truncate_binary(binary_str, show_bits=64):
         if len(binary_str) > show_bits * 2:
@@ -572,17 +666,19 @@ def embed_message(data, message, offset):
         return binary_str
 
     print("\nOriginal binary data at embedding positions (truncated):")
-    print(truncate_binary(original_binary))
+    print(truncate_binary(highlighted_original))
 
     print("\nModified binary data at embedding positions (truncated):")
-    print(truncate_binary(modified_binary))
+    print(truncate_binary(highlighted_modified))
 
     return modified_data
 
 
 input_file_path = os.path.join(path, "cat.bmp")
 output_file_path = os.path.join(path, "hiddencat.bmp")
-with open(input_file_path, "rb") as f:data = f.read()
+
+with open(input_file_path, "rb") as f:
+    data = f.read()
 
 print("Enter the message to embed: ")
 message_to_embed = input()
@@ -591,7 +687,10 @@ message_to_embed = input()
 pixel_data_offset = int.from_bytes(data[10:14], byteorder='little')
 
 encoded_data = embed_message(data, message_to_embed, pixel_data_offset)
-with open(output_file_path, "wb") as f: f.write(encoded_data)
+
+with open(output_file_path, "wb") as f:
+    f.write(encoded_data)
+
 print(f"Message embedded successfully in Base64! Encoded image saved as {output_file_path}.")
 ```
 
@@ -611,10 +710,10 @@ Binary message: 0110000101010111001100000110011101011001010100110100001001101010
 Length bits: 00000000000000000000000000001100
 
 Original binary data at embedding positions (truncated):
-0110011110001110010000100110011110001110010000100110011110001110...0110011110001110010000100110011110001110010000100110011110001110
+0011100[1]00100100000101100001011[1]011111101100000[1]0000101[1]...100110001111001[0]0010000[0]0101111[0]1000110[0]0000110010100101
 
 Modified binary data at embedding positions (truncated):
-0110011010001110010000100110011010001110010000100110011010001110...0110011010001110010000110110011110001111010000110110011010001111
+0011100[0]00100100000101100001011[0]011111101100000[0]0000101[0]...100110001111001[1]0010000[1]0101111[1]1000110[1]0000110010100101
 Message embedded successfully in Base64! Encoded image saved as /yourfolders/hiddencat.bmp.
 ```
 
@@ -1096,6 +1195,26 @@ string base64_encode(const string &input)
     return encoded_string;
 }
 
+// This will allow us to highlight the differences in the binary data
+pair<string, string> highlight_changes(const string &original, const string &modified)
+{
+    string highlighted_original, highlighted_modified;
+    for (size_t i = 0; i < original.size(); ++i)
+    {
+        if (original[i] != modified[i])
+        {
+            highlighted_original += "[" + string(1, original[i]) + "]";
+            highlighted_modified += "[" + string(1, modified[i]) + "]";
+        }
+        else
+        {
+            highlighted_original += original[i];
+            highlighted_modified += modified[i];
+        }
+    }
+    return {highlighted_original, highlighted_modified};
+}
+
 vector<char> embed_message(const vector<char>& data, const string& message, int offset) {
     // Ask the user for the Caesar cipher shift
     int shift;
@@ -1146,6 +1265,9 @@ vector<char> embed_message(const vector<char>& data, const string& message, int 
         modified_binary += bitset<8>(modified_data[offset + i]).to_string();
     }
 
+    // Highlight changes
+    auto [highlighted_original, highlighted_modified] = highlight_changes(original_binary, modified_binary);
+
     // Truncate for readability
     auto truncate_binary = [](const string& binary_str, size_t show_bits = 64) {
         if (binary_str.length() > show_bits * 2) {
@@ -1155,10 +1277,10 @@ vector<char> embed_message(const vector<char>& data, const string& message, int 
     };
 
     cout << "\nOriginal binary data at embedding positions (truncated):" << endl;
-    cout << truncate_binary(original_binary) << endl;
+    cout << truncate_binary(highlighted_original) << endl;
 
     cout << "\nModified binary data at embedding positions (truncated):" << endl;
-    cout << truncate_binary(modified_binary) << endl;
+    cout << truncate_binary(highlighted_modified) << endl;
 
     return modified_data;
 }
@@ -1271,6 +1393,29 @@ string Base64Encode(string input)
     return encodedString;
 }
 
+// This will allow us to highlight the differences in the binary data
+(string, string) HighlightChanges(string original, string modified)
+{
+    StringBuilder highlightedOriginal = new StringBuilder();
+    StringBuilder highlightedModified = new StringBuilder();
+
+    for (int i = 0; i < original.Length; i++)
+    {
+        if (original[i] != modified[i])
+        {
+            highlightedOriginal.Append($"[{original[i]}]");
+            highlightedModified.Append($"[{modified[i]}]");
+        }
+        else
+        {
+            highlightedOriginal.Append(original[i]);
+            highlightedModified.Append(modified[i]);
+        }
+    }
+
+    return (highlightedOriginal.ToString(), highlightedModified.ToString());
+}
+
 List<byte> EmbedMessage(List<byte> data, string message, int offset)
 {
     // Ask the user for the Caesar shift
@@ -1332,6 +1477,9 @@ List<byte> EmbedMessage(List<byte> data, string message, int offset)
         modifiedBinary.Append(Convert.ToString(modifiedData[offset + i], 2).PadLeft(8, '0'));
     }
 
+    // Highlight changes
+    (string highlightedOriginal, string highlightedModified) = HighlightChanges(originalBinary.ToString(), modifiedBinary.ToString());
+
     // Truncate for readability
     string TruncateBinary(string binaryStr, int showBits = 64)
     {
@@ -1343,11 +1491,11 @@ List<byte> EmbedMessage(List<byte> data, string message, int offset)
     }
 
     Console.WriteLine("\nOriginal binary data at embedding positions (truncated):");
-    Console.WriteLine(TruncateBinary(originalBinary.ToString()));
+    Console.WriteLine(TruncateBinary(highlightedOriginal));
 
     Console.WriteLine("\nModified binary data at embedding positions (truncated):");
-    Console.WriteLine(TruncateBinary(modifiedBinary.ToString()));
-
+    Console.WriteLine(TruncateBinary(highlightedModified));
+    
     return modifiedData;
 }
 
@@ -1444,6 +1592,29 @@ class Program
         return encodedString;
     }
 
+    // This will allow us to highlight the differences in the binary data
+    static (string, string) HighlightChanges(string original, string modified)
+    {
+        StringBuilder highlightedOriginal = new StringBuilder();
+        StringBuilder highlightedModified = new StringBuilder();
+
+        for (int i = 0; i < original.Length; i++)
+        {
+            if (original[i] != modified[i])
+            {
+                highlightedOriginal.Append($"[{original[i]}]");
+                highlightedModified.Append($"[{modified[i]}]");
+            }
+            else
+            {
+                highlightedOriginal.Append(original[i]);
+                highlightedModified.Append(modified[i]);
+            }
+        }
+
+        return (highlightedOriginal.ToString(), highlightedModified.ToString());
+    }
+
     static List<byte> EmbedMessage(List<byte> data, string message, int offset)
     {
         // Ask the user for the Caesar shift
@@ -1505,6 +1676,9 @@ class Program
             modifiedBinary.Append(Convert.ToString(modifiedData[offset + i], 2).PadLeft(8, '0'));
         }
 
+        // Highlight changes
+        (string highlightedOriginal, string highlightedModified) = HighlightChanges(originalBinary.ToString(), modifiedBinary.ToString());
+
         // Truncate for readability
         string TruncateBinary(string binaryStr, int showBits = 64)
         {
@@ -1516,10 +1690,10 @@ class Program
         }
 
         Console.WriteLine("\nOriginal binary data at embedding positions (truncated):");
-        Console.WriteLine(TruncateBinary(originalBinary.ToString()));
+        Console.WriteLine(TruncateBinary(highlightedOriginal));
 
         Console.WriteLine("\nModified binary data at embedding positions (truncated):");
-        Console.WriteLine(TruncateBinary(modifiedBinary.ToString()));
+        Console.WriteLine(TruncateBinary(highlightedModified));
 
         return modifiedData;
     }
@@ -1607,6 +1781,21 @@ def base64_encode(input_string):
     
     return encoded_string
 
+# This will allow us to highlight the differences in the binary data
+def highlight_changes(original, modified):
+    highlighted_original = []
+    highlighted_modified = []
+
+    for o, m in zip(original, modified):
+        if o != m:
+            highlighted_original.append(f"[{o}]")
+            highlighted_modified.append(f"[{m}]")
+        else:
+            highlighted_original.append(o)
+            highlighted_modified.append(m)
+
+    return ''.join(highlighted_original), ''.join(highlighted_modified)
+
 def embed_message(data, message, offset, shift):
     # Apply Caesar cipher shift to the message
     shifted_message = ceaser_cipher_encode(message, shift)
@@ -1638,6 +1827,8 @@ def embed_message(data, message, offset, shift):
     # Extract modified binary at embedding positions
     modified_binary = "".join(format(modified_data[offset + i], '08b') for i in range(len(length_bits + binary_message)))
 
+    highlighted_original, highlighted_modified = highlight_changes(original_binary, modified_binary)
+    
     # Truncate for readability
     def truncate_binary(binary_str, show_bits=64):
         if len(binary_str) > show_bits * 2:
@@ -1645,10 +1836,10 @@ def embed_message(data, message, offset, shift):
         return binary_str
 
     print("\nOriginal binary data at embedding positions (truncated):")
-    print(truncate_binary(original_binary))
+    print(truncate_binary(highlighted_original))
 
     print("\nModified binary data at embedding positions (truncated):")
-    print(truncate_binary(modified_binary))
+    print(truncate_binary(highlighted_modified))
 
     return modified_data
 
@@ -1691,10 +1882,10 @@ Binary message: 0110001101011000010101010110011101100001010100110100001001110010
 Length bits: 00000000000000000000000000001100
 
 Original binary data at embedding positions (truncated):
-0110011110001110010000100110011110001110010000100110011110001110...0110011110001110010000100110011110001110010000100110011110001110
+0011100[1]00100100000101100001011[1]011111101100000[1]0000101[1]...100110001111001[0]0010000[0]0101111[0]1000110[0]0000110010100101
 
 Modified binary data at embedding positions (truncated):
-0110011010001110010000100110011010001110010000100110011010001110...0110011010001110010000110110011110001111010000110110011010001111
+0011100[0]00100100000101100001011[0]011111101100000[0]0000101[0]...100110001111001[1]0010000[1]0101111[1]1000110[1]0000110010100101
 Message embedded successfully in Base64! Encoded image saved as /yourfolders/hiddencat.bmp.
 ```
 
