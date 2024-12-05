@@ -1,9 +1,9 @@
 ---
-title: Converting Text to Morse code and Back
+title: Morse Code Tutorial
 description: Explore morse code, and how you can use a program to convert text to morse code and back.
 category: Guides
 author: Brianna Laird
-lastupdated: November 2024
+lastupdated: December 2024
 ---
 
 import { Tabs, TabItem, Steps } from "@astrojs/starlight/components";
@@ -256,7 +256,7 @@ def encode_to_morse(text):
         if char in MORSE_CODE_DICT:
             encoded_message.append(MORSE_CODE_DICT[char])
         else:
-            encoded_message.append('?')  # Unknown character
+            encoded_message.append('?')
     return ' '.join(encoded_message)
 
 print("Enter the text to encode using morse code:")
