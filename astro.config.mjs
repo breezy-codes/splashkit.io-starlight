@@ -8,7 +8,7 @@ import sitemap from "@astrojs/sitemap";
 // https://astro.build/config
 export default defineConfig({
   site: 'https://breezy-codes.github.io',
-  base: 'splashkit.io-starlight',
+  //base: 'splashkit.io-starlight',
   integrations: [
     starlight({
       title: "SplashKit",
